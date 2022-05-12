@@ -1,0 +1,24 @@
+name: comp135_2020f_env
+channels:
+  - defaults
+dependencies:
+  - python=3.8
+  - anaconda
+  - pip
+  - git
+  ## Scientific Computing
+  - numpy=1.19
+  - scipy=1.5
+  ## Visualization
+  - jupyter=1.0
+  - matplotlib=3.3
+  - seaborn=0.10
+  ## Data I/O
+  - pandas=1.1
+  ## Machine Learning
+  - scikit-learn=0.23
+  ## Autograd for automatic differentiation
+  # Will be delegated to pip for install (not a conda package itself)
+  # We want a specific version for consistency (late 2019 release)
+  - pip:
+    - git+https://github.com/hips/autograd.git@c6f630a#egg=autograd

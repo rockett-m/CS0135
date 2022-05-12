@@ -1,0 +1,1366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags always come first -->
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Schedule | Introduction to Machine Learning
+</title>
+  <link rel="canonical" href="https://www.cs.tufts.edu/comp/135/2020f/schedule.html">
+
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://www.cs.tufts.edu/comp/135/2020f/theme/js/icsFormatter.js"></script>
+
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/style.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/custom.css">
+
+
+<meta name="description" content="Jump to: [Unit 1: Regression] - [Unit 2: Classification] - [Unit 3: Neural Nets] [Unit 4: Trees and Ensembles] - [Unit 5: Kernels] - [Unit 6: PCA and Rec. Sys.] - [Unit 7: Frontiers] Please complete assigned readings and videos before the start of class. Schedule might change slightly as the semester goes on. Please …">
+</head>
+
+<body>
+  <header class="header">
+    <nav class="navbar navbar-expand-lg navbar-expand-md navbar-light bg-light">
+    <div class="container">
+    <div class="row display-flex">
+        <div class="col-2 col-sm-2 d-md-none"><!-- hidden if md or lg -->
+        <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#my_collapsing_navbar"
+            aria-controls="my_collapsing_navbar"
+            aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon mw-100"></span>
+        </button>
+        </div>
+
+        <div class="d-none d-md-block col-md-2">
+          <a href="https://www.cs.tufts.edu/comp/135/2020f/">
+            <img class="img-fluid mw-100" src=https://www.cs.tufts.edu/comp/135/2020f/images/tufts_ml_logo.png alt="Introduction to Machine Learning">
+          </a>
+        </div>
+
+        <div class="col-10 col-sm-10 col-md-10">
+          <h1 class="text-left" style="word-break:'break-all'">
+            <a href="https://www.cs.tufts.edu/comp/135/2020f/">Introduction to Machine Learning</a>
+          </h1>
+
+          <p class="text-muted text-left d-none d-md-block mw-100">
+            Tufts CS COMP 135 Intro ML | Fall 2020
+          </p>
+
+
+
+          <div class="collapse navbar-collapse" id="my_collapsing_navbar">
+                <ul class="navbar-nav">
+                  <li class="nav-item text-left">
+                    <a href="index.html">Syllabus</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="schedule.html">Schedule</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="assignments.html">Assignments</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="office_hours.html">Office Hours</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="resources.html">Resources</a>
+                  </li>
+
+                </ul>
+          </div>
+
+
+        </div>
+
+    </div>
+    </div>
+    </nav>
+
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>Schedule
+</h1>
+      <hr>
+<article class="article">
+  <div class="content">
+    <p>Jump to:</p>
+<p>[<a class="reference external" href="#unit1">Unit 1: Regression</a>] - [<a class="reference external" href="#unit2">Unit 2: Classification</a>]  - [<a class="reference external" href="#unit3">Unit 3: Neural Nets</a>]</p>
+<p>[<a class="reference external" href="#unit4">Unit 4: Trees and Ensembles</a>] - [<a class="reference external" href="#unit5">Unit 5: Kernels</a>] - <a class="reference external" href="#unit6">[Unit 6: PCA and Rec. Sys.</a>] - [<a class="reference external" href="#unit7">Unit 7: Frontiers</a>]</p>
+<p>Please complete assigned readings and videos <em>before</em> the start of class.</p>
+<p>Schedule might change slightly as the semester goes on. Please check here regularly and refresh the page. Look for key announcements on Piazza.</p>
+<div class="section" id="course-introduction">
+<span id="unit0"></span><h2>Course Introduction</h2>
+<p>Concepts: supervised learning, unsupervised learning, difference between ML and AI</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="12%" />
+<col width="30%" />
+<col width="35%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Date</th>
+<th class="head">Assignments</th>
+<th class="head">Do Before Class</th>
+<th class="head">Class Content</th>
+<th class="head">Optional Extras</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Wed 09/09 day01</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">- <a class="reference external" href="hw0.html">HW0</a>  out</div>
+</div>
+</blockquote>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="index.html">course  syllabus</a></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Videos  on  Canvas:  </div>
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day01  -  Types  of  Machine  Learning</a></div>
+</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt>Course Overview </dt>
+<dd><div class="first last line-block">
+<div class="line">- <a class="reference external" href="slides/day01_why_and_what.pdf">Slides: Why take this course? What will we learn? [PDF]</a> </div>
+<div class="line">- <a class="reference external" href="slides/day01_how.pdf">Slides: How will this semester go? [PDF]</a> </div>
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day01-IntroToNumericalPython.ipynb">Intro to Numerical Python and NumPy [notebook]</a> </div>
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day01-IntroToPandasAndMatplotlib.ipynb">Intro to Dataframes and Plotting [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><br /></p>
+</div>
+<div class="section" id="id1">
+<span id="unit1"></span><h2>Unit 1: Regression</h2>
+<p>Concepts: over-fitting, under-fitting, cross-validation</p>
+<p>Methods: Linear regression, k-NN regression</p>
+<p>Evaluation: mean squared error, mean absolute error</p>
+<p>Work: HW1, Quiz1</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="12%" />
+<col width="30%" />
+<col width="35%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Date</th>
+<th class="head">Assignments</th>
+<th class="head">Do Before Class</th>
+<th class="head">Class Content</th>
+<th class="head">Optional Extras</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Mon 09/14 day02</td>
+<td>&nbsp;</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Install  your  <a class="reference external" href="setup_python_env.html">Python  environment</a></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf#page=14">ISL Textbook Ch. 1</a>  :  </div>
+<div class="line-block">
+<div class="line">-  Focus:  'Notation  and  Simple  Matrix  Algebra'</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf#page=28">ISL Textbook Ch. 2</a>  :  Sec.  2.1  &amp;  Sec.  2.2  </div>
+<div class="line-block">
+<div class="line">-  Focus:  'Parametric  Methods'  </div>
+<div class="line">-  Focus:  'Assessing  Model  Accuracy'  </div>
+<div class="line">-  Focus:  'K-Nearest  Neighbors'</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Videos  on  Canvas:  </div>
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day02  -  The  Learning  Problem  for  Linear  Regression</a>  </div>
+</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="slides/day02_regression.pdf">Regression Basics [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day02_RegressionDemo_Linear_vs_kNN.ipynb">Lab: Linear Regression vs. k-Nearest neighbors [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Wed 09/16 day03</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="hw0.html">HW0</a> due </div>
+<div class="line">- <a class="reference external" href="hw1.html">HW1</a>  out</div>
+</div>
+</blockquote>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf#page=71">ISL Textbook Ch. 3</a>  :  Sec.  3.1-3.3  </div>
+<div class="line-block">
+<div class="line">-  Focus:  '3.1.1    Estimating  Coefficients'  </div>
+<div class="line">-  '3.3.2  Extensions  beyond  Linear'  </div>
+<div class="line">-  '3.3.3  Potential  Problems'</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="https://www.deeplearningbook.org/contents/ml.html">DL Textbook Sec. 5.1.4</a>  :  </div>
+<div class="line-block">
+<div class="line">-  Focus:  Coefficient  Estimation  Derivation  in  Eq.  5.4  -  5.12</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Read  math  notes:  </div>
+<div class="line-block">
+<div class="line">-  Estimating  coefficients  in  1-dim.  and  many  dim.  <a class="reference external" href="notes/day03_linear_regression.pdf">[PDF]</a></div>
+</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="slides/day03_linear_regression.pdf">Linear Regression [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day03_LinearRegression_ExactFormulasForModelTraining.ipynb">Lab: Training Linear Regression [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="https://mml-book.github.io/book/mml-book.pdf#page=295">MML Textbook Ch. 9</a>  :  Sec.  9.1-9.2  </div>
+<div class="line-block">
+<div class="line">-  Derivation  with  probabilistic  perspective</div>
+</div>
+</div>
+</blockquote>
+</td>
+</tr>
+<tr><td>Mon 09/21 day04</td>
+<td>&nbsp;</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Videos  on  Canvas:  </div>
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day04  -  01  -  Linear  Regression  with  Polynomial  Features</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day04  -  02  -  High-degree  polynomials  and  over-fitting</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day04  -  03  -Definition  of  over-fitting</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day04  -  04  -  Cross-Validation</a></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf#page=186">ISL Textbook Ch. 5</a>  :  Sec.  5.1  </div>
+<div class="line-block">
+<div class="line">-  Focus:  5.1.1  Validation  Set  Approach  </div>
+<div class="line">-  Focus:  5.1.3  k-fold  Cross-Validation</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Skim  <a class="reference external" href="https://www.oreilly.com/data/free/files/evaluating-machine-learning-models.pdf#chapter-03">EMLM Textbook Ch. 3</a></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Skim  <a class="reference external" href="https://www.oreilly.com/data/free/files/evaluating-machine-learning-models.pdf#chapter-04">EMLM Textbook Ch. 4</a>  </div>
+<div class="line-block">
+<div class="line">-  Focus:  Case  for  Nested  Cross-Validation</div>
+</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="https://www.cs.tufts.edu/comp/135/2020f/slides/day04_lr_with_polynomial_features_and_cross_validation.pdf">Polynomial Features, Hyperparameter Selection, and Cross-Validation [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day04_Polynomial_Features_and_Hyperparameter_Selection_on_Validation_Set.ipynb">Lab: Polynomial Features and Hyperparameter Selection [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Wed 09/23 day05</td>
+<td>&nbsp;</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf#page=213">ISL Textbook Ch. 6</a>  :  Sec.  6.2.1,  6.2.2,  and  6.2.3</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Video  by  Prof.  A.  Ihler  (UC-Irvine):  <a class="reference external" href="https://www.youtube.com/watch?v=sO4ZirJh9ds">Regularization  for  Linear  Regression</a></div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="https://www.cs.tufts.edu/comp/135/2020f/slides/day05_regularized_linear_regression.pdf">Regularization for Linear Regression [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day05_PenalizedLinearRegression_Ridge_vs_Lasso.ipynb">Lab: Penalized Linear Regression: Ridge (L2) vs. Lasso (L1) [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><br /></p>
+</div>
+<div class="section" id="id3">
+<span id="unit2"></span><h2>Unit 2: Classification</h2>
+<p>Concepts: feature engineering, hyperparameters, numerical stability, gradient descent</p>
+<p>Methods: Logistic regression, k-NN classification</p>
+<p>Evaluation: ROC curves, confusion matrices, cross entropy</p>
+<p>Work: HW2, Quiz2, ProjectA</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="12%" />
+<col width="30%" />
+<col width="35%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Date</th>
+<th class="head">Assignments</th>
+<th class="head">Do Before Class</th>
+<th class="head">Class Content</th>
+<th class="head">Optional Extras</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Mon 09/28 day06</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">- <a class="reference external" href="projectA.html">ProjectA</a> out</div>
+</div>
+</blockquote>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="https://www.deeplearningbook.org/contents/numerical.html">DL Textbook Sec. 4.3</a>  :  Gradient  Descent</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Video  on  Canvas:  </div>
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day06  -  01  -  The  Basic  Idea  of  Gradient  Descent</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day06  -  02  -  Gradient  Descent  and  Step  Sizes</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day06  -  03  -  Mathematical  Details  for  LR</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day06  -  04  -  Issues  with  Non-Convex  Functions:  Global  vs.  Local  Minima</a></div>
+</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="https://www.cs.tufts.edu/comp/135/2020f/slides/day06_gradient_descent.pdf">Gradient Descent [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day06_GradientDescent_LinearRegression.ipynb">Lab: Gradient Descent for Linear Regression [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Some  Practical  Wisdom  for  ProjectA:  <a class="reference external" href="https://dl.acm.org/doi/10.1145/2347736.2347755">&quot;A Few Useful Things to Know about ML&quot; by Domingos '12</a></div>
+</div>
+</blockquote>
+</td>
+</tr>
+<tr><td>Wed 09/30 day07</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="hw1.html">HW1</a> due </div>
+<div class="line">- <a class="reference external" href="hw2.html">HW2</a> out</div>
+</div>
+</blockquote>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf#page=139">ISL Textbook Ch. 4</a>  :  Sec.  4.1  -  4.2</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Videos  on  Canvas:  </div>
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day07  -  01  Intro  to  Classification</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day07  -  02  Classification  by  Thresholding  Linear  Functions</a></div>
+</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="https://www.cs.tufts.edu/comp/135/2020f/slides/day07_binary_classification.pdf">Binary Classification Overview [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- Nearest Neighbor Methods </div>
+<div class="line">- Linear Methods </div>
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day07_BinaryClassifierBasics.ipynb">Lab: Classification Basics [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Mon 10/05 day08</td>
+<td>&nbsp;</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="https://www.oreilly.com/data/free/files/evaluating-machine-learning-models.pdf#page=17">EMLM Textbook Ch. 2</a>  :  Ch.  2  Evaluation  Metrics</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Videos  on  Canvas:  </div>
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day08  -  01  Evaluating  Binary  Classifiers</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day08  -  02  Confusion  Matrix  and  Accuracy</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day08  -  03  ROC  Curves</a></div>
+</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="https://www.cs.tufts.edu/comp/135/2020f/slides/day08_evaluating_binary_classifiers.pdf">Evaluation of Binary Classification [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- False Positives vs. False Negatives </div>
+<div class="line">- ROC Curves </div>
+<div class="line">- PR Curves </div>
+<div class="line">- Log loss (cross entropy) </div>
+<div class="line">- Lab: <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day08_EvaluatingBinaryClassifiers.ipynb">Evaluation Metrics [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Wed 10/07 day09</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">- Quiz1</div>
+</div>
+</blockquote>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf#page=139">ISL Textbook Ch. 4</a>  :  Sec.  4.3  -  4.3.4</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Videos  on  Canvas:  </div>
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day09  -  01  Geometry  of  Linear  Decision  Functions</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day09  -  02  Logistic  Regression</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day09  -  03  Gradients  of  Sigmoid</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day09  -  04  Log  loss  and  gradient  descent</a></div>
+</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="https://www.cs.tufts.edu/comp/135/2020f/slides/day09_logistic_regression.pdf">Logistic Regression [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day09_LogisticRegression.ipynb">Lab: Logistic Regression [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><br /></p>
+</div>
+<div class="section" id="id6">
+<span id="unit3"></span><h2>Unit 3: Neural Nets</h2>
+<p>Concepts: backpropagation, stochastic gradient descent, hyperparameter selection</p>
+<p>Methods: multi-layer perceptrons for regression and classification</p>
+<p>Work: HW3, Quiz3</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="12%" />
+<col width="30%" />
+<col width="35%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Date</th>
+<th class="head">Assignments</th>
+<th class="head">Do Before Class</th>
+<th class="head">Class Content</th>
+<th class="head">Optional Extras</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Mon 10/12 day10</td>
+<td>&nbsp;</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read:  <a class="reference external" href="https://www.deeplearningbook.org/contents/mlp.html">DL Textbook Ch 6</a>  -  especially:  </div>
+<div class="line-block">
+<div class="line">-  Sec  6.0  (Intro)  </div>
+<div class="line">-  Sec  6.1  (xor)  </div>
+<div class="line">-  Sec  6.2  (Learning)  </div>
+<div class="line">-  Sec.  6.3  Hidden  Units</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Videos  on  Canvas:  </div>
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  10  -  01  Neural  Network  Basics</a>  </div>
+<div class="line"><a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  10  -  02  Neural  Networks  for  OR  and  AND</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  10  -  03  Neural  Networks  for  XOR</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  10  -  04  Logistic  Sigmoid  as  an  Activation  Function</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  10  -  05  ReLU  and  other  Activation  Functions</a></div>
+</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="https://www.cs.tufts.edu/comp/135/2020f/slides/day10_neural_networks.pdf">Neural Networks Overview [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- Multi-layer Perceptrons </div>
+<div class="line">- Universal Function Approximation <a class="reference external" href="http://neuralnetworksanddeeplearning.com/chap4.html#universality_with_one_input_and_one_output">[demo]</a> </div>
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day10_NeuralNetworks_XOR.ipynb">Lab: Neural Nets and XOR [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Wed 10/14 day11</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="hw2.html">HW2</a> due</div>
+</div>
+</blockquote>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Videos  on  Canvas:  </div>
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  11  -  01  Training  Single-Layer  Networks</a>  </div>
+<div class="line"><a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  11  -  02  Gradients  of  Single-Layer  Networks</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  11  -  03  Worked  Example</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  11  -  04  Training  Multi-layer  Networks</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  11  -  05  Backpropagation</a></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Skim  for  high-level  understanding:  <a class="reference external" href="https://www.deeplearningbook.org/contents/mlp.html">DL Textbook Ch 6</a>  :  </div>
+<div class="line-block">
+<div class="line">-  Sec.  6.5  Backprop</div>
+</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="slides/day11_backprop.pdf">Training Neural Nets with Backprop [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- <a class="reference external" href="https://developers-dot-devsite-v2-prod.appspot.com/machine-learning/crash-course/backprop-scroll">Visualization: Backprop Scroll from Google ML Crash Course</a> </div>
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day11_Backpropagation.ipynb">Lab: Backprop [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Mon 10/19 day12</td>
+<td>&nbsp;</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="https://www.deeplearningbook.org/contents/ml.html">DL Textbook Sec. 5.9</a>  :  Stochastic  Gradient  Descent</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="https://www.deeplearningbook.org/contents/optimization.html">DL Textbook Ch. 8</a>  Sec.  8.1  -  8.3  </div>
+<div class="line-block">
+<div class="line">-  Focus  on  8.1.2  Surrogates  and  Early  Stopping  </div>
+<div class="line">-  Focus  on  8.1.3  Batch  and  Minibatch  algorithms  </div>
+<div class="line">-  Focus  on  Sec.  8.3  -  8.3.1  Stochastic  Gradient  Descent</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Videos  on  Canvas:  </div>
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  12  -  01  -  Stochastic  Gradient  Descent</a></div>
+</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="slides/day12_sgd.pdf">Stochastic Gradient Descent [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day12_StochasticGradientDescent.ipynb">Lab: Stochastic Gradient Descent [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Wed 10/21 day13</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">- <a class="reference external" href="assignments.html#quizzes">Quiz2</a></div>
+</div>
+</blockquote>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="https://www.deeplearningbook.org/contents/guidelines.html">DL Textbook Sec. 11.4</a>  </div>
+<div class="line-block">
+<div class="line">-  Sec.  11.4  Hyperparameter  Search</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="https://www.deeplearningbook.org/contents/mlp.html">DL Textbook Ch 6</a>  :  Sec.  6.2.2  </div>
+<div class="line-block">
+<div class="line">-  Focus  on  6.2.2.3  :  Softmax  Units</div>
+</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="slides/day13_multiclass_NNs_and_hyper_search.pdf">Neural Nets In Practice [slides PDF]</a>  </dt>
+<dd><div class="first last line-block">
+<div class="line">- Multi-class Classification </div>
+<div class="line">- Early Stopping </div>
+<div class="line">- Hyperparameter Search </div>
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day13_HyperparameterSearch.ipynb">Lab: Random vs Grid Search [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><br /></p>
+</div>
+<div class="section" id="id10">
+<span id="unit4"></span><h2>Unit 4: Trees and Ensembles</h2>
+<p>Concepts: greedy training, bagging, boosting</p>
+<p>Methods: decision trees, random forests, XGBoost</p>
+<p>Work: HW4, Quiz4, ProjectB</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="12%" />
+<col width="30%" />
+<col width="35%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Date</th>
+<th class="head">Assignments</th>
+<th class="head">Do Before Class</th>
+<th class="head">Class Content</th>
+<th class="head">Optional Extras</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Mon 10/26 day14</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="projectA.html">ProjectA</a> due  </div>
+<div class="line">- <a class="reference external" href="projectB.html">ProjectB</a> out</div>
+</div>
+</blockquote>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf#page=312">ISL Textbook Ch. 8</a>  :  Sec.  8.1  </div>
+<div class="line-block">
+<div class="line">-  Read  8.1  -  8.1.4  </div>
+<div class="line">-  Focus  on  figures  for  intuition</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Videos  on  Canvas:  </div>
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  14  -  01  -  Choosing  Attributes  for  Decision  Tree  Classifiers</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  14  -  02  -  Feature  Importance  with  Information  Theory</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  14  -  03  -  Entropy</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  14  -  04  -  Information  Gain</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  14  -  05  -  Worked  Example</a></div>
+</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="slides/day14_decision_trees.pdf">Decision Trees for Regression and Classification [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day14_DecisionTrees.ipynb">Lab: Decision Trees for Classification [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="http://ciml.info/dl/v0_99/ciml-v0_99-ch01.pdf">Daume's  Ch  1.  on  Decision  Trees</a>  </div>
+<div class="line-block">
+<div class="line">-  An  algorithmic  focus  on  decision  trees  for  classification</div>
+</div>
+</div>
+</blockquote>
+</td>
+</tr>
+<tr><td>Wed 10/28 day15</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="hw3.html">HW3</a> due </div>
+<div class="line">- <a class="reference external" href="hw4.html">HW4</a> out</div>
+</div>
+</blockquote>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf#page=186">ISL Textbook Ch. 5</a>  :  Sec.  5.2  </div>
+<div class="line-block">
+<div class="line">-  5.2  'The  Bootstrap'</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf#page=312">ISL Textbook Ch. 8</a>  :  Sec.  8.2  </div>
+<div class="line-block">
+<div class="line">-  Read  8.2.1  Bagging  </div>
+<div class="line">-  Read  8.2.2  Random  Forests</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">(No  videos  on  Canvas  today)</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="slides/day15_random_forests.pdf">Random Forests [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- Ensembles of independent predictors </div>
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day15_Bootstrap_and_RandomForest.ipynb">Lab: Bootstrap and Random Forest [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Mon 11/02 day16</td>
+<td>&nbsp;</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf#page=312">ISL Textbook Ch. 8</a>  :  Sec.  8.2  </div>
+<div class="line-block">
+<div class="line">-  Read  8.2.3  Boosting</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">(No  videos  on  Canvas  today)</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="slides/day16_boosting.pdf">Boosting [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- Boosting and XGBoost </div>
+<div class="line">- <a class="reference external" href="https://docs.google.com/document/d/1kmoe_tJGdvZJSbPBGM0R4x9ogucoPJja2Db96-2dR3o">Breakout: Practice for Quiz 3 [PDF]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Wed 11/04 day17</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">- <a class="reference external" href="assignments.html#quizzes">Quiz3</a></div>
+</div>
+</blockquote>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  sklearn  docs  on  <a class="reference external" href="https://scikit-learn.org/stable/modules/feature_extraction.html#the-bag-of-words-representation">Text  Feature  Extraction</a></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line-block">
+<div class="line">-  From  6.2.3  through  6.2.3.7</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="https://www.shanelynn.ie/get-busy-with-word-embeddings-introduction/">Get  Busy  with  Word  Embeddings</a></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">(No  videos  on  Canvas  today)</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt>Project B Material: Text Representations </dt>
+<dd><div class="first last line-block">
+<div class="line">- <a class="reference external" href="slides/day17_text_representations.pdf">Bag of Words [slides PDF]</a> </div>
+<div class="line">- <a class="reference external" href="slides/day17_text_representations.pdf#page=11">Word Embeddings [slides PDF]</a> </div>
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day17_BagOfWords.ipynb">Lab: Bag-of-words [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><br /></p>
+</div>
+<div class="section" id="unit-5-kernel-methods">
+<span id="unit5"></span><h2>Unit 5: Kernel Methods</h2>
+<p>Concepts: kernel functions</p>
+<p>Methods: kernelized linear regression, support vector machines</p>
+<p>Work: HW5, Quiz5</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="11%" />
+<col width="31%" />
+<col width="36%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Date</th>
+<th class="head">Assignments</th>
+<th class="head">Do Before Class</th>
+<th class="head">Class Content</th>
+<th class="head">Optional Extras</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Mon 11/09 day18</td>
+<td>&nbsp;</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Videos  on  Canvas:  </div>
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  18  -  01  SVMs  as  Maximum  Margin  Classifiers</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  18  -  02  SVM  Prediction  and  Training</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  18  -  03  SVM  Prediction  in  Dual  formulation</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  18  -  04  From  Hard  Margin  to  Soft  Margin</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  18  -  05  Summary  of  SVMs</a></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf#page=345">ISL Textbook Ch. 9</a>  </div>
+<div class="line-block">
+<div class="line">-  Focus  on  Sec  9.1  -  9.2  </div>
+<div class="line">-  Skim  Sec.  9.4  </div>
+<div class="line">-  Focus  on  Sec.  9.5  relating  SVMs  to  Logistic  Regression</div>
+</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="slides/day18_support_vector_machines.pdf">Support Vector Machines [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day18_SupportVectorMachines.ipynb">Lab: Support Vector Machines [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Tue 11/10 (Tufts-Wed-on-Tues) day19</td>
+<td>&nbsp;</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Videos  on  Canvas:  </div>
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  19  -  01  The  Kernel  Trick</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  19  -  02  Kernel  Example</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  19  -  03  SVM  with  Radial  Basis  Functions</a>  </div>
+<div class="line">-  <a class="reference external" href="https://canvas.tufts.edu/courses/20476/external_tools/154">day  19  -  04  RBF  Kernels  correspond  to  infinite  features</a>  </div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf#page=345">ISL Textbook Ch. 9</a>  </div>
+<div class="line-block">
+<div class="line">-  Focus  on  Sec  9.3  (which  covers  Kernels  for  SVMs)</div>
+</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="slides/day19_kernel_methods.pdf">Kernel Methods for Regression and Classification [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day19_KernelsForRegressionAndClassification.ipynb">Lab: Kernels for Regression and Classification [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf#page=311">Bishop PRML Ch. 6</a>  </div>
+<div class="line-block">
+<div class="line">-  Skim  Sec.  6.1  Dual  Representations  </div>
+<div class="line">-  Focus  on  Sec.  6.2  Constructing  Kernels</div>
+</div>
+</div>
+</blockquote>
+</td>
+</tr>
+<tr><td>Wed 11/11</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="hw4.html">HW4</a> due</div>
+</div>
+</blockquote>
+</td>
+<td>&nbsp;</td>
+<td>NO CLASS (Veteran's Day Holiday)</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Mon 11/16 day20</td>
+<td>&nbsp;</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line"><a class="reference external" href="http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf#page=345">ISL Textbook Ch. 9</a>  </div>
+<div class="line-block">
+<div class="line">-  Read  Sec.  9.4  one-vs-one  and  one-vs-all</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line"><a class="reference external" href="http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf#page=381">ISL Textbook Ch. 10</a>  </div>
+<div class="line-block">
+<div class="line">-  Read  Sec.  10.1  Unsupervised  Learning</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line"><a class="reference external" href="http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf#page=381">ISL Textbook Ch. 10</a>  </div>
+<div class="line-block">
+<div class="line">-  Read  Sec.  10.2.1  What  are  Principal  Components?</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">(No  videos  on  Canvas  today)</div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt>Multi-class SVMs / <a class="reference external" href="slides/day20_dimensionality_reduction.pdf">Intro to Dimensionality Reduction [slides]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- <a class="reference external" href="https://docs.google.com/document/d/1hwQdj-MNVvofZXS-jvAgxftL1SeGdQDUjB1yxTJ2v_8/edit?usp=sharing">Breakout: Practice for Quiz 4 [PDF]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Wed 11/18 day21</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">- <a class="reference external" href="assignments.html#quizzes">Quiz4</a> </div>
+<div class="line">- <a class="reference external" href="hw5.html">HW5</a> out</div>
+</div>
+</blockquote>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing">ProPublic  article  'Machine  Bias'  by  Angwin  et  al.</a></div>
+</div>
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://www.washingtonpost.com/news/monkey-cage/wp/2016/10/17/can-an-algorithm-be-racist-our-analysis-is-more-cautious-than-propublicas/">Commentary  by  Corbett-Davies,  Pierson,  Feller  and  Goel</a></div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="slides/day21_fairness_supervised_learning.pdf">Fairness in Supervised Learning [slides]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- Breakout: <a class="reference external" href="https://docs.google.com/document/d/1Ws4ZRD157cU6dhkDeRuru-h38ZE1lAQxVTZhEZTr2qU/edit?usp=sharing">Discussion Guide</a> </div>
+<div class="line">- No lab materials or notebook today</div>
+</div>
+</dd>
+</dl>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  about  other  high-stakes  applications  </div>
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="https://science.sciencemag.org/content/366/6464/447">Healthcare:</a>  </div>
+<div class="line">-  <a class="reference external" href="https://www.nytimes.com/2018/01/02/magazine/can-an-algorithm-tell-when-kids-are-in-danger.html">Child  Services:</a></div>
+</div>
+</div>
+</blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<p><br /></p>
+</div>
+<div class="section" id="unit-6-pca-and-recommender-systems">
+<span id="unit6"></span><h2>Unit 6: PCA and Recommender Systems</h2>
+<p>Concepts: dimensionality reduction, matrix factorization, recommendation systems</p>
+<p>Methods: principal components analysis, collaborative filtering models</p>
+<p>Work: ProjectC</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="12%" />
+<col width="30%" />
+<col width="35%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Date</th>
+<th class="head">Assignments</th>
+<th class="head">Do Before Class</th>
+<th class="head">Class Content</th>
+<th class="head">Optional Extras</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Mon 11/23 day22</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">- <a class="reference external" href="projectB.html">ProjectB</a> due </div>
+<div class="line">- <a class="reference external" href="projectC.html">ProjectC</a> out</div>
+</div>
+</blockquote>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line"><a class="reference external" href="http://faculty.marshall.usc.edu/gareth-james/ISL/ISLR%20Seventh%20Printing.pdf#page=381">ISL Textbook Ch. 10</a>  </div>
+<div class="line-block">
+<div class="line">-  Read  Sec.  10.2.2  Another  Interpretation  of  PCA  </div>
+<div class="line">-  Read  Sec.  10.2.3  More  on  PCA  </div>
+<div class="line">-  Read  Rec.  10.2.4  Other  Uses  of  PCA  (then  go  skim  6.3.1)</div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Read  first  4  pages  of  <a class="reference external" href="https://ieeexplore.ieee.org/abstract/document/5197422">Koren et al. 'Matrix Factorization Techniques for Recommender Systems' 2009</a></div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="slides/day22_principal_components_analysis.pdf">Principal Components Analysis  [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day22_PrincipalComponentsAnalysis.ipynb">Lab: PCA [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Wed 11/25</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>NO CLASS (Thanksgiving Holiday)</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Mon 11/30 day23</td>
+<td>&nbsp;</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  all  of  <a class="reference external" href="https://ieeexplore.ieee.org/abstract/document/5197422">Koren et al. 'Matrix Factorization Techniques for Recommender Systems' 2009</a></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Skim  <a class="reference external" href="projectC.html">Project  C  instructions</a></div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="slides/day23_recommendation_via_matrix_factorization.pdf">Matrix Factorization for Recommender Systems [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day23_AutogradForGradientDescent.ipynb">Lab: Autograd for gradient descent [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+<tr><td>Wed 12/02 day24</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="hw5.html">HW5</a> due</div>
+</div>
+</blockquote>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Read  all  of  <a class="reference external" href="https://ieeexplore.ieee.org/abstract/document/5197422">Koren et al. 'Matrix Factorization Techniques for Recommender Systems' 2009</a></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Read  <a class="reference external" href="projectC.html">Project  C  instructions</a></div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="slides/day24_recommendation_systems.pdf">Recommender Systems [slides PDF]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- <a class="reference external" href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day24_RecommenderSystems.ipynb">Lab: Recommender Systems (Warmup for Project C) [notebook]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><br /></p>
+</div>
+<div class="section" id="unit-7-ml-frontiers">
+<span id="unit7"></span><h2>Unit 7: ML Frontiers</h2>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="12%" />
+<col width="30%" />
+<col width="35%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr><th class="head">Date</th>
+<th class="head">Assignments</th>
+<th class="head">Do Before Class</th>
+<th class="head">Class Content</th>
+<th class="head">Optional Extras</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr><td>Mon 12/07 day25</td>
+<td>&nbsp;</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">Watch  Video:  </div>
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="https://www.youtube.com/watch?v=aKf6pB4p06E">Understanding  the  Limitations  of  AI:  When  Algorithms  Fail  (Gebru  '19)</a></div>
+</div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line">Read:  <a class="reference external" href="https://ai.google/responsibilities/responsible-ai-practices/?category=general">Responsible  AI  Practices  from  Google  [web  article]</a></div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt><a class="reference external" href="slides/day25_responsible_ml.pdf">Responsible Machine Learning [slides]</a> </dt>
+<dd><div class="first last line-block">
+<div class="line">- Breakout: <a class="reference external" href="https://docs.google.com/document/d/1hIHL6fGUxqFbEtQ6tl8dpBerRMLfYAFJXHK-huxNzdo/edit?usp=sharing">Discussion [doc]</a> </div>
+<div class="line">- Breakout: <a class="reference external" href="https://docs.google.com/document/d/1DEtWMhANRt4Q0q8c4OIw-ZnmFXYWKNso2YEZjq4da88/edit?usp=sharing">Unit 5 Practice Quiz [doc]</a></div>
+</div>
+</dd>
+</dl>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://dl.acm.org/doi/pdf/10.1145/3287560.3287596">Model  Cards  for  Model  Reporting  (Mitchell  et  al.  '19)  [research  article  PDF]</a></div>
+</div>
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://arxiv.org/pdf/1803.09010.pdf">Datasheets  for  Datasets  (Gebru  et  al.  '18)  [research  article  PDF]</a></div>
+</div>
+</blockquote>
+</td>
+</tr>
+<tr><td>Wed 12/09</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">- <a class="reference external" href="assignments.html#quizzes">Quiz5</a></div>
+</div>
+</blockquote>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://www.quantamagazine.org/to-build-truly-intelligent-machines-teach-them-cause-and-effect-20180515/">To  Build  Truly  Intelligent  Machines,  Teach  Them  Cause  and  Effect  [web  article]</a>  </div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://pharmacy.ucsf.edu/news/2019/04/training-computers-think-more-scientists">Training  computers  to  think  more  like  scientists  [web  article]</a></div>
+</div>
+</blockquote>
+</td>
+<td><dl class="first last docutils">
+<dt>Class Review and A Look to the Frontiers of ML </dt>
+<dd><div class="first last line-block">
+<div class="line">- <a class="reference external" href="slides/day26_final_review.pdf">Wrap-up Presentation [slides]</a>  </div>
+<div class="line">- Group discussion (Ask Instructor Anything)</div>
+</div>
+</dd>
+</dl>
+</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://hdsr.mitpress.mit.edu/pub/f9kuryi8/release/6">Why  Are  We  Using  Black  Box  Models  when  we  don't  need  to?  (Rudin  &amp;  Radin  '19)  [research  article]</a></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="line-block">
+<div class="line"><a class="reference external" href="https://www.brookings.edu/research/a-guide-to-healthy-skepticism-of-artificial-intelligence-and-coronavirus/">A  guide  to  healthy  skepticism  of  AI  and  coronavirus  [web  article]</a></div>
+</div>
+</blockquote>
+</td>
+</tr>
+<tr><td>Mon 12/21</td>
+<td><blockquote class="first last">
+<div class="line-block">
+<div class="line">-  <a class="reference external" href="projectC.html">ProjectC</a> due</div>
+</div>
+</blockquote>
+</td>
+<td>&nbsp;</td>
+<td>NO CLASS (Final Exam Period)</td>
+<td>&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<p><br /></p>
+<p><br /></p>
+<p><br /></p>
+<p><br /></p>
+<p><br /></p>
+</div>
+
+  </div>
+</article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+       <ul class="col-sm-6 list-inline">
+
+
+
+        </ul>
+        <p class="col-sm-6 text-sm-right text-muted">
+          MIT License
+          /
+          <a href="https://github.com/tufts-ml/tufts_ml_website">
+          Source on github
+          </a>
+          /
+          <a href="https://github.com/getpelican/pelican" target="_blank">Powered by Pelican</a>
+          /
+          <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags always come first -->
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Project A: Classifying Images with Feature Transformations | Introduction to Machine Learning
+</title>
+  <link rel="canonical" href="https://www.cs.tufts.edu/comp/135/2020f/projectA.html">
+
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://www.cs.tufts.edu/comp/135/2020f/theme/js/icsFormatter.js"></script>
+
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/style.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/custom.css">
+
+
+<meta name="description" content="Status: RELEASED. Due date: Mon. Oct. 26 at 11:59PM AoE (Anywhere on Earth) (Tue 10/27 at 07:59am in Boston) Updates 2020-10-26 : Clarified that Results section of your report should include discussion of your main findings and lessons you learned as well as the required figures (as the …">
+</head>
+
+<body>
+  <header class="header">
+    <nav class="navbar navbar-expand-lg navbar-expand-md navbar-light bg-light">
+    <div class="container">
+    <div class="row display-flex">
+        <div class="col-2 col-sm-2 d-md-none"><!-- hidden if md or lg -->
+        <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#my_collapsing_navbar"
+            aria-controls="my_collapsing_navbar"
+            aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon mw-100"></span>
+        </button>
+        </div>
+
+        <div class="d-none d-md-block col-md-2">
+          <a href="https://www.cs.tufts.edu/comp/135/2020f/">
+            <img class="img-fluid mw-100" src=https://www.cs.tufts.edu/comp/135/2020f/images/tufts_ml_logo.png alt="Introduction to Machine Learning">
+          </a>
+        </div>
+
+        <div class="col-10 col-sm-10 col-md-10">
+          <h1 class="text-left" style="word-break:'break-all'">
+            <a href="https://www.cs.tufts.edu/comp/135/2020f/">Introduction to Machine Learning</a>
+          </h1>
+
+          <p class="text-muted text-left d-none d-md-block mw-100">
+            Tufts CS COMP 135 Intro ML | Fall 2020
+          </p>
+
+
+
+          <div class="collapse navbar-collapse" id="my_collapsing_navbar">
+                <ul class="navbar-nav">
+                  <li class="nav-item text-left">
+                    <a href="index.html">Syllabus</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="schedule.html">Schedule</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="assignments.html">Assignments</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="office_hours.html">Office Hours</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="resources.html">Resources</a>
+                  </li>
+
+                </ul>
+          </div>
+
+
+        </div>
+
+    </div>
+    </div>
+    </nav>
+
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>Project A: Classifying Images with Feature Transformations
+</h1>
+      <hr>
+<article class="article">
+  <div class="content">
+        <p style="text-align:right">Last modified: 2020-10-27 12:50 </p>
+    <p><strong>Status: RELEASED.</strong></p>
+<p><strong>Due date</strong>: Mon. Oct. 26 at 11:59PM AoE (Anywhere on Earth) (Tue 10/27 at 07:59am in Boston)</p>
+<p><strong> Updates </strong></p>
+<ul>
+<li>2020-10-26 : Clarified that Results section of your report should include <em>discussion</em> of your main findings and lessons you learned as well as the required figures (as the rubric always indicated)</li>
+<li>2020-10-20 : Added turn-in link for the Reflection Form</li>
+<li>2020-10-07 : Clarification of plots in <a href='#1B'>Figure 1B</a></li>
+</ul>
+<p><strong>Turn-in links</strong>:</p>
+<ul>
+<li>PDF report for Problem 1 (8 vs 9): <a href="https://www.gradescope.com/courses/173055/assignments/697997/">https://www.gradescope.com/courses/173055/assignments/697997/</a></li>
+<li>PDF report for Problem 2 (Sneaker vs Sandal): <a href="https://www.gradescope.com/courses/173055/assignments/698006/">https://www.gradescope.com/courses/173055/assignments/698006/</a></li>
+<li>ZIP file of predictions for Problem 2 leaderboard: <a href="https://www.gradescope.com/courses/173055/assignments/697979/">https://www.gradescope.com/courses/173055/assignments/697979/</a></li>
+<li>Reflection on Project A: <a href="https://forms.gle/oor7k8sGH4KDfqnU6">https://forms.gle/oor7k8sGH4KDfqnU6</a></li>
+</ul>
+<h2>Overview</h2>
+<p>This is a four week project with lots of open-ended programming. Get started right away!</p>
+<h4>Team Formation</h4>
+<p>In this project, you can work with teams of 2 people, or (if you prefer) individually. 
+Individual teams still need to complete all the parts below. We want to incentivize you to work in pairs.</p>
+<p>If you need help finding teammates, please post to our "Finding a Partner for Project A" post on Piazza.</p>
+<p>By the start of the second week (by end of day Mon 10/05), you should have identified your partner and signed up here:</p>
+<ul>
+<li><a href="https://forms.gle/DXRhd8mu7MuwXhch8">ProjectA Team Formation Form</a></li>
+<li>
+<ul>
+<li>Please use your tufts.edu G Suite account. You must provided tufts.edu email addresses.</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Even if you decide to work alone, you should fill this form out acknowledging that.</li>
+</ul>
+</li>
+</ul>
+<h4>Work to Complete</h4>
+<p>As a team, you will work on one <em>structured</em> problem (Problem 1: 8-vs-9) and then one <em>open-ended</em> problem (Problem 2: Sneaker-vs-Sandal).</p>
+<ul>
+<li>
+<p>Problem 1, you will demonstrate that you know how to train a logistic regression classifier and interpret the results. </p>
+</li>
+<li>
+<p>Problem 2, you will practice the <em>development cycle</em> of an ML practitioner:</p>
+</li>
+<li>
+<ul>
+<li>Propose a reasonable ML pipeline (feature extraction + classifier)</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Evaluate it and analyze the results carefully</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Revise the pipeline and repeat</li>
+</ul>
+</li>
+</ul>
+<p>For Problem 2, we will maintain a <em>leaderboard</em> on Gradescope. You should periodically submit the predictions of your best model on the <em>test set</em>. </p>
+<h4>What to Turn In</h4>
+<p>Each team will prepare <em>one</em> PDF report for Problem 1: </p>
+<ul>
+<li>Prepare a short PDF report (no more than 3 pages).</li>
+<li>This document will be manually graded according to our <a href="#rubric">rubric</a></li>
+<li>Can use your favorite report writing tool (Word or G Docs or LaTeX or ....)</li>
+<li>Should be <strong>human-readable</strong>. Do not include code. Do NOT just export a jupyter notebook to PDF.</li>
+<li>Should have each subproblem <a href="https://www.youtube.com/watch?v=KMPoby5g_nE&amp;feature=youtu.be&amp;t=43">marked via the in-browser Gradescope annotation tool</a>)</li>
+</ul>
+<p>Each team will prepare <em>one</em> PDF report for Sneaker-vs-Sandal (Problem 2)</p>
+<ul>
+<li>Prepare a short PDF report (no more than 5 pages).</li>
+<li>This document will be manually graded according to our <a href="#rubric">rubric</a></li>
+<li>Can use your favorite report writing tool (Word or G Docs or LaTeX or ....)</li>
+<li>Should be <strong>human-readable</strong>. Do not include code. Do NOT just export a jupyter notebook to PDF.</li>
+<li>Should have each subproblem <a href="https://www.youtube.com/watch?v=KMPoby5g_nE&amp;feature=youtu.be&amp;t=43">marked via the in-browser Gradescope annotation tool</a>)</li>
+</ul>
+<p>Each team should submit <em>one</em> ZIP file of test-set predictions for the Sneaker-vs-Sandal Leaderboard (Problem 2):</p>
+<ul>
+<li>yproba1_test.txt : plain text file</li>
+<li>
+<ul>
+<li>One line per test-set example in <a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/tree/master/projectA/data_sneaker_vs_sandal"><code>data_sneaker_vs_sandal/x_test.csv</code></a></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Each line contains float probability that the relevant example should be classified as a positive example given its features</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Should be loadable into NumPy as a 1D array via this snippet: <code>np.loadtxt('yproba1_test.txt')</code></li>
+</ul>
+</li>
+</ul>
+<p>Multiple submissions to the leaderboard are allowed and even encouraged.
+By the deadline, make sure the "best" pipeline you design has its predictions submitted.</p>
+<h2><a name="problem1">Problem 1: Logistic Regression for Image Classification of Handwritten Digits </a></h2>
+<div class="row">
+<div class="col-md-6">
+    <div class="thumbnail">
+<img src="images/example_images_8_vs_9.jpg" class="img-fluid" alt="Examples of 8s and 9s with added noise">
+    </div>
+    <div class="caption">
+        <p>Example 28x28 pixel images of "8s" and "9s". Each image is titled with its associated binary label.</p>
+    </div>
+</div>
+</div>
+
+<p>We consider building a classifier to distinguish images of handwritten digits, specifically the digit 8 from the digit 9. You'll use the <span class="math">\(x\)</span> and <span class="math">\(y\)</span> examples provided in CSV files located in the <code>data_digits_8_vs_9_noisy</code> folder of the starter code.</p>
+<p><a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/tree/master/projectA/data_digits_8_vs_9_noisy">https://github.com/tufts-ml-courses/comp135-20f-assignments/tree/master/projectA/data_digits_8_vs_9_noisy</a></p>
+<p>We extracted this data from the well-known <a href="http://yann.lecun.com/exdb/mnist/">MNIST dataset by LeCun, Cortes, and Burges</a>. We have preprocessed lightly for usability as well as to make the problem slightly more difficult by adding a small amount of random noise to each image.</p>
+<p>Your challenge is to build a logistic regression classifier to distinguish '8' from '9'.</p>
+<p>Each example image (indexed by integer <span class="math">\(i\)</span>) has features <span class="math">\(x_i \in \mathbb{R}^F\)</span> and label <span class="math">\(y_i \in \{0, 1\}\)</span>. </p>
+<ul>
+<li>Each row of the provided <code>x_train.csv</code> file is the feature vector <span class="math">\(x_i\)</span> for one image. </li>
+<li>Each row of the provided <code>y_train.csv</code> file is the label <span class="math">\(y_i\)</span> for the corresponding image.</li>
+</ul>
+<p>The features <span class="math">\(x_i\)</span> for the <span class="math">\(i-\)</span>th image are the gray-scale pixel intensity values of a 28x28 pixel image. Each pixel's feature value varies between 0.0. (black) and 1.0 (bright white), with shades of gray possible in between. We've reshaped and flattened each 28x28 image so that it has a <em>feature vector</em> <span class="math">\(x_i\)</span> of size 784 (= 28 x 28).</p>
+<p>The label <span class="math">\(y_i\)</span> for the <span class="math">\(i\)</span>-th image is a binary value. Here, we've encoded the '8's as a 0 and '9's as a 1.</p>
+<h3>Preparation and Starter Code</h3>
+<p>You are given the following predefined labeled datasets:</p>
+<ul>
+<li>"training" set of 9817 total examples of handwritten digits and their labels. </li>
+<li>"validation" set of 1983 total examples, and their labels</li>
+<li>"test" set of 1983 total examples (<strong>but no labels!</strong>)</li>
+</ul>
+<p>We emphasize that throughout this project, your test set does <em>not</em> have labels available to you. Your goal is to build a classifier that generalizes well.</p>
+<p>See the sample code <code>show_images.py</code> to get a sense of how to load these into Python and display the images.</p>
+<p><a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/projectA/show_images.py">https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/projectA/show_images.py</a></p>
+<p>In your PDF report, include the following sections:</p>
+<h3>1A : Dataset Exploration</h3>
+<p><strong> Table 1A </strong> </p>
+<p>In one table, summarize the composition of your training <em>and</em> validation sets. </p>
+<p>Include 3 rows:</p>
+<ul>
+<li>total number of examples</li>
+<li>number of positive examples</li>
+<li>fraction of positive examples</li>
+</ul>
+<p>You should <em>always</em> make such a table, to understand your data and help explain any trends you are seeing.</p>
+<p><a id="1B"></a></p>
+<h3>1B : Assess Loss and Error vs. Training Iterations</h3>
+<p>Using <code>sklearn.linear_model.LogisticRegression</code>, you should fit a logistic regression models to your training split.</p>
+<p>Set <code>C = 1e6</code> and `solver='lbfgs'. Leave other parameters at their default values.
+Explore what happens when we limit the iterations allowed for the solver to converge on its solution.</p>
+<p>For the values <code>i</code> = 1, 2, 3, 4, ... 39, 40, build a logistic regression model with setting <code>max_iter=i</code>. Fit each such model to the training data, and keep track of the following performance metrics on both training and validation sets:</p>
+<ul>
+<li>binary cross entropy (aka log loss)</li>
+<li>error rate (can use <code>sklearn.metrics.zero_one_loss</code>).</li>
+</ul>
+<p>You may safely ignore any warnings about lack of convergence.</p>
+<p><strong> Figure 1B </strong>: Produce two plots side by side:</p>
+<ul>
+<li>Left plot should show log loss (y-axis) vs iteration (x-axis), with two lines (one for training, one for validation)</li>
+<li>Right plot should show error rate (y-axis) vs iteration (x-axis), with two lines (one for training, one for validation)</li>
+</ul>
+<p>Place these plots into your PDF document, with appropriate captions.</p>
+<p><strong> Short Answer 1B </strong>: Below the plots, discuss the results you are seeing; what do they show, and why?</p>
+<h3>1C : Hyperparameter Selection</h3>
+<p>You should now explore a range of penalty strength values <code>C</code>. You can fix <code>max_iter = 1000</code>. </p>
+<div class="highlight"><pre><span></span><span class="nv">C_grid</span> <span class="o">=</span> <span class="nv">np</span>.<span class="nv">logspace</span><span class="ss">(</span><span class="o">-</span><span class="mi">9</span>, <span class="mi">6</span>, <span class="mi">31</span><span class="ss">)</span>
+
+<span class="k">for</span> <span class="nv">C</span> <span class="nv">in</span> <span class="nv">C_grid</span>:
+    # <span class="nv">Build</span> <span class="nv">and</span> <span class="nv">evaluate</span> <span class="nv">model</span> <span class="k">for</span> <span class="nv">this</span> <span class="nv">C</span> <span class="nv">value</span>
+    # <span class="nv">Record</span> <span class="nv">training</span> <span class="nv">and</span> <span class="nv">validation</span> <span class="nv">set</span> <span class="nv">error</span> <span class="nv">rate</span>
+</pre></div>
+
+
+<p><strong> Figure 1C </strong>: Produce a plot of the error rate as a function of <code>C</code>. Which hyperparameter should you select?</p>
+<h3>1D : Analysis of Mistakes</h3>
+<p>For the selected model from 1C, we might wonder if there is any pattern to the examples the classifier gets wrong.</p>
+<p><strong> Figure 1D </strong>: 
+Produce two plots, one consisting of 9 sample images that are <em>false positives</em> on the validation set, and one consisting of 9 false negatives. You can display the images by converting the pixel data using the matplotlib function imshow(), using the Grey colormap, with vmin=0.0 and vmax=1.0. Place each plot into your PDF as a properly captioned figure. '</p>
+<p><strong> Short Answer 1D </strong>
+Discuss the results you are seeing in Figure 1D. What kinds of mistakes is the classifier making? </p>
+<h3>1E : Interpretation of Learned Weights</h3>
+<p>For the selected model from 1C, what has it really learned? One way to understand this model is to visualize the learned weight coefficient that will be applied to each pixel in a 28 x 28 image.</p>
+<p><strong> Figure 1E </strong>:</p>
+<p>Reshape the weight coefficients into a (28 × 28) matrix, corresponding to the pixels of the original images, and plot the result using imshow(), with colormap RdYlBu, vmin=-0.5, and vmax=0.5. Place this plot into your PDF as a properly captioned figure. </p>
+<p><strong> Short Answer 1E </strong></p>
+<ul>
+<li>Which pixels have negative weights, and thus have high-intensity values correspond to the negative class ('8')?</li>
+<li>Which pixels have positive weights, and thus have high-intensity values correspond to the positive class ('9')?</li>
+<li>Why do you think this is the case?</li>
+</ul>
+<h2><a name="problem2">Problem 2: Sneaker vs Sandal Image Classification </a></h2>
+<div class="row">
+<div class="col-md-6">
+    <div class="thumbnail">
+<img src="images/example_images_sneaker_vs_sandal.jpg" class="img-fluid" alt="Examples of 8s and 9s with added noise">
+    </div>
+    <div class="caption">
+       <p>Example 28x28 pixel images of "sneakers" and "sandals". Each image is titled with its associated binary label.</p>
+    </div>
+</div>
+</div>
+
+<p>In this <em>open-ended</em> problem, you'll take on another image classification problem: sneakers vs. sandals.</p>
+<p>Each input image has the same <span class="math">\(x\)</span> feature representation as the MNIST digits problem above (each example is a 28x28 image, which is reshaped into a 784-dimensional vector). However, now we have images of "sneakers" and "sandals". These are from the larger <a href="https://github.com/zalandoresearch/fashion-mnist/">Fashion MNIST dataset</a>, made public originally by Zalando Research.</p>
+<p>Get the data here:</p>
+<p><a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/tree/master/projectA/data_sneaker_vs_sandal">https://github.com/tufts-ml-courses/comp135-20f-assignments/tree/master/projectA/data_sneaker_vs_sandal</a></p>
+<p>Now, we'd like you to build a binary classifier that works on this new task. Can you achieve an error rate that reaches the top of the leaderboard? Can you understand what it takes for an image classifier to be successful on this task?</p>
+<p>You'll be evaluated much more on your PROCESS than on your results. A well-designed experiment and careful evaluation will earn more points than getting to a perfect error rate without an ability to justify what you've done.</p>
+<p>Your challenge is <em>open-ended</em>: you're not restricted to using only the 784 pixel values as features <span class="math">\(x_n\)</span> for image <span class="math">\(n\)</span>.</p>
+<p>Instead, you should spend most of your time engineering your own <em>feature transform</em> <span class="math">\(\phi(x_n)\)</span>. You are free to use ANY feature transform you can think of to turn the image into a feature vector. </p>
+<h4>Ideas for better feature transformations</h4>
+<p>Be creative! If you're stuck, here are a few ideas to consider:</p>
+<ul>
+<li>
+<p>does the total number of pixels that are "on" help distinguish sandals from sneakers?</p>
+</li>
+<li>
+<p>how can you identify when multiple pixels are on (bright white) simultanenously?</p>
+</li>
+<li>
+<p>how can you capture spatial trends (e.g. across rows or columns) that are relevant to the sneaker vs. sandal problem?</p>
+</li>
+<li>
+<p>can you measure the "holes" (blocks of dark pixels) that are more common within sandals?</p>
+</li>
+</ul>
+<h4>Other ideas for improving your performance</h4>
+<ul>
+<li>
+<p>You'll need to decide how to do hyperparameter selection. Will you use a fixed validation set? Something else? What candidate values will you choose, and why?</p>
+</li>
+<li>
+<p>You could explore data augmentation (can you augment your existing training set by transforming existing images in helpful ways? for example, if you flip each image horizontally, would that be a useful way to "double" your training set size?)</p>
+</li>
+<li>
+<p>You could explore better regularization (try L1 vs L2 penalties for LogisticRegression, or look at alternatives)</p>
+</li>
+<li>
+<p>You could explore better optimization (does the `solver' you choose for LogisticRegression matter?)</p>
+</li>
+</ul>
+<h4>Required Experiments</h4>
+<p>Your report should summarize experiments on at least 3 possible classifier pipelines:</p>
+<ul>
+<li>0) Baseline: raw pixel features, fed into a Logistic Regression classifier</li>
+<li>
+<ul>
+<li>You should use <code>sklearn.linear_model.LogisticRegression</code></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>You should carefully justify all hyperparameters, and select at least one complexity hyperparameter via grid search</li>
+</ul>
+</li>
+<li>
+<p>1) A feature transform of your own design, fed into a Logistic Regression classifier</p>
+</li>
+<li>
+<ul>
+<li>You should write your own transform functions, or use <code>sklearn.preprocessing</code></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>You should use <code>sklearn.linear_model.LogisticRegression</code></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>You should carefully justify all hyperparameters, and select at least one complexity hyperparameter via grid search</li>
+</ul>
+</li>
+<li>
+<p>2) Another feature transform of your own design, fed into a Logistic Regression classifier or some other classifier (e.g. KNeighborsClassifier)</p>
+</li>
+<li>
+<ul>
+<li>You should write your own transform functions, or use <code>sklearn.preprocessing</code></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>You should carefully justify all hyperparameters, and select at least one complexity hyperparameter via grid search</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>If you choose <code>sklearn.neighbors.KNeighborsClassifier</code>, think carefully about the distance function you use</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>You can use any classifier in <code>sklearn</code>, but you must understand it and be able to talk about it professionally in your report</li>
+</ul>
+</li>
+</ul>
+<p>For all classifiers, we strongly recommend using sklearn Pipelines to manage everything.
+For simple examples of pipelines, see <a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/day04_Polynomial_Features_and_Hyperparameter_Selection_on_Validation_Set.ipynb">Part 5 of day04 lab notebook</a>.
+For examples tailored to the image classification task, see our starter code.</p>
+<h4>Data Usage Restrictions</h4>
+<p>You <strong>should not</strong> use any additional Fashion MNIST data from other sources, only that provided for you in the starter code.</p>
+<h4>Code Usage Restrictions</h4>
+<p>For this project, any code in our standard environment <code>comp135_2020f_env</code> is fair game.</p>
+<p>If you really want to use some other library, you can <em>ask</em> instructors on Piazza. You'll need permission to proceed.</p>
+<h4>What goes in your report PDF for Problem 2</h4>
+<p>Your entire report for Problem 2 should be somewhere between 2-5 total pages, including all figures and text.</p>
+<p><strong> Section 1: Methods for Sneaker-Sandal </strong></p>
+<p>First, in your report, provide 1 paragraph describing your <em>experimental design</em></p>
+<ul>
+<li>How did you divide the provided labeled set to develop models?</li>
+<li>Did you make a separate "train" or "validation" sets? How did you select the sizes of these sets? </li>
+<li>Did you do cross-validation? Why or why not?</li>
+</ul>
+<p>Next, in your report, for each of the 3 methods, provide 1 paragraph of concise but complete description of that method. A strong methods paragraph will answer each of these prompts:</p>
+<ul>
+<li>Describe the feature transformation you tried and why you thought it would work</li>
+<li>Describe your model fitting process: what were parameters, and how were they fit? are there concerns about overfitting? concerns about convergence of the optimization?</li>
+<li>Describe your hyperparameter selection process: what were hyperparameters, and how were they selected? What candidate values were considered? What performance metric did you try to optimize?</li>
+</ul>
+<p><strong> Section 2: Results for Sneaker-Sandal </strong></p>
+<p>In the results section, of your report, please include the following with appropriate discussion in main text of your report:</p>
+<ul>
+<li>
+<p>One figure showing evidence of hyperparameter selection to avoid overfitting for your baseline model (you should look at these for all models, but you can just use your baseline model here). Usually, this figure will plot training and heldout error vs one hyperparameter (like we did in HW1).</p>
+</li>
+<li>
+<p>One figure <em>comparing</em> the training-set and heldout-set performance of your 3 models using an ROC curve (one plot for training, one plot for heldout, each plot shows an ROC line for each of the 3 models).</p>
+</li>
+<li>
+<p>One figure showing analysis of mistakes (several example false positives and false negatives on heldout set) for your preferred single model and one other baseline or alternative.</p>
+</li>
+</ul>
+<h2><a name="rubric">Rubric for Evaluating PDF Report</a></h2>
+<p>This should match the rubric outline on Gradescope for the PDF report. If for any reason there is a conflict, the official problem weights on Gradescope will be used.</p>
+<ul>
+<li>25 points for Problem 1 Report</li>
+<li>
+<ul>
+<li>2 for 1A</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>8 for 1B </li>
+</ul>
+</li>
+<li>
+<ul>
+<li>5 for 1C </li>
+</ul>
+</li>
+<li>
+<ul>
+<li>5 for 1D </li>
+</ul>
+</li>
+<li>
+<ul>
+<li>5 for 1E </li>
+</ul>
+</li>
+<li>
+<p>60 points for Problem 2 Report</p>
+</li>
+<li>
+<ul>
+<li>10 points for experimental design paragraph</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>6 points for description of Method 0</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>6 points for description of Method 1</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>6 points for description of Method 2</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>10 points for figure(s) showing hyperparameter selection, with discussion</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>12 points for figure(s) showing ROC curves, with discussion</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>10 points for figure(s) showing analysis of mistakes, with discussion</li>
+</ul>
+</li>
+<li>
+<p>15 points for Problem 2 Leaderboard</p>
+</li>
+<li>
+<ul>
+<li>10 points for submission with at least 'bare minimum' satisfactory error rate (as good as our Baseline Method 0)</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>5 points for submission within 0.02 points of the best error rate</li>
+</ul>
+</li>
+</ul>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+</article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+       <ul class="col-sm-6 list-inline">
+
+
+
+        </ul>
+        <p class="col-sm-6 text-sm-right text-muted">
+          MIT License
+          /
+          <a href="https://github.com/tufts-ml/tufts_ml_website">
+          Source on github
+          </a>
+          /
+          <a href="https://github.com/getpelican/pelican" target="_blank">Powered by Pelican</a>
+          /
+          <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>

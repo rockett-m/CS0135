@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags always come first -->
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Project 3: Recommendation Systems via Matrix Factorization | Introduction to Machine Learning
+</title>
+  <link rel="canonical" href="https://www.cs.tufts.edu/comp/135/2020f/proj3.html">
+
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://www.cs.tufts.edu/comp/135/2020f/theme/js/icsFormatter.js"></script>
+
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/style.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/custom.css">
+
+
+<meta name="description" content="Status: DRAFT. Due date: Mon. Dec. 21 at 11:59pm AoE (Anywhere on Earth). (Tue 12/21 at 07:59am in Boston) Jump to:   Background   Code   Datasets   Problem 1   Problem 2   Problem 3   Problem 4   Problem 5   Bonus Problem   Rubric for Evaluating PDF Report Turn-in links: PDF report: https://www …">
+</head>
+
+<body>
+  <header class="header">
+    <nav class="navbar navbar-expand-lg navbar-expand-md navbar-light bg-light">
+    <div class="container">
+    <div class="row display-flex">
+        <div class="col-2 col-sm-2 d-md-none"><!-- hidden if md or lg -->
+        <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#my_collapsing_navbar"
+            aria-controls="my_collapsing_navbar"
+            aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon mw-100"></span>
+        </button>
+        </div>
+
+        <div class="d-none d-md-block col-md-2">
+          <a href="https://www.cs.tufts.edu/comp/135/2020f/">
+            <img class="img-fluid mw-100" src=https://www.cs.tufts.edu/comp/135/2020f/images/tufts_ml_logo.png alt="Introduction to Machine Learning">
+          </a>
+        </div>
+
+        <div class="col-10 col-sm-10 col-md-10">
+          <h1 class="text-left" style="word-break:'break-all'">
+            <a href="https://www.cs.tufts.edu/comp/135/2020f/">Introduction to Machine Learning</a>
+          </h1>
+
+          <p class="text-muted text-left d-none d-md-block mw-100">
+            Tufts CS COMP 135 Intro ML | Fall 2020
+          </p>
+
+
+
+          <div class="collapse navbar-collapse" id="my_collapsing_navbar">
+                <ul class="navbar-nav">
+                  <li class="nav-item text-left">
+                    <a href="index.html">Syllabus</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="schedule.html">Schedule</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="assignments.html">Assignments</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="office_hours.html">Office Hours</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="resources.html">Resources</a>
+                  </li>
+
+                </ul>
+          </div>
+
+
+        </div>
+
+    </div>
+    </div>
+    </nav>
+
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>Project 3: Recommendation Systems via Matrix Factorization
+</h1>
+      <hr>
+<article class="article">
+  <div class="content">
+        <p style="text-align:right">Last modified: 2020-11-25 12:03 </p>
+    <p><strong>Status: DRAFT.</strong> </p>
+<p><strong>Due date</strong>: Mon. Dec. 21 at 11:59pm AoE (Anywhere on Earth).  (Tue 12/21 at 07:59am in Boston)</p>
+<p><strong>Jump to</strong>:</p>
+<p>&nbsp; <a href="#background">Background</a> 
+&nbsp; <a href="#code">Code</a> 
+&nbsp; <a href="#datasets">Datasets</a> 
+&nbsp; <a href="#problem1">Problem 1</a> 
+&nbsp; <a href="#problem2">Problem 2</a>
+&nbsp; <a href="#problem3">Problem 3</a>
+&nbsp; <a href="#problem4">Problem 4</a>
+&nbsp; <a href="#problem5">Problem 5</a>
+&nbsp; <a href="#bonus-problem">Bonus Problem</a>
+&nbsp; <a href="#rubric">Rubric for Evaluating PDF Report</a></p>
+<p><strong>Turn-in links</strong>:</p>
+<ul>
+<li>PDF report: <a href="https://www.gradescope.com/courses/33142/assignments/193961">https://www.gradescope.com/courses/33142/assignments/193961</a></li>
+<li>ZIP file containing <a href="#leaderboard-instructions">Problem 5 predictions</a>, collaborator info, and source code: <a href="https://www.gradescope.com/courses/33142/assignments/193962/">https://www.gradescope.com/courses/33142/assignments/193962/</a></li>
+</ul>
+<p><strong>Starter Code and Dataset Links:</strong></p>
+<p><a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/tree/master/projectC">https://github.com/tufts-ml-courses/comp135-20f-assignments/tree/master/projectC</a></p>
+<p><strong>Files to Turn In:</strong></p>
+<p>PDF report:</p>
+<ul>
+<li>Human-readable report (NOT a notebook export), answering the prompts for all Problems.</li>
+<li>This document will be manually graded according to our <a href="#rubric">rubric</a></li>
+<li><em>Please</em>: within Gradescope via the normal submission process, annotate for each subproblem exactly which page(s) are relevant. This will save your graders much time!</li>
+</ul>
+<p><a name="leaderboard-instructions">ZIP file</a> should contain:</p>
+<ul>
+<li>predicted_ratings_test.txt : a plain text file for leaderboard performance on <a href="#problem5">Problem 5</a></li>
+<li>
+<ul>
+<li>One line for each line in <code>ratings_test_masked.csv</code></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Can be loaded in with <code>np.loadtxt()</code> as a valid 1d array of floats with shape (10000,)</li>
+</ul>
+</li>
+<li>Any .py or .ipynb files</li>
+<li>COLLABORATORS.txt : a plain text file [<a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/tree/master/project1/COLLABORATORS.txt">example</a>], containing</li>
+<li>
+<ul>
+<li>Your full name</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Estimate the hours you spent on each Problem</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Names of any people you talked to for help (TAs, students, etc.). If none, write "No external help".</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Brief description of what content you sought help about (1-3 sentences)</li>
+</ul>
+</li>
+</ul>
+<h2>Overview</h2>
+<p>This is a four week project with lots of open-ended programming. Get started right away!</p>
+<h4>Team Formation</h4>
+<p>In this project, you can work in teams of 2 people, or (if you prefer) individually. 
+Individual teams still need to complete all the parts below. We want to incentivize you to work in pairs.</p>
+<p>If you need help finding teammates, please post to our "Finding a Partner for Project B" post on Piazza.</p>
+<p>By the start of the second week (by end of day Wed 12/02), you should have identified your partner.</p>
+<h4>Work to Complete</h4>
+<p>As a team, you will work on several problems that study different representations of recommendation systems.</p>
+<ul>
+<li>Problem 1 looks at a baseline factorization model with one scalar parameter.</li>
+<li>Problem 2 looks at a baseline factorization model with one learned scalar per item.</li>
+<li>Problem 3 looks at a factorization model with a learned vector embedding per item.</li>
+</ul>
+<p>Throughout Problems 1, 2, and 3, you will practice the <em>development cycle</em> of gradient descent:</p>
+<ul>
+<li>
+<ul>
+<li>Develop a coherent loss function for your application</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Use automatic differentiation toolboxes to compute the gradient</li>
+</ul>
+</li>
+<li>
+<ul>
+<li></li>
+</ul>
+</li>
+</ul>
+<p>Then, for Problem 5</p>
+<h2><a name="background">Background</a></h2>
+<p>We have given you a dataset of ratings of 1682 movies by a set of 943 possible users. </p>
+<p>Ratings were collected on a 5-star scale. Each rating is one of 5 possible integer values -- 1, 2, 3, 4, or 5 -- with 5 being 'best' and 1 being 'worst'.</p>
+<p>We'd like to build a <em>recommendation system</em> to help guess which movies a user will like. Our prediction system should be able to take as input a specific user (denoted by index <span class="math">\(i\)</span>, one of 943 possibilities) and movie (denoted by index <span class="math">\(j\)</span>, one of 1682 possibilities). The output of our predictor (e.g. the quantity produced by calling <code>model.predict(i,j)</code>) will be a scalar rating <span class="math">\(\hat{y}_{ij} \in \mathbb{R}\)</span>. For each possible user-movie pair <span class="math">\(i,j\)</span>, we'd like <span class="math">\(\hat{y}_{ij}\)</span> to be as close as possible to the "real" rating <span class="math">\(y_{ij}\)</span>. </p>
+<p>Of course, not all users have seen and rated all movies, so some true ratings are simply unknown to us. Thus, some entries <span class="math">\(y_{ij}\)</span> of the true rating matrix <span class="math">\(y\)</span> are <em>missing</em>. It is impossible to know if our guesses for these entries are any good. </p>
+<p>We thus evaluate by simply <em>ignoring</em> missing entries and concentrating on the <strong>observed</strong> entries of <span class="math">\(y\)</span>. We can create a list <span class="math">\(\mathcal{I}\)</span> of all distinct <em>observed</em> pairs of (user_id <span class="math">\(i\)</span>, item_id <span class="math">\(j\)</span>) in the complete dataset. As usual, we can then randomly divide these examples into training and test sets: <span class="math">\(\mathcal{I}^{\text{train}}\)</span> and 
+<span class="math">\(\mathcal{I}^{\text{test}}\)</span>.</p>
+<p>We've provided two CSV files, <code>ratings_train.csv</code> and <code>ratings_test.csv</code>, to give you everything you need. Each row of these files specifies:</p>
+<ul>
+<li>user_id <span class="math">\(i\)</span> : an integer in <span class="math">\(\{0, 1, 2, ... 942\}\)</span></li>
+<li>item_id <span class="math">\(j\)</span> : an integer in <span class="math">\(\{0, 1, 2, ... 1681\}\)</span></li>
+<li>observed 5-star rating <span class="math">\(y_{ij}\)</span> : an integer in {1, 2, 3, 4, 5}$</li>
+</ul>
+<p>The first few rows of <code>ratings_train.csv</code> are:</p>
+<div class="highlight"><pre><span></span><span class="n">user_id</span><span class="p">,</span><span class="n">item_id</span><span class="p">,</span><span class="n">rating</span>
+<span class="mi">772</span><span class="p">,</span><span class="mi">36</span><span class="p">,</span><span class="mi">3</span>
+<span class="mi">471</span><span class="p">,</span><span class="mi">228</span><span class="p">,</span><span class="mi">5</span>
+<span class="mi">641</span><span class="p">,</span><span class="mi">401</span><span class="p">,</span><span class="mi">4</span>
+<span class="mi">312</span><span class="p">,</span><span class="mi">98</span><span class="p">,</span><span class="mi">4</span>
+<span class="p">...</span>
+</pre></div>
+
+
+<h3>Background: Evaluation</h3>
+<p>You'll use the training set of user-movie ratings to fit a model, and then evaluate on the test set. To measure prediction accuracy, we'll use <em>mean absolute error</em>.</p>
+<p>On the test set, this is computed as:</p>
+<div class="math">$$
+\text{MAE}(y, \hat{y}) =
+    \frac{1}{|\mathcal{I}^{\text{test}}|}
+    \sum_{i,j \in \mathcal{I}^{\text{test}}} | y_{ij} - \hat{y}_{ij} |
+$$</div>
+<h3>Background: SGD, Automatic Differentiation and <code>autograd</code></h3>
+<p>Across Problem 1, Problem 2, and Problem 3, you'll develop your own Python code to build a series of increasingly more powerful models to perform recommendation. For each model, we will view training as an optimization problem, and we'll solve it with <em>stochastic gradient descent</em>. </p>
+<p>Recall that we spent HW3 analyzing an existing <code>sklearn</code> implementation of SGD for MLP classifiers. You'll now get some experience writing your <em>own</em> loss function and using SGD to optimize that loss.</p>
+<p>How do we use SGD for our problem? At each update step, you'll grab a <em>minibatch</em> of data (a random subset of the observed entries in our ratings matrix <span class="math">\(y\)</span>), and compute gradient estimates for parameters with respect to this batch.</p>
+<p>How will we compute gradients? We've provided some starter code to help you. To save lots of effort and help us explore many possible models, we'll use the <a href="https://github.com/HIPS/autograd">autograd</a> Python package to perform <em>automatic differentiation</em>. See the lab from Monday 11/30 to get started.</p>
+<p>As you get started with autograd, you might find some material from this previous tutorial/recitation helpful: <a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/labs/IntroToAutogradAndBackpropForNNets.ipynb">IntroToAutogradAndBackpropForNNets.ipynb</a></p>
+<h4>Starter Code organization</h4>
+<p>For each model of interest (Problem 1, Problem 2, Problem 3, all defined mathematically below), we have created a separate file defining the python <code>class</code> for that model. For examples in your starter code, see:</p>
+<ul>
+<li><a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/projectC/CollabFilterMeanOnly.py">CollabFilterMeanOnly.py</a> for Problem 1</li>
+<li><a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/projectC/CollabFilterOneScalarPerItem.py">CollabFilterOneScalarPerItem.py</a> for Problem 2.</li>
+<li><a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/projectC/CollabFilterOneScalarPerVector.py">CollabFilterOneScalarPerVector.py</a> for Problem 3.</li>
+</ul>
+<p>Your task is to define several methods for each model class, which allow us to perform prediction given fixed parameters, and compute the loss used for gradient-based training of parameters.</p>
+<p>All these models will be subclasses of a "base" class <a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/projectC/AbstractBaseCollabFilterSGD.py">AbstractBaseCollabFilterSGD</a>, which contains logic to construct and fit collaborative filtering models to data via stochastic gradient descent. Using this base class, you don't need to write SGD yourself, or even how to compute the gradient! Please do read through this base class carefully to understand how it works.</p>
+<p>Below, we review the methods/attributes you'll need to write yourself, and the methods/attributes you only need to use that are provided in the base class. </p>
+<h4>Methods you'll need to write</h4>
+<p>To complete the implementation of a given model, we'll follow the following pattern:</p>
+<ul>
+<li>Use the instance attribute <code>param_dict</code> to store all model parameters</li>
+</ul>
+<div class="highlight"><pre><span></span><span class="n">param_dict</span> <span class="o">:</span> <span class="n">dict</span>
+    <span class="n">Keys</span> <span class="n">are</span> <span class="n">string</span> <span class="n">names</span> <span class="n">of</span> <span class="n">parameters</span>
+    <span class="n">Values</span> <span class="n">are</span> <span class="o">*</span><span class="n">numpy</span> <span class="n">arrays</span><span class="o">*</span> <span class="n">of</span> <span class="n">parameter</span> <span class="n">values</span>    
+</pre></div>
+
+
+<ul>
+<li>Define method <code>predict</code> to make predictions:</li>
+<li>
+<ul>
+<li>Input: Specific user-movie example pairs, indicated by integer ids</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Output: Predicted ratings for each example</li>
+</ul>
+</li>
+<li>
+<p>Define method <code>calc_loss_wrt_parameter_dict</code> to compute the loss to minimize with SGD:</p>
+</li>
+<li>
+<ul>
+<li>Input: a minibatch of training data, a parameter dict</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Output: scalar float, indicating the loss on the batch given the parameters</li>
+</ul>
+</li>
+<li>
+<p>Define method <code>init_parameter_dict</code> to initialize the param_dict attribute to random values:</p>
+</li>
+<li>
+<ul>
+<li>Input: Number of possible users, Number of possible items</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Output: None, internal attribute <code>param_dict</code> updated</li>
+</ul>
+</li>
+</ul>
+<p>The steps above are <em>all</em> you need to do for each possible model. Each class <em>inherits</em> a complete <code>fit</code> method from the predefined <code>AbstractBaseCollabFilterSGD</code>, which knows how to perform SGD given the pieces above.</p>
+<h4>Methods you'll need to understand and use (but not edit)</h4>
+<p>You should read through the provided <a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/projectC/AbstractBaseCollabFilterSGD.py">AbstractBaseCollabFilterSGD.py</a>, to be sure you understand what's going on.</p>
+<ul>
+<li><code>__init__</code> : Constructor</li>
+</ul>
+<p>This is where the user defines the <code>batch_size</code>, the <code>step_size</code> (learning rate), and the number of epochs <code>n_epochs</code> to complete during training.</p>
+<p>This constructor can also define the regularization strength <code>alpha</code> and the number of hidden factors <code>n_factors</code> for Problem 3.</p>
+<ul>
+<li><code>fit</code> : Method to fit model parameters to provided data</li>
+</ul>
+<p>At the bottom of each starter code file, you can see example code for calling <code>fit</code> for that model. </p>
+<p>When the user calls <code>fit</code>, the model parameters are initialized to random values, and then updated iteratively via SGD to improve the loss. These updates proceed until the desired number of epochs are performed.</p>
+<p><strong>Epoch - A Definition</strong>: An epoch is a unit of training progress in minibatch learning. One epoch is complete when our stochastic gradient descent has processed enough minibatches such that the total number of examples seen is "equivalent" to the size of the entire training dataset. </p>
+<p>Within our <code>fit</code> implementation, we compute and store performance metrics at various checkpoints throughout the training process, including:</p>
+<ul>
+<li>for the initial parameters (before any updates)</li>
+<li>every 10% of an epoch for the first 5 or so epochs</li>
+<li>every 1 epoch after that.</li>
+</ul>
+<p>These metrics helps us monitor progress as learning progresses, which is especially rapid in early epochs as the poor random initialization is improved.</p>
+<h4>Attributes available after calling <code>fit</code> that trace performance</h4>
+<p>We have recorded and stored useful diagnostic metrics computed at various checkpoints throughout the training procedure. These help us "trace" what happens throughout learning, so we call them trace performance metrics.</p>
+<p>After fitting a model, you'll have the following trace attributes available to you:</p>
+<div class="highlight"><pre><span></span><span class="n">trace_epoch</span> <span class="o">:</span> <span class="mi">1</span><span class="n">D</span> <span class="n">array</span><span class="o">-</span><span class="n">like</span>
+    <span class="n">Contains</span> <span class="n">the</span> <span class="n">epochs</span> <span class="o">(</span><span class="n">fractional</span><span class="o">)</span> <span class="n">where</span> <span class="n">model</span> <span class="n">performance</span> <span class="n">was</span> <span class="n">assessed</span><span class="o">.</span>
+    <span class="n">Value</span> <span class="n">of</span> <span class="mf">0.0</span> <span class="n">indicates</span> <span class="n">the</span> <span class="n">initial</span> <span class="n">model</span> <span class="n">parameters</span> <span class="o">(</span><span class="n">before</span> <span class="n">any</span> <span class="n">gradient</span> <span class="n">updates</span><span class="o">).</span>
+    <span class="n">Value</span> <span class="n">of</span> <span class="mf">0.1</span> <span class="n">indicates</span> <span class="n">that</span> <span class="n">the</span> <span class="n">total</span> <span class="n">training</span> <span class="n">examples</span> <span class="n">seen</span> <span class="n">represents</span> <span class="mi">10</span><span class="o">%</span> <span class="n">of</span> <span class="n">the</span> <span class="n">size</span> <span class="n">of</span> <span class="n">the</span> <span class="n">training</span> <span class="kd">set</span><span class="o">.</span>
+
+<span class="n">trace_loss</span> <span class="o">:</span> <span class="mi">1</span><span class="n">D</span> <span class="n">array</span><span class="o">-</span><span class="n">like</span>
+    <span class="n">Contains</span> <span class="n">training</span> <span class="n">loss</span> <span class="o">(</span><span class="n">at</span> <span class="n">current</span> <span class="n">batch</span> <span class="n">only</span><span class="o">)</span> <span class="n">whenever</span> <span class="n">model</span> <span class="n">was</span> <span class="n">assessed</span><span class="o">.</span>
+    <span class="n">This</span> <span class="k">is</span> <span class="n">reported</span> <span class="k">as</span> <span class="n">an</span> <span class="n">average</span> <span class="n">per</span> <span class="n">example</span> <span class="k">in</span> <span class="n">the</span> <span class="n">current</span> <span class="n">batch</span><span class="o">.</span>
+
+<span class="n">trace_mae_train</span> <span class="o">:</span> <span class="mi">1</span><span class="n">D</span> <span class="n">array</span><span class="o">-</span><span class="n">like</span>
+    <span class="n">MAE</span> <span class="n">assessed</span> <span class="n">on</span> <span class="n">entire</span> <span class="n">training</span> <span class="kd">set</span> <span class="n">whenever</span> <span class="n">model</span> <span class="n">assessed</span><span class="o">.</span>
+
+<span class="n">trace_mae_valid</span> <span class="o">:</span> <span class="mi">1</span><span class="n">D</span> <span class="n">array</span><span class="o">-</span><span class="n">like</span>
+    <span class="n">MAE</span> <span class="n">assessed</span> <span class="n">on</span> <span class="n">entire</span> <span class="n">validation</span> <span class="kd">set</span> <span class="n">whenever</span> <span class="n">model</span> <span class="n">assessed</span><span class="o">.</span>
+</pre></div>
+
+
+<p>So for example, to plot training MAE vs. epochs completed, you could do:</p>
+<div class="highlight"><pre><span></span><span class="o">#</span> <span class="k">After</span> <span class="n">calling</span> <span class="n">fit</span><span class="p">...</span>
+<span class="n">plt</span><span class="p">.</span><span class="n">plot</span><span class="p">(</span> <span class="n">model</span><span class="p">.</span><span class="n">trace_epoch</span><span class="p">,</span> <span class="n">model</span><span class="p">.</span><span class="n">trace_mae_train</span><span class="p">,</span> <span class="s1">&#39;.-&#39;</span><span class="p">)</span>
+</pre></div>
+
+
+<h2><a name='datasets'>Datasets</a></h2>
+<p>We will use the MovieLens 100K dataset. This data set consists of:</p>
+<ul>
+<li>100,000 ratings (1-5 stars) from 943 users on 1682 movies. </li>
+<li>Each user has rated at least 20 movies. </li>
+<li>Some movies have ratings from only a few users.</li>
+<li>Simple demographic info for the users (age, gender, etc.) are available</li>
+</ul>
+<p>For more information about the original dataset, see <a href="http://files.grouplens.org/datasets/movielens/ml-100k-README.txt">http://files.grouplens.org/datasets/movielens/ml-100k-README.txt</a>. We are grateful to the dataset creators and the University of Minnesota for making this data publicly available.</p>
+<p>We've provided a clean train/test split of this dataset here:
+<a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/tree/master/projectC/data_movie_lens_100k">https://github.com/tufts-ml-courses/comp135-20f-assignments/tree/master/projectC/data_movie_lens_100k</a></p>
+<h3><a name='code'>Starter Code and Code Restrictions</a></h3>
+<p>For this assignment, you are limited to the following Python packages for performing machine learning related functionality: </p>
+<ul>
+<li>All Problems: Default <code>comp135_env</code> packages: numpy, scipy, sklearn, etc.</li>
+<li>All Problems: <code>autograd</code> package for automatic differentiation</li>
+<li>Problem 4 onward: <code>surprise</code> package for recommendation</li>
+<li>Problem 5 (open-ended): any other packages you want</li>
+</ul>
+<p>You are welcome to consult the documentation websites or other external web resources for any of these packages. However, you should <em>understand</em> every line of the code you use and not simply copy-paste without thinking carefully.
+Remember to keep the course <a href="index.html#collaboration-policy">collaboration policy</a> in mind: do your own work!</p>
+<p>You can INSTALL the <code>surprise</code> package as follows:</p>
+<div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">activate</span> <span class="n">comp135_2020f_env</span>
+<span class="n">conda</span> <span class="n">install</span> <span class="o">-</span><span class="k">c</span> <span class="n">conda</span><span class="o">-</span><span class="n">forge</span> <span class="n">scikit</span><span class="o">-</span><span class="n">surprise</span>
+</pre></div>
+
+
+<p>Your staff found in late November 2020 that scikit-surprise version <code>1.1.1</code> worked fine with the existing comp135 environment.</p>
+<h2><a name="problem1"> Problem 1: Simple Baseline Model with SGD and Autograd</a></h2>
+<p>To get used to developing models using our autograd framework, we'll consider the simplest possible baseline model "M1": a model that makes the <em>same</em> scalar prediction for a movie's rating no matter what user or movie is considered. This model has one scalar parameter <span class="math">\(\mu \in \mathbb{R}\)</span>, and the prediction for user <span class="math">\(i\)</span> and movie <span class="math">\(j\)</span> is simply:</p>
+<div class="math">$$
+\hat{y}_{ij} = \mu
+$$</div>
+<h3>Training Model M1</h3>
+<p>To train model M1 for <span class="math">\(N\)</span> users and <span class="math">\(M\)</span> movies, we wish to optimize this <em>mean squared error</em> training objective:</p>
+<div class="math">$$
+\min_{\mu \in \mathbb{R}}  \sum_{i,j \in \mathcal{I}^{\text{train}}} (y_{ij} - \mu)^2
+$$</div>
+<p>In words, this means we want to minimize the squared error on the training set, between the predicted rating (simply <span class="math">\(\mu\)</span> here) and the observed rating <span class="math">\(y_{ij}\)</span>. </p>
+<h3>Problem 1 Code Implementation Tasks</h3>
+<p>Edit the starter code file: <code>CollabFilterMeanOnly.py</code>. Complete each required method (<code>init_parameter_dict</code>, <code>predict</code>, and <code>calc_loss_wrt_parameter_dict</code>), as described above in the background section above. </p>
+<h3>Problem 1 Report Tasks</h3>
+<p>As evidence of successfully completing Problem 1, include the following in your report:</p>
+<p><strong>1a:</strong> Figure and caption: Trace plots showing <em>mean absolute error</em> vs. epoch completed, for both the training set and validation set.</p>
+<p>In two side-by-side plots, you should compare two batch sizes: 20000 examples per batch and 200 examples per batch.</p>
+<p>Please <em>adjust the y axis</em> to focus on what happens after epoch 2. Avoid showing a plot where you cannot see some difference between the two curves.</p>
+<p><strong>1b:</strong> Short answer: Would adding regularization to our training optimization problem (e.g. an L2 penalty on <span class="math">\(\mu\)</span>) noticeably improve performance with this model on this dataset? Why or why not? What's special about this task that you might want to consider?</p>
+<p><strong>1c:</strong> Short answer: There is a closed-form operation we could apply to the training set to compute the optimal <span class="math">\(\mu\)</span> value (e.g. a one line computation in numpy involving the observed ratings <span class="math">\(y_{\mathcal{I}^{\text{train}}}\)</span>). How would you compute this "exact" solution? Report the computed optimal <span class="math">\(\mu\)</span> value. Does this result agree with your SGD solution?</p>
+<h2><a name="problem2"> Problem 2: One-Scalar-Per-Item Baseline with SGD and Autograd</a></h2>
+<p>We now consider a second model "M2" with three parameters:</p>
+<ul>
+<li><span class="math">\(\mu\)</span> : scalar mean rating</li>
+<li><span class="math">\(b_i\)</span> : scalar bias term for each user <span class="math">\(i\)</span></li>
+<li><span class="math">\(c_j\)</span> : scalar bias term for each movie <span class="math">\(j\)</span></li>
+</ul>
+<p>Prediction under model "M2" becomes:</p>
+<div class="math">$$
+\hat{y}_{ij} = \mu + b_i + c_j
+$$</div>
+<h3>Training Model M2</h3>
+<p>To train model M2 for <span class="math">\(N\)</span> users and <span class="math">\(M\)</span> movies, we wish to optimize the following <strong>mean squared error</strong> objective:</p>
+<div class="math">$$
+\min_{\mu \in \mathbb{R}, b \in \mathbb{R}^N, c \in \mathbb{R}^M}  \sum_{i,j \in \mathcal{I}^{\text{train}}} (y_{ij} - \mu - b_i - c_j)^2
+$$</div>
+<p>In words, this means we want to minimize the squared error on the training set, between the predicted rating and the observed rating <span class="math">\(y_{ij}\)</span>. </p>
+<h3>Problem 2: Code Implementation Tasks</h3>
+<p>Edit the starter code file: <code>CollabFilterOneScalarPerItem.py</code>. Complete each required method, as described above in the background section. </p>
+<h3>Problem 2: Report Tasks</h3>
+<p>As evidence of successfully completing Problem 2, include the following in your report:</p>
+<p><strong>2a:</strong> Figure and caption: Trace plot showing <em>mean absolute error</em> vs. epoch completed, for both the training set and validation set.</p>
+<p>In two side-by-side plots, you should compare two batch sizes: 20000 examples per batch and 200 examples per batch.
+You may need to adjust the SGD <code>step_size</code> hyperparameter to make learning effective here.</p>
+<p><strong>2b:</strong> Short answer: Taking the best result of model M2 above, how does model M2 compare to M1 in terms of predictive performance on the validation set?</p>
+<p><strong>2c:</strong> Figure and caption: Inspect the learned per-movie rating adjustment parameters <span class="math">\(c_j\)</span> for the short list of movies in <code>select_movies.csv</code>. Do you notice any interpretable trends? What does it mean for a movie to have a large positive <span class="math">\(c_j\)</span> or large negative <span class="math">\(c_j\)</span> value?</p>
+<h2><a name="problem3"> Problem 3: Matrix Factorization with Autograd</a></h2>
+<p>We now consider a full matrix factorization model "M3" with five parameters:</p>
+<ul>
+<li><span class="math">\(\mu\)</span> : scalar mean rating</li>
+<li><span class="math">\(b_i\)</span> : scalar bias term for each user <span class="math">\(i\)</span></li>
+<li><span class="math">\(c_j\)</span> : scalar bias term for each movie <span class="math">\(j\)</span></li>
+<li><span class="math">\(u_i\)</span> : K-dimensional vector for each user <span class="math">\(i\)</span></li>
+<li><span class="math">\(v_j\)</span> : K-dimensional vector for each movie <span class="math">\(j\)</span></li>
+</ul>
+<p>Crucially, you'll now need to think about how to set <span class="math">\(K\)</span>, the number of "factors" or "dimensions" to learn when representing each user/movie in a vector space. Within the starter code, you set this with the <code>n_factors</code> keyword argument to the constructor. </p>
+<p>Prediction under model "M3" for the rating that user <span class="math">\(i\)</span> will give to movie <span class="math">\(j\)</span> is:</p>
+<div class="math">$$
+\hat{y}_{ij} = \mu + b_i + c_j + \sum_{k=1}^K u_{ik} v_{jk}
+$$</div>
+<h3>Training:</h3>
+<p>To train model M3 for <span class="math">\(N\)</span> users and <span class="math">\(M\)</span> movies, we wish to optimize the following objective:</p>
+<div class="math">$$
+\min_{\mu, b, c, \{ u_i \}_{i=1}^N, \{ v_j \}_{j=1}^M}
+\quad
+\alpha \Big(
+    \sum_{j} \sum_{k} v_{jk}^2 
+    + \sum_{i} \sum_{k} u_{ik}^2 
+    \Big)
++ \sum_{i,j \in \mathcal{I}^{\text{train}}}
+    (y_{ij} - \mu - b_i - c_j - u_i^T v_j)^2
+$$</div>
+<p>Again, this is a <em>squared error</em> objective. Note that we have added L2 regularization penalties on the <span class="math">\(u\)</span> and <span class="math">\(v\)</span> vectors. We'll investigate whether this helps us generalize to heldout data better.</p>
+<p>In the starter code, the L2 penalty strength hyperparameter can be set via the keyword argument <code>alpha=...</code> in the constructor, and accessed via the attribute <code>alpha</code>.</p>
+<h3>Problem 3: Code Implementation Tasks</h3>
+<p>Edit the starter code file: <code>CollabFilterOneVectorPerItem.py</code>. Complete each required method, as described above in the Autograd background section. </p>
+<h3>Problem 3: Report Tasks</h3>
+<p>As evidence of successfully completing Problem 3, include the following in your report:</p>
+<p><strong>3a:</strong> Figure and caption: Using NO regularization (<code>alpha=0.0</code>), make a trace plot showing <em>mean absolute error</em> vs. epoch completed, for both the training set and validation set. Repeat for several values of the number of factors <span class="math">\(K\)</span>: 2, 10, 50. </p>
+<p><strong>3b:</strong> Figure and caption: Repeat <strong>3a</strong> with a moderate regularization strength <span class="math">\(\alpha &gt; 0\)</span>, such that any overfitting in <strong>3a</strong> is not longer visible.</p>
+<p><strong>3c:</strong> Short answer: Other than L2 regularization penalties on parameter values, what else could we do to avoid overfitting in this setting when using the same model M3 and still using SGD?</p>
+<p><strong>3d:</strong> Short answer: Taking the best result of model M3 so far, how does model M3 compare to M2 or M1 in terms of predictive performance? How many factors do you recommend? Should we try even more than 50 factors?</p>
+<p><strong>3e:</strong> Figure and caption: For the best M3 model with <span class="math">\(K=2\)</span> factors, consider the learned per-movie vectors <span class="math">\(v_j\)</span> for the short list of movies listed in <code>select_movies.csv</code>. Can you make a scatter plot of the 2-dimensional "embedding" vector <span class="math">\(v_j\)</span> of these movies (labeling each point with its movie title), like we saw in lecture? Do you notice any interpretable trends? </p>
+<h2><a name="problem4"> Problem 4: Matrix Factorization using Surprise </a></h2>
+<h3>Using surprise to tune collaborative filtering models</h3>
+<p>The <code>surprise</code> package can fit a collaborative filtering model just like M3 with <span class="math">\(K\)</span> hidden factors to ratings data, using surprise's <a href="https://surprise.readthedocs.io/en/stable/matrix_factorization.html">SVD</a>.</p>
+<p><strong>4a:</strong> Figure and caption: Show the results of 5-fold cross-validation on the full-training set (no need for a separate validation set here), across a range of possible <span class="math">\(K\)</span> and <span class="math">\(\alpha\)</span> values to get the best possible <em>mean absolute error</em> performance. What is your recommendation for the choice of the hyperparameters <span class="math">\(K\)</span> and <span class="math">\(\alpha\)</span>? How did you set the learning rate?</p>
+<p><strong>4b:</strong> Short answer: How does this model's performance compare with that from Problem 3, which you trained using your own implementation? If big differences exist, why do you think they occured?</p>
+<p><strong>4c:</strong> Figure and caption: For the best surprise model with <span class="math">\(K=2\)</span> factors, consider the learned per-movie vectors <span class="math">\(v_j\)</span> for the short list of movies listed in <code>select_movies.csv</code>. Can you make a scatter plot of the 2-dimensional "embedding" vector <span class="math">\(v_j\)</span> of these movies (labeling each point with its movie title). Do you notice any interpretable trends? </p>
+<h2><a name="problem5"> Problem 5: Open-Ended Recommendation Challenge </a></h2>
+<p>The starter code includes an additional test dataset -- <code>ratings_test_masked.csv</code> -- which you haven't used yet. This contains an additional 10,000 entries of user-movie pairs for the same set of users and movies as above. We've omitted the ratings here, so you won't be able to access them. In this problem, your goal is to obtain the best possible prediction results on this heldout test data, in terms of mean absolute error.</p>
+<p>You can try <em>any model</em> you want. You can make use of the other ratings you've already observed in the training set, as well as the user-specific info found in <code>user_info.csv</code> and the movie-specific attributes found in <code>item_info.csv</code>. You can use <code>autograd</code>, <code>sklearn</code>, <code>surprise</code>, or any other package. Your goal is to get the best score on our leaderboard.</p>
+<h4>Example Problem 5 ideas</h4>
+<ul>
+<li>
+<p>Throughout this project, we have used mean-squared error in the <code>calc_loss...</code> method for training the models, but then evaluated with mean-absolute-error. What if we just used mean absolute error in the loss? This should be easy with <code>autograd</code>.</p>
+</li>
+<li>
+<p>Can you somehow use user-specific features (like gender and age) as well as the learned features to improve accuracy?</p>
+</li>
+<li>
+<p>Try one of the <a href="https://surprise.readthedocs.io/en/stable/knn_inspired.html">k-nearest neighbor approaches to recommendation</a> in <code>surprise</code></p>
+</li>
+<li>
+<p>Try dropout as an alternative to L2 regularization</p>
+</li>
+</ul>
+<h4>Problem 5: Leaderboard Tasks</h4>
+<p>You should submit your final predictions as a plain text file named <code>predicted_ratings_test.txt</code></p>
+<p>This file should have one line for each non-header line of ratings_test_masked.csv.</p>
+<p>Include this file inside the top-level of the ZIP file you submit to the leaderboard, which also contains your COLLABORATORS.txt and a snapshot of your full source code.</p>
+<h4>Problem 5: Report Tasks</h4>
+<p>Include 1 or 2 paragraphs describing your method, and 1 or 2 tables/figures relevant to reporting how you trained the model and how it performed on the test set. Be sure to include the measured leaderboard performance (in terms of mean absolute error) and discuss how this number compared to your internal validation efforts.</p>
+<h2><a name="bonus-problem"> BONUS Problem: Predicting Gender from Learned Per-User Embedding Vectors </a></h2>
+<p>Consider the best M3 model you've trained (either with surprise or with your own implementation in Problem 3). Let <span class="math">\(U\)</span> be the learned matrix of user vectors, with its i-th row as the vector <span class="math">\(u_i\)</span> for user <span class="math">\(i\)</span>. Each row of <span class="math">\(U\)</span> can be seen as a "feature vector" for a particular user.</p>
+<p>The question we'd like to investigate is this: do our learned per-user features that are optimized for predicting movie ratings contain anything to do with gender?</p>
+<p>The provided data file <code>user_info.csv</code> contains an <code>is_male</code> column indicating which users in the dataset are male. Can you predict this signal given the features <span class="math">\(U\)</span>?</p>
+<h4>Implementation Tasks</h4>
+<p>Train a binary classifier to predict the <code>is_male</code> target variable given the fixed per-user embedding features <span class="math">\(U\)</span>. Feel free to use any sklearn binary classifier (logistic regression, SVM, random forest, etc.). You should use best practices for model selection (cross validation, hyperparameter search, etc).</p>
+<p>You'll need to set up this classification task from scratch. You have info for all 943 users. Should you include them all in the training process? How will you fairly report the accuracy on heldout data? </p>
+<h4>Bonus Problem Report Tasks</h4>
+<p><strong>a</strong>: Paragraph: Describe your analysis. How did you split the data (train/test)? What classifier did you choose and why? How did you tune hyperparameters?</p>
+<p><strong>b</strong>: Figure and caption: Show a confusion matrix for your gender-from-user-features classifier. What error rate do you get? Is it significantly better than chance for this dataset? </p>
+<h2><a name="rubric">Rubric for Evaluating PDF Report</a></h2>
+<p>Earning full credit on this assignment requires a well-thought-out report that demonstrates you understand the models and training procedures we're studying here.</p>
+<p>Points will be allocated across the various parts as follows:</p>
+<ul>
+<li>10%: Problem 1</li>
+<li>20%: Problem 2</li>
+<li>30%: Problem 3</li>
+<li>20%: Problem 4</li>
+<li>20%: Problem 5</li>
+</ul>
+<p>The BONUS problem, if completed successfully, will be worth up to 8%.  </p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+</article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+       <ul class="col-sm-6 list-inline">
+
+
+
+        </ul>
+        <p class="col-sm-6 text-sm-right text-muted">
+          MIT License
+          /
+          <a href="https://github.com/tufts-ml/tufts_ml_website">
+          Source on github
+          </a>
+          /
+          <a href="https://github.com/getpelican/pelican" target="_blank">Powered by Pelican</a>
+          /
+          <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>

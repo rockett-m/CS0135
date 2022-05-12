@@ -1,0 +1,27 @@
+body {
+    background-color:#FFF;
+}
+
+.nav-item {
+    font-size: 1.0em;
+    padding: 0em 1em 0em 0em;    
+}
+
+
+.header h1 a:hover {
+    text-decoration: none;
+}
+
+.list-inline-item{
+    font-size: 1.0em;
+    border: 0px solid black;
+    padding: 0em 1em 0em 0em;
+}
+
+
+.list-inline-item a:hover{
+    color:#22A6c7;
+    text-decoration: none;
+    padding-bottom:0.5em;
+    border-bottom:3px solid #22A6c7;
+}
