@@ -1,0 +1,4 @@
+conda activate ml135_env_su22
+
+conda env export --from-history -n ml135_env_su22 -f ml135_env.yml
+

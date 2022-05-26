@@ -1,0 +1,4 @@
+name: ml135_env_su22
+channels:
+  - defaults
+prefix: /Users/sudo/CodeProjects/Tufts/CS0135/attempt_comp135_2020f_assn/hw0/ml135_env_su22
