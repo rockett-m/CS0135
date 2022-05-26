@@ -1,4 +1,23 @@
-conda activate ml135_env_su22
+
 
 conda env export --from-history -n ml135_env_su22 -f ml135_env.yml
 
+conda activate ml135_env_su22
+
+
+
+
+
+conda env create -f ml135_env.yml
+
+3. Using the Environment: Once the environment has been created, you no longer need the downloaded YML file. In order to use the environment when coding for the class, you can execute the following command from the console/terminal (you will do this each time you want to code in the standard environment):
+
+conda activate ml135_env_su22
+
+Once the environment is active, it will ensure that launching Python or related tools gives you access to the same versions as will be used in testing your submitted code. For instance, to launch a Jupyter Notebook, once you have activated the environment via the prior command, you would use the following console/terminal command:
+
+jupyter notebook
+
+You can shut down the environment when done coding with the following console/terminal command:
+
+conda deactivate
