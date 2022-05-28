@@ -21,3 +21,6 @@ jupyter notebook
 You can shut down the environment when done coding with the following console/terminal command:
 
 conda deactivate
+
+conda env remove -n ml135_env_su22 && conda env create -f ml135_env_su22.yml
+
