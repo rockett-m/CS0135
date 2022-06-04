@@ -1,7 +1,13 @@
-(This is an example. Please edit accordingly.)
+Name: Morgan Rockett
 
-Name: A. Student
-I spent 8 hours on this problem (1 on Prob. 1 and 3 on Prob. 2)
+I spent x hours on this assignment (4 on Prob. 1 and x on Prob. 2)
+
+I read through Stanford CS 229 (ML) course materials and went over the provided materials for this class
+which took roughly 10 hours.
+
 I sought help from Prof. Huckleberry.
 We talked about the definition of Euclidean distance.
 
+# https://www.delftstack.com/howto/numpy/python-numpy-get-number-of-rows/
+# https://stackoverflow.com/questions/28064634/random-state-pseudo-random-numberin-scikit-learn
+# https://www.geeksforgeeks.org/calculate-the-euclidean-distance-using-numpy/

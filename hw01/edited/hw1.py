@@ -1,15 +1,19 @@
-'''
+"""
 hw1.py
-Author: TODO
+Author: Morgan Rockett
 
 Tufts CS 135 Intro ML
 
-'''
+Commands:
+conda activate ml135_env_su22
+python3 hw1.py
+"""
 
 import numpy as np
 
+
 def split_into_train_and_test(x_all_LF, frac_test=0.5, random_state=None):
-    ''' Divide provided array into train and test set along first dimension
+    """ Divide provided array into train and test set along first dimension
 
     User can provide a random number generator object to ensure reproducibility.
 
@@ -69,11 +73,31 @@ def split_into_train_and_test(x_all_LF, frac_test=0.5, random_state=None):
     ----------
     For more about RandomState, see:
     https://stackoverflow.com/questions/28064634/random-state-pseudo-random-numberin-scikit-learn
-    '''
+    """
+
     if random_state is None:
-        random_state = np.random
-    ## TODO fixme
-    return None, None
+        random_state_gen = np.random.default_rng(seed=42)
+    else:
+        random_state_gen = np.random.default_rng(random_state)
+
+    x_all_LF_copy = x_all_LF.copy()  # preserve what input was before the call
+
+    random_state_gen.shuffle(x_all_LF_copy)  # pseudo-randomize input arr
+
+    rows, cols = x_all_LF_copy.shape  # (10, 10)
+
+    test_rows =  int(rows * frac_test)  # (3, 10)
+    train_rows = int(rows - test_rows)  # (7, 10)
+
+    x_train_MF = x_all_LF_copy[0:train_rows]     # cols implied (7, 10)
+    x_test_NF =  x_all_LF_copy[train_rows:rows]  # cols implied (3, 10)
+
+    # for arr in [x_all_LF, x_all_LF_copy, x_train_MF, x_test_NF]:
+    #     print(f'arr.shape:\n{arr.shape}\narr:\n{arr}\n')
+
+    np.allclose(x_all_LF, x_all_LF_copy)  # Verify that input array did not change due to function call
+
+    return x_train_MF, x_test_NF
 
 
 def calc_k_nearest_neighbors(data_NF, query_QF, K=1):
@@ -96,4 +120,23 @@ def calc_k_nearest_neighbors(data_NF, query_QF, K=1):
         Entry q,k is feature vector of the k-th neighbor of the q-th query
     '''
     # TODO fixme
-    return None
+    data_NF_copy =  data_NF.copy
+    query_QF_copy = query_QF.copy
+
+    dist = np.linalg.norm(data_NF_copy, query_QF_copy)
+
+    neighb_QKF = ''
+
+    return neighb_QKF
+
+
+if __name__ == '__main__':
+
+    x_LF = np.eye(10)
+    rdm_state = np.random.RandomState(0)
+    train_MF, test_NF = split_into_train_and_test(x_LF, frac_test=0.3, random_state=420)  # rdm_state
+
+    data_NF = np.random.rand(10, 10)
+    query_QF = np.eye(10)
+
+    neighb_QKF = calc_k_nearest_neighbors(data_NF, query_QF, K=1)
