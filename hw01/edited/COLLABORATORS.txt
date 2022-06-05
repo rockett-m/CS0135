@@ -11,3 +11,5 @@ We talked about the definition of Euclidean distance.
 # https://www.delftstack.com/howto/numpy/python-numpy-get-number-of-rows/
 # https://stackoverflow.com/questions/28064634/random-state-pseudo-random-numberin-scikit-learn
 # https://www.geeksforgeeks.org/calculate-the-euclidean-distance-using-numpy/
+# https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/
+# https://www.askpython.com/python/examples/k-nearest-neighbors-from-scratch

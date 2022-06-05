@@ -10,6 +10,8 @@ python3 hw1.py
 """
 
 import numpy as np
+import math
+import sys
 
 
 def split_into_train_and_test(x_all_LF, frac_test=0.5, random_state=None):
@@ -86,8 +88,8 @@ def split_into_train_and_test(x_all_LF, frac_test=0.5, random_state=None):
 
     rows, cols = x_all_LF_copy.shape  # (10, 10)
 
-    test_rows =  int(rows * frac_test)  # (3, 10)
-    train_rows = int(rows - test_rows)  # (7, 10)
+    test_rows =  math.ceil(rows * frac_test)  # (3, 10)
+    train_rows = rows - test_rows             # (7, 10)
 
     x_train_MF = x_all_LF_copy[0:train_rows]     # cols implied (7, 10)
     x_test_NF =  x_all_LF_copy[train_rows:rows]  # cols implied (3, 10)
@@ -98,6 +100,11 @@ def split_into_train_and_test(x_all_LF, frac_test=0.5, random_state=None):
     np.allclose(x_all_LF, x_all_LF_copy)  # Verify that input array did not change due to function call
 
     return x_train_MF, x_test_NF
+
+
+def euclidean_distance(row_a, row_b):
+    dist = np.linalg.norm(row_a, row_b)
+    return dist
 
 
 def calc_k_nearest_neighbors(data_NF, query_QF, K=1):
@@ -120,10 +127,25 @@ def calc_k_nearest_neighbors(data_NF, query_QF, K=1):
         Entry q,k is feature vector of the k-th neighbor of the q-th query
     '''
     # TODO fixme
-    data_NF_copy =  data_NF.copy
-    query_QF_copy = query_QF.copy
 
-    dist = np.linalg.norm(data_NF_copy, query_QF_copy)
+    for q in range(len(query_QF)):
+        distance_list = []
+        for d in range(len(data_NF)):
+            distance = np.linalg.norm(data_NF[d] - query_QF[q])
+            distance_list.append(distance)
+            print(query_QF[q], data_NF[d], distance)
+
+        distance_list = np.array(distance_list)
+
+    sys.exit()
+    for row_a, row_b in zip(data_NF, query_QF):  # iterate through rows of both 2D arrays
+        print(f'row_a: {row_a}\nrow_b: {row_b}\n')
+        for i, j in zip(row_a, row_b):
+            print(i, j)
+            dist = np.linalg.norm(row_a[i] - row_b[j])
+            print(dist)
+
+    sys.exit()
 
     neighb_QKF = ''
 
@@ -132,11 +154,6 @@ def calc_k_nearest_neighbors(data_NF, query_QF, K=1):
 
 if __name__ == '__main__':
 
-    x_LF = np.eye(10)
-    rdm_state = np.random.RandomState(0)
-    train_MF, test_NF = split_into_train_and_test(x_LF, frac_test=0.3, random_state=420)  # rdm_state
+    train_MF, test_NF = split_into_train_and_test(x_all_LF=np.eye(10), frac_test=0.3, random_state=420)
 
-    data_NF = np.random.rand(10, 10)
-    query_QF = np.eye(10)
-
-    neighb_QKF = calc_k_nearest_neighbors(data_NF, query_QF, K=1)
+    neighb_QKF = calc_k_nearest_neighbors(data_NF=np.eye(10), query_QF=np.eye(10), K=1)
