@@ -43,38 +43,6 @@ def split_into_train_and_test(x_all_LF, frac_test=0.5, random_state=None):
     --------------
     This function should be side-effect free. The provided input array x_all_LF
     should not change at all (not be shuffled, etc.)
-
-    Examples
-    --------
-    >>> x_LF = np.eye(10)
-    >>> xcopy_LF = x_LF.copy() # preserve what input was before the call
-    >>> train_MF, test_NF = split_into_train_and_test(
-    ...     x_LF, frac_test=0.3, random_state=np.random.RandomState(0))
-    >>> train_MF.shape
-    (7, 10)
-    >>> test_NF.shape
-    (3, 10)
-    >>> print(train_MF)
-    [[0. 0. 1. 0. 0. 0. 0. 0. 0. 0.]
-     [0. 0. 0. 0. 0. 0. 0. 0. 1. 0.]
-     [0. 0. 0. 0. 1. 0. 0. 0. 0. 0.]
-     [0. 0. 0. 0. 0. 0. 0. 0. 0. 1.]
-     [0. 1. 0. 0. 0. 0. 0. 0. 0. 0.]
-     [0. 0. 0. 0. 0. 0. 1. 0. 0. 0.]
-     [0. 0. 0. 0. 0. 0. 0. 1. 0. 0.]]
-    >>> print(test_NF)
-    [[0. 0. 0. 1. 0. 0. 0. 0. 0. 0.]
-     [1. 0. 0. 0. 0. 0. 0. 0. 0. 0.]
-     [0. 0. 0. 0. 0. 1. 0. 0. 0. 0.]]
-
-    ## Verify that input array did not change due to function call
-    >>> np.allclose(x_LF, xcopy_LF)
-    True
-
-    References
-    ----------
-    For more about RandomState, see:
-    https://stackoverflow.com/questions/28064634/random-state-pseudo-random-numberin-scikit-learn
     """
 
     if random_state is None:
@@ -102,11 +70,6 @@ def split_into_train_and_test(x_all_LF, frac_test=0.5, random_state=None):
     return x_train_MF, x_test_NF
 
 
-def euclidean_distance(row_a, row_b):
-    dist = np.linalg.norm(row_a, row_b)
-    return dist
-
-
 def calc_k_nearest_neighbors(data_NF, query_QF, K=1):
     ''' Compute and return k-nearest neighbors under Euclidean distance
 
@@ -127,25 +90,21 @@ def calc_k_nearest_neighbors(data_NF, query_QF, K=1):
         Entry q,k is feature vector of the k-th neighbor of the q-th query
     '''
     # TODO fixme
+    distance_list = []
 
     for q in range(len(query_QF)):
         distance_list = []
         for d in range(len(data_NF)):
             distance = np.linalg.norm(data_NF[d] - query_QF[q])
             distance_list.append(distance)
-            print(query_QF[q], data_NF[d], distance)
+            # print(f'q: {query_QF[q]}, d: {data_NF[d]}, dist: {distance}')
 
-        distance_list = np.array(distance_list)
-
-    sys.exit()
-    for row_a, row_b in zip(data_NF, query_QF):  # iterate through rows of both 2D arrays
-        print(f'row_a: {row_a}\nrow_b: {row_b}\n')
-        for i, j in zip(row_a, row_b):
-            print(i, j)
-            dist = np.linalg.norm(row_a[i] - row_b[j])
-            print(dist)
-
-    sys.exit()
+    # for row_a, row_b in zip(data_NF, query_QF):  # iterate through rows of both 2D arrays
+    #     print(f'row_a: {row_a}\nrow_b: {row_b}\n')
+    #     for i, j in zip(row_a, row_b):
+    #         print(i, j)
+    #         dist = np.linalg.norm(row_a[i] - row_b[j])
+    #         print(dist)
 
     neighb_QKF = ''
 
