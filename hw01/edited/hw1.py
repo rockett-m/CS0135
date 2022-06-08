@@ -71,7 +71,7 @@ def split_into_train_and_test(x_all_LF, frac_test=0.5, random_state=None):
 
 
 def calc_k_nearest_neighbors(data_NF, query_QF, K=1):
-    ''' Compute and return k-nearest neighbors under Euclidean distance
+    """ Compute and return k-nearest neighbors under Euclidean distance
 
     Any ties in distance may be broken arbitrarily.
 
@@ -88,25 +88,28 @@ def calc_k_nearest_neighbors(data_NF, query_QF, K=1):
     -------
     neighb_QKF : 3D array, (n_queries, n_neighbors, n_feats) (Q, K, F)
         Entry q,k is feature vector of the k-th neighbor of the q-th query
-    '''
-    # TODO fixme
-    distance_list = []
+    """
+
+    knn_list = []
 
     for q in range(len(query_QF)):
         distance_list = []
         for d in range(len(data_NF)):
             distance = np.linalg.norm(data_NF[d] - query_QF[q])
-            distance_list.append(distance)
+            distance_list.append((distance, data_NF[d]))
             # print(f'q: {query_QF[q]}, d: {data_NF[d]}, dist: {distance}')
+        distance_list.sort(key=lambda x: x[0])
 
-    # for row_a, row_b in zip(data_NF, query_QF):  # iterate through rows of both 2D arrays
-    #     print(f'row_a: {row_a}\nrow_b: {row_b}\n')
-    #     for i, j in zip(row_a, row_b):
-    #         print(i, j)
-    #         dist = np.linalg.norm(row_a[i] - row_b[j])
-    #         print(dist)
+        length_dist = len(distance_list[0][1])
+        value_array = np.array([0] * length_dist)
 
-    neighb_QKF = ''
+        neighbor_values_list = ''
+        for k in range(K):
+            neighbor_values_list = np.vstack((value_array, distance_list[k][1]))
+        knn = neighbor_values_list[1:]
+        knn_list.append(knn)
+
+    neighb_QKF = np.array(knn_list)
 
     return neighb_QKF
 

@@ -1,15 +1,20 @@
 Name: Morgan Rockett
 
-I spent x hours on this assignment (4 on Prob. 1 and x on Prob. 2)
+I spent 17+ hours on this assignment (7 on Prob. 1 and 10+ on Prob. 2)
 
 I read through Stanford CS 229 (ML) course materials and went over the provided materials for this class
 which took roughly 10 hours.
 
-I sought help from Prof. Huckleberry.
-We talked about the definition of Euclidean distance.
+I spent a lot of time in jupyter notebooks learning numpy and googling on stackoverflow about how to
+manipulate data structures, etc.
+
+For implementation details, the following sites helped a lot:
 
 # https://www.delftstack.com/howto/numpy/python-numpy-get-number-of-rows/
 # https://stackoverflow.com/questions/28064634/random-state-pseudo-random-numberin-scikit-learn
 # https://www.geeksforgeeks.org/calculate-the-euclidean-distance-using-numpy/
 # https://machinelearningmastery.com/tutorial-to-implement-k-nearest-neighbors-in-python-from-scratch/
 # https://www.askpython.com/python/examples/k-nearest-neighbors-from-scratch
+# https://medium.com/@lope.ai/knn-classifier-from-scratch-with-numpy-python-5c436e26a228
+# https://datascienceparichay.com/article/numpy-vstack/
+# https://stackoverflow.com/questions/40984564/sort-numpy-array-elements-by-the-value-of-a-condition-on-the-elements
