@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags always come first -->
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>HW4: Trees and Random Forests for Bag of Words | Introduction to Machine Learning
+</title>
+  <link rel="canonical" href="https://www.cs.tufts.edu/comp/135/2020f/hw4.html">
+
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://www.cs.tufts.edu/comp/135/2020f/theme/js/icsFormatter.js"></script>
+
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/style.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/custom.css">
+
+
+<meta name="description" content="Status: RELEASED. Due date: Wed. Nov. 11 at 11:59PM AoE (Anywhere on Earth) (Thu 11/12 at 07:59am in Boston) Overview In this HW, you'll complete the following: Complete Problem 0's coding tasks (worth 50% of your grade) You'll submit a ZIP of your code to the Gradescope …">
+</head>
+
+<body>
+  <header class="header">
+    <nav class="navbar navbar-expand-lg navbar-expand-md navbar-light bg-light">
+    <div class="container">
+    <div class="row display-flex">
+        <div class="col-2 col-sm-2 d-md-none"><!-- hidden if md or lg -->
+        <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#my_collapsing_navbar"
+            aria-controls="my_collapsing_navbar"
+            aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon mw-100"></span>
+        </button>
+        </div>
+
+        <div class="d-none d-md-block col-md-2">
+          <a href="https://www.cs.tufts.edu/comp/135/2020f/">
+            <img class="img-fluid mw-100" src=https://www.cs.tufts.edu/comp/135/2020f/images/tufts_ml_logo.png alt="Introduction to Machine Learning">
+          </a>
+        </div>
+
+        <div class="col-10 col-sm-10 col-md-10">
+          <h1 class="text-left" style="word-break:'break-all'">
+            <a href="https://www.cs.tufts.edu/comp/135/2020f/">Introduction to Machine Learning</a>
+          </h1>
+
+          <p class="text-muted text-left d-none d-md-block mw-100">
+            Tufts CS COMP 135 Intro ML | Fall 2020
+          </p>
+
+
+
+          <div class="collapse navbar-collapse" id="my_collapsing_navbar">
+                <ul class="navbar-nav">
+                  <li class="nav-item text-left">
+                    <a href="index.html">Syllabus</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="schedule.html">Schedule</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="assignments.html">Assignments</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="office_hours.html">Office Hours</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="resources.html">Resources</a>
+                  </li>
+
+                </ul>
+          </div>
+
+
+        </div>
+
+    </div>
+    </div>
+    </nav>
+
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>HW4: Trees and Random Forests for Bag of Words
+</h1>
+      <hr>
+<article class="article">
+  <div class="content">
+        <p style="text-align:right">Last modified: 2020-11-11 10:26 </p>
+    <p><strong>Status: RELEASED.</strong></p>
+<p><strong>Due date</strong>: Wed. Nov. 11 at 11:59PM AoE (Anywhere on Earth) (Thu 11/12 at 07:59am in Boston)</p>
+<h2>Overview</h2>
+<p>In this HW, you'll complete the following:</p>
+<ul>
+<li>Complete Problem 0's <em>coding tasks</em> (worth 50% of your grade)</li>
+<li>
+<ul>
+<li>You'll submit a ZIP of your code to the Gradescope link below.</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>The goal of these problems is to:</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>
+<ul>
+<li>Demonstrate understanding of how to implement a decision tree</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Complete Problems 0-3 <em>analysis</em> and <em>implementation</em> tasks and write a <em>report</em> (worth 50% of your grade)</p>
+</li>
+<li>
+<ul>
+<li>You'll submit this PDF report to the Gradescope link below.</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>The goal of these problems is to:</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>
+<ul>
+<li>Demonstrate understanding of how to use decision trees and random forests effectively on real data.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>
+<ul>
+<li>Demonstrate understanding of how to "interpret" the learned structure of these models.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>Much of your analysis will use library code in sklearn with similar functionality as what you implement yourself earlier.</p>
+<p><strong>Turn-in links</strong>:</p>
+<ul>
+<li>PDF report turned in to: <a href="https://www.gradescope.com/courses/173055/assignments/800777/">https://www.gradescope.com/courses/173055/assignments/800777/</a></li>
+<li>ZIP file of source code turned in to: <a href="https://www.gradescope.com/courses/173055/assignments/800774">https://www.gradescope.com/courses/173055/assignments/800774</a></li>
+<li>Finally, complete your reflection here: <a href="https://forms.gle/8ncG149gLAwSWwUr5">https://forms.gle/8ncG149gLAwSWwUr5</a></li>
+</ul>
+<p><strong>Files to Turn In:</strong></p>
+<p>PDF report:</p>
+<ul>
+<li>Prepare a short PDF report (no more than 4 pages).</li>
+<li>This document will be manually graded.</li>
+<li>Can use your favorite report writing tool (Word or G Docs or LaTeX or ....)</li>
+<li>Should be <strong>human-readable</strong>. Do not include code. Do NOT just export a jupyter notebook to PDF.</li>
+<li>Should have each subproblem <a href="https://www.youtube.com/watch?v=KMPoby5g_nE&amp;feature=youtu.be&amp;t=43">marked via the in-browser Gradescope annotation tool</a>)</li>
+</ul>
+<p>ZIP file of source code should contain:</p>
+<ul>
+<li>tree_utils.py (will be autograded)</li>
+<li>train_tree.py (will be autograded)</li>
+<li>select_best_binary_split.py (will be autograded)</li>
+<li>hw4.ipynb (just for completeness, will not be autograded but will be manually assessed if necessary.)</li>
+</ul>
+<p><strong>Evaluation Rubric:</strong></p>
+<p>See the PDF submission portal on Gradescope for the point values of each problem. Generally, tasks with more coding/effort will earn more potential points.</p>
+<p><strong>Jump to</strong>: 
+<a href="#background">Background</a> &nbsp;
+<a href="#code-tasks">Code Tasks</a> &nbsp; <a href="#starter-code">Starter Code</a> &nbsp; <a href="#dataset">Dataset</a> &nbsp;
+<a href="#problem-1">Problem 1</a> &nbsp; <a href="#problem-2">Problem 2</a> &nbsp; <a href="#problem-3">Problem 3</a></p>
+<h4><a name="starter-code"> Starter Code </a></h4>
+<p>See the hw4 folder of the public assignments repo for this class:</p>
+<p><a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/tree/master/hw4">https://github.com/tufts-ml-courses/comp135-20f-assignments/tree/master/hw4</a></p>
+<p>This starter code includes a notebook to help you get started on your analysis, plus a helper file to visualize the internal logic of trees produced by sklearn.</p>
+<h2><a id="background">Background</a></h2>
+<p>To complete this HW, you'll need some knowledge from the following sessions of class:</p>
+<ul>
+<li>Logistic Regression (day09)</li>
+<li>Hyperparameter Search (day13)</li>
+<li>Decision Trees (day14)</li>
+<li>Random Forests (day15)</li>
+</ul>
+<h2><a name="problem-0"> Problem 0: Code Implementation of Decision Tree Regression </a></h2>
+<p>In this problem, you'll finish an implementation of Decision Tree Regression, which at the end will be a drop-in replacement for sklearn's <code>DecisionTreeRegression</code> in terms of underlying functionality.</p>
+<p>Notably, we've written our autograder such that each part is assessed <em>independently</em>. If you don't get one part correct, you can still get the other parts correct.</p>
+<p>Please look at the starter code <a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/hw4/README.md">README</a>. to get organized.</p>
+<h4><a name="code-task-0C"> Code Task A </a> (20% of code grade): Implement <code>predict</code> for a LeafNode</h4>
+<p>See the <code>LeafNode</code> class within starter code file: <a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/hw4/tree_utils.py">tree_utils.py</a>.</p>
+<h4><a name="code-task-0C"> Code Task B </a> (20% of code grade): Implement <code>predict</code> for an InternalDecisionNode</h4>
+<p>See the <code>InternalDecisionNode</code> class within starter code file: <a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/hw4/tree_utils.py">tree_utils.py</a>.</p>
+<h4><a name="code-task-0A"> Code Task C </a> (40% of code grade): Implement select_best_binary_split</h4>
+<p>See the starter code file: <a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/
+hw4/select_best_binary_split.py">select_best_binary_split.py</a>.</p>
+<h4><a name="code-task-0B"> Code Task D </a> (20% of code grade): Implement train_tree</h4>
+<p>See the starter code file: <a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/hw4/train_tree.py">train_tree.py</a>.</p>
+<h2><a name="problem-0"> Problem 0 Analysis (40% of report grade) </a></h2>
+<h4><a name="report-task-0a"> Short Answer 0a in Report </a></h4>
+<p>Consider a decision tree for regression that has already been trained on <span class="math">\(N\)</span> examples with <span class="math">\(F\)</span> features. The depth of the tree is <span class="math">\(D\)</span>.</p>
+<p>What is the runtime complexity of making a <em>prediction</em> for a single test feature vector <span class="math">\(x \in \mathbb{R}^F\)</span>?</p>
+<p>Express your answer in terms of <span class="math">\(N\)</span>, <span class="math">\(F\)</span>, and <span class="math">\(D\)</span>. You should provide a clear statement like <span class="math">\(O(L^2)\)</span> or "quadratic as a function of variable L", as well as a brief explanation.</p>
+<h4><a name="report-task-0b"> Short Answer 0b in Report </a></h4>
+<p>Your colleague suggests that, given any dataset of <span class="math">\(N\)</span> examples, <em>training</em> a regression tree can be done in runtime complexity <span class="math">\(O(N)\)</span> (i.e. the time cost scales linearly with the number of training examples <span class="math">\(N\)</span>), and thus is "just as scalable" as logistic regression.</p>
+<p>Is your colleague correct? Provide a brief explanation. You should focus on simply supporting or refuting this statement above.</p>
+<h4><a name="report-task-0c"> Short Answer 0c in Report </a></h4>
+<p>Suppose you fix your <code>max_depth</code> hyperparameter to <span class="math">\(N^2\)</span> and other settings so the tree is as flexible as possible.
+You then train a decision tree for regression trained using our greedy training procedure on a training set of <span class="math">\(N\)</span> examples. What can you say in general about the worst case depth of the tree? Will the worst-case depth as a function of <span class="math">\(N\)</span> grow like <span class="math">\(O(\sqrt{N})\)</span> or <span class="math">\(O(\log N)\)</span> or <span class="math">\(O(N)\)</span> or <span class="math">\(O(N^2)\)</span> or something else?</p>
+<h2><a id="dataset">Dataset: Bag-of-words representations of product reviews on Amazon</a></h2>
+<p>Dataset credit: M. Dredze, J. Blitzer, and Fernando Pereira. <a href="https://www.cs.jhu.edu/~mdredze/datasets/sentiment/">https://www.cs.jhu.edu/~mdredze/datasets/sentiment/</a></p>
+<p>We consider a classification task where each example is one plain-text online review for a consumer product (either a book, a movie, an electronics item, or a kitchen item)</p>
+<p>Here's an example book review that is a positive sentiment:</p>
+<blockquote>
+<p>This all-Spanish handbook for parents with new babies will prove essential for any concerned about a child's health. </p>
+</blockquote>
+<p>Here's one with a negative sentiment</p>
+<blockquote>
+<p>It completely sucked. Very long with nothing to say. Author was proud of his own knowledge of the SCA and Wiccans, and the publishers thought that obviated the need for plot or character development.</p>
+</blockquote>
+<p>At training time, we observe N <em>samples</em> of feature-label pairs, where the features are a <em>bag-of-words</em> representation of the written text and the label is an overall binary rating of the user's feelings about the product (either 'positive' or 'negative').</p>
+<p>Our goal is to build a model that can predict the sentiment (positive or negative) from the text alone.</p>
+<p>We have preprocessed this data into a standardized format using a bag-of-words representation, using a fixed vocabulary of the 7729 most common words provided by the original dataset creators (with some slight modifications by us). We'll emphasize that the vocabulary includes some <em>bigrams</em> (e.g. "waste_of") in addition to single words. </p>
+<p>For the n-th text review, we define our features and labels as follows:</p>
+<ul>
+<li>Feature vector <span class="math">\(x_n \in \mathbb{R}^F\)</span> is a <em>binary</em> vector of size F=7729, indicating which terms in the vocabulary are present in the review, and which are absent.</li>
+<li>
+<ul>
+<li>Words that are <em>not</em> in the vocabulary have no impact on this feature vector.</li>
+</ul>
+</li>
+<li>Label <span class="math">\(y_n\)</span> is a binary label (<span class="math">\(y_n \in \{0, 1\}\)</span>), indicating whether that review had a positive or negative star rating.</li>
+</ul>
+<p>We have included in the starter code repo:</p>
+<ul>
+<li>a training set of 6346 documents</li>
+<li>a validation set of 792 documents</li>
+<li>a test set of 793 documents</li>
+</ul>
+<p>Our analysis goals across Problems 1-3 are:</p>
+<ul>
+<li>Can we train tree models to solve this task well?</li>
+<li>Can we the inspect these trees to understand how the model is making decisions?</li>
+<li>How well do tree models compare with others we know about?</li>
+</ul>
+<h2><a id="problem-1">Problem 1</a>: Decision Trees for Review Classification (20% of report grade)</h2>
+<p>We'll now examine simple decision trees for our sentiment classification problem.</p>
+<h4>Implementation Step 1A : Train a Simple Tree</h4>
+<p>Train a <code>DecisionTreeClassifier</code> with <code>criterion='gini'</code>, <code>max_depth=3</code>, <code>min_samples_leaf=1</code>.</p>
+<h4>Figure 1 in Report</h4>
+<p>Show the ASCII-text representation of your trained decision tree from 1A, by calling the helper function <code>pretty_print_sklearn_tree</code> found in the starter code.
+(Remember when you are reading the printed statements that "Y" means the above decision question evaluated to "yes" and "N" means "no".)</p>
+<h4>Short Answer 1a in Report</h4>
+<p>Reflect on the tree in Figure 1, remembering that we are predicting overall sentiment about a household product based on observed words in a written review</p>
+<ul>
+<li>Is the internal logic of the tree reasonable?</li>
+<li>Are there any paths or internal logic that do not make sense to you?</li>
+</ul>
+<h4>Implementation Step 1B</h4>
+<p>Perform a grid search for hyperparameters over the following settings:</p>
+<ul>
+<li>Performance metric to optimize: "balanced_accuracy"</li>
+<li>Source of heldout data: the provided fixed validation set</li>
+<li><code>max_depth</code> in [2, 8, 32, 128]</li>
+<li><code>min_samples_leaf</code> in [1, 3, 9]</li>
+<li><code>random_state</code> in [101]</li>
+<li>All other settings at default values</li>
+</ul>
+<p>Use the best-ranked configuration to obtain one "best" decision tree (using only the training set). </p>
+<p>You'll use this best tree later in Problem 3.</p>
+<h4>Short Answer 1b in Report</h4>
+<p>What is the depth of the best tree you found?
+How many leaves does it have?
+Can you interpret the internal logic of this tree? Why or why not?</p>
+<h2><a id="problem-2">Problem 2</a>: Random Forests for Review Classification (20% of report grade)</h2>
+<p>We'll now examine whether we can produce an <em>ensemble</em> of decision trees to improve performance on our classification problem.</p>
+<h4>Implementation Step 2A: Selecting the best random forest</h4>
+<p>Perform a grid search for hyperparameters over the following settings:</p>
+<ul>
+<li>Performance metric to optimize: "balanced_accuracy"</li>
+<li>Source of heldout data: the provided fixed validation set</li>
+<li><code>max_features</code> in [3, 10, 33, 100, 333]</li>
+<li><code>max_depth</code> in [16, 32]</li>
+<li><code>min_samples_leaf</code> in [1]</li>
+<li><code>n_estimators</code> in [125]</li>
+<li><code>random_state</code> in [101]</li>
+<li>All other settings at default values</li>
+</ul>
+<p>Use the best-ranked configuration to obtain one "best" random forest (using only the training set). </p>
+<p>You'll use this best tree later in Problem 3.</p>
+<h4>Implementation Step 2B: Feature importances</h4>
+<p>Access the <code>feature_importances_</code> attribute of your trained forest to get a score for each term in our vocabulary.</p>
+<p>A higher value of this score indicates the feature is "more important".</p>
+<h4>Figure 2 in Report</h4>
+<p>On one panel, display a list of the top 10 vocabulary words of your best forest with <em>highest</em> feature importance.</p>
+<p>In another panel, display a list of 10 randomly chosen terms that have <em>close-to-zero</em> feature importance (any feature with importance less than 0.00001 is eligible).</p>
+<h4>Short Answer 2a in Report</h4>
+<p>Reflect on the contents of Figure 2.
+Do the included vocabulary terms that are "most important" appear reasonable?
+Is there anything confusing or that you have trouble explaining?
+Is there anything missing you would have expected?</p>
+<h4>Short Answer 2b in Report</h4>
+<p>When you fit random forests, you can adjust <code>n_estimators</code> to set the number of trees in your ensemble.</p>
+<p>What is the primary tradeoff this hyperparameter controls? Can you overfit by setting this too large?</p>
+<h2><a id="problem-3">Problem 3</a>: Comparing Trees to Linear Models for Review Classification (20% of report grade)</h2>
+<p>In this problem, you'll think about comparing trees to models with linear decision boundaries (logistic regression).</p>
+<p>We'll specifically look at an L1-penalized logistic regression (aka "Lasso"), since we want an <em>interpretable</em> model.</p>
+<h4>Short Answer 3a in Report</h4>
+<p>Specifically for binary bag-of-words features, can you describe a reason where you'd expect a tree model to outperform a (thresholded) linear model? What kinds of logic can a tree encode about the presence or absence of vocabulary words in text that a logistic regression model cannot?</p>
+<h4>Implementation Step 3A: Selecting the best logistic regression with L1 penalty</h4>
+<p>Perform a grid search for LogisticRegression classifier with the following settings:</p>
+<ul>
+<li>Performance metric to optimize: "balanced_accuracy"</li>
+<li>Source of heldout data: the provided fixed validation set</li>
+<li><code>C</code> in <code>np.logspace(-4, 4, 9)</code></li>
+<li><code>penalty</code> set to 'l1', since we want a more interpretable model with sparse weights.</li>
+<li><code>solver</code> set to 'saga' (needed to handle the L1 penalty)</li>
+<li>All other settings at default values</li>
+</ul>
+<h4>Table 3 in Report</h4>
+<p>In one table, show the <em>train</em>, <em>validation</em>, and <em>test set</em> performance (in terms of balanced accuracy).</p>
+<ul>
+<li>Include 3 columns, one for each dataset (train/valid/test)</li>
+<li>Include 4 rows:</li>
+<li>
+<ul>
+<li>Simple decision tree</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Best decision tree </li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Best random forest </li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Best L1-penalized Logistic Regresion</li>
+</ul>
+</li>
+</ul>
+<p>Include a brief caption summarizing your conclusions. Which model does best on the test set? Would we have expected that from the validation set performance?</p>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+</article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+       <ul class="col-sm-6 list-inline">
+
+
+
+        </ul>
+        <p class="col-sm-6 text-sm-right text-muted">
+          MIT License
+          /
+          <a href="https://github.com/tufts-ml/tufts_ml_website">
+          Source on github
+          </a>
+          /
+          <a href="https://github.com/getpelican/pelican" target="_blank">Powered by Pelican</a>
+          /
+          <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags always come first -->
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Python Setup Instructions | Introduction to Machine Learning
+</title>
+  <link rel="canonical" href="https://www.cs.tufts.edu/comp/135/2020f/setup_python_env.html">
+
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://www.cs.tufts.edu/comp/135/2020f/theme/js/icsFormatter.js"></script>
+
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/style.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/custom.css">
+
+
+<meta name="description" content="Regardless of whether you use Windows, Mac, or Linux, we recommend using the Anaconda python package manager and Python 3.6 (or higher). The instructions below are for Unix. Please adapt accordingly if you are on a non-Unix environment. We will offer very limited support at office hours for installing …">
+</head>
+
+<body>
+  <header class="header">
+    <nav class="navbar navbar-expand-lg navbar-expand-md navbar-light bg-light">
+    <div class="container">
+    <div class="row display-flex">
+        <div class="col-2 col-sm-2 d-md-none"><!-- hidden if md or lg -->
+        <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#my_collapsing_navbar"
+            aria-controls="my_collapsing_navbar"
+            aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon mw-100"></span>
+        </button>
+        </div>
+
+        <div class="d-none d-md-block col-md-2">
+          <a href="https://www.cs.tufts.edu/comp/135/2020f/">
+            <img class="img-fluid mw-100" src=https://www.cs.tufts.edu/comp/135/2020f/images/tufts_ml_logo.png alt="Introduction to Machine Learning">
+          </a>
+        </div>
+
+        <div class="col-10 col-sm-10 col-md-10">
+          <h1 class="text-left" style="word-break:'break-all'">
+            <a href="https://www.cs.tufts.edu/comp/135/2020f/">Introduction to Machine Learning</a>
+          </h1>
+
+          <p class="text-muted text-left d-none d-md-block mw-100">
+            Tufts CS COMP 135 Intro ML | Fall 2020
+          </p>
+
+
+
+          <div class="collapse navbar-collapse" id="my_collapsing_navbar">
+                <ul class="navbar-nav">
+                  <li class="nav-item text-left">
+                    <a href="index.html">Syllabus</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="schedule.html">Schedule</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="assignments.html">Assignments</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="office_hours.html">Office Hours</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="resources.html">Resources</a>
+                  </li>
+
+                </ul>
+          </div>
+
+
+        </div>
+
+    </div>
+    </div>
+    </nav>
+
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>Python Setup Instructions
+</h1>
+      <hr>
+<article class="article">
+  <div class="content">
+    <p>Regardless of whether you use Windows, Mac, or Linux, we recommend using the Anaconda python package manager and Python 3.6 (or higher). The instructions below are for Unix. Please adapt accordingly if you are on a non-Unix environment.</p>
+<p>We will offer very limited support at office hours for installing or maintaining Python on your laptop/desktop/cluster. It is your responsibility to acquire and maintain the packages and environments you need.</p>
+<p>We have verified that these instructions successfully install the required environment on common laptops, a standard issue Tufts EECS unix account home directory or in a Tufts High Performance Computing account.</p>
+<h2>One Time Setup: Install "miniconda"</h2>
+<p><em>Expected time</em> for this step: 15 minutes</p>
+<p>Install Miniconda (which is a bare essentials version of Anaconda) to your $HOME directory, or whereever you prefer to install it.</p>
+<p>The installation could be done by following the instructions here: 
+<a href="https://conda.io/projects/conda/en/latest/user-guide/install/index.html">https://conda.io/projects/conda/en/latest/user-guide/install/index.html</a></p>
+<p><strong>Tip for Unix users:</strong> When it asks whether to put Miniconda on your PATH within your .bashrc, say yes.</p>
+<h2>One Time Setup: Install all necessary Python packages (including autograd)</h2>
+<p><em>Expected time</em> for this step: 10 minutes</p>
+<p><em>Expected disk space</em>: About 1GB (sorry! modern Python is quite bloated)</p>
+<p>After you have conda installed, you can install a set of standard packages that we have prepared as a convenient .yml specification file:
+<a href="https://www.cs.tufts.edu/comp/135/2020f/conda_envs/comp135_2020f_env.yml">https://www.cs.tufts.edu/comp/135/2020f/conda_envs/comp135_2020f_env.yml</a></p>
+<p>After downloading this file, you can setup the environment and install all required packages in just one terminal command:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ conda env create -f comp135_2020f_env.yml
+</pre></div>
+</td></tr></table>
+
+<h2>Use the environment</h2>
+<p>At a terminal:</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre>1</pre></div></td><td class="code"><div class="highlight"><pre><span></span>$ conda activate comp135_2020f_env
+</pre></div>
+</td></tr></table>
+  </div>
+</article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+       <ul class="col-sm-6 list-inline">
+
+
+
+        </ul>
+        <p class="col-sm-6 text-sm-right text-muted">
+          MIT License
+          /
+          <a href="https://github.com/tufts-ml/tufts_ml_website">
+          Source on github
+          </a>
+          /
+          <a href="https://github.com/getpelican/pelican" target="_blank">Powered by Pelican</a>
+          /
+          <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>

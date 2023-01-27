@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags always come first -->
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>Project B: Classifying Sentiment from Text Reviews | Introduction to Machine Learning
+</title>
+  <link rel="canonical" href="https://www.cs.tufts.edu/comp/135/2020f/projectB.html">
+
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://www.cs.tufts.edu/comp/135/2020f/theme/js/icsFormatter.js"></script>
+
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/pygments/default.min.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/style.css">
+  <link rel="stylesheet" href="https://www.cs.tufts.edu/comp/135/2020f/theme/css/custom.css">
+
+
+<meta name="description" content="Status: RELEASED. Due date: Mon. 11/23 at 11:59pm AoE (Anywhere on Earth). (Tue 11/24 at 07:59am in Boston) Updates 2020-10-27 7:45am ET : Released. Please get started. Jump to:   Background   Code   Datasets   Problem 1   Problem 2   Problem 3   Rubric Turn-in links: See What to Turn In …">
+</head>
+
+<body>
+  <header class="header">
+    <nav class="navbar navbar-expand-lg navbar-expand-md navbar-light bg-light">
+    <div class="container">
+    <div class="row display-flex">
+        <div class="col-2 col-sm-2 d-md-none"><!-- hidden if md or lg -->
+        <button type="button" class="navbar-toggler" data-toggle="collapse"
+            data-target="#my_collapsing_navbar"
+            aria-controls="my_collapsing_navbar"
+            aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon mw-100"></span>
+        </button>
+        </div>
+
+        <div class="d-none d-md-block col-md-2">
+          <a href="https://www.cs.tufts.edu/comp/135/2020f/">
+            <img class="img-fluid mw-100" src=https://www.cs.tufts.edu/comp/135/2020f/images/tufts_ml_logo.png alt="Introduction to Machine Learning">
+          </a>
+        </div>
+
+        <div class="col-10 col-sm-10 col-md-10">
+          <h1 class="text-left" style="word-break:'break-all'">
+            <a href="https://www.cs.tufts.edu/comp/135/2020f/">Introduction to Machine Learning</a>
+          </h1>
+
+          <p class="text-muted text-left d-none d-md-block mw-100">
+            Tufts CS COMP 135 Intro ML | Fall 2020
+          </p>
+
+
+
+          <div class="collapse navbar-collapse" id="my_collapsing_navbar">
+                <ul class="navbar-nav">
+                  <li class="nav-item text-left">
+                    <a href="index.html">Syllabus</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="schedule.html">Schedule</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="assignments.html">Assignments</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="office_hours.html">Office Hours</a>
+                  </li>
+                  <li class="nav-item text-left">
+                    <a href="resources.html">Resources</a>
+                  </li>
+
+                </ul>
+          </div>
+
+
+        </div>
+
+    </div>
+    </div>
+    </nav>
+
+  </header>
+
+  <div class="main">
+    <div class="container">
+      <h1>Project B: Classifying Sentiment from Text Reviews
+</h1>
+      <hr>
+<article class="article">
+  <div class="content">
+        <p style="text-align:right">Last modified: 2020-11-23 18:42 </p>
+    <p><strong>Status: RELEASED.</strong></p>
+<p><strong>Due date</strong>: Mon. 11/23 at 11:59pm AoE (Anywhere on Earth). (Tue 11/24 at 07:59am in Boston)</p>
+<p><strong> Updates </strong></p>
+<ul>
+<li>2020-10-27 7:45am ET : Released. Please get started.</li>
+</ul>
+<p><strong>Jump to</strong>:</p>
+<p>&nbsp; <a href="#background">Background</a> 
+&nbsp; <a href="#code">Code</a> 
+&nbsp; <a href="#datasets">Datasets</a> 
+&nbsp; <a href="#problem1">Problem 1</a> 
+&nbsp; <a href="#problem2">Problem 2</a>
+&nbsp; <a href="#problem3">Problem 3</a>
+&nbsp; <a href="#rubric">Rubric</a></p>
+<p><strong>Turn-in links</strong>: See <a href='#what-to-turn-in'> What to Turn In Instructions</a> for details</p>
+<ul>
+<li>PDF report turned in to: <a href="https://www.gradescope.com/courses/173055/assignments/795320">https://www.gradescope.com/courses/173055/assignments/795320</a></li>
+<li>ZIP file of test-set predictions for Problem 1's Bag-of-Words Leaderboard: <a href="https://www.gradescope.com/courses/173055/assignments/795584">https://www.gradescope.com/courses/173055/assignments/795584</a></li>
+<li>ZIP file of test-set predictions for Problem 2's Word-Embeddings Leaderboard: <a href="https://www.gradescope.com/courses/173055/assignments/796337">https://www.gradescope.com/courses/173055/assignments/796337</a></li>
+<li>ZIP file of test-set predictions for Problem 3's Open-Ended Leaderboard: <a href="https://www.gradescope.com/courses/173055/assignments/796338">https://www.gradescope.com/courses/173055/assignments/796338</a></li>
+<li>Reflection on Project B: <a href="https://forms.gle/eKWE8fyvNTKQtS196">https://forms.gle/eKWE8fyvNTKQtS196</a></li>
+</ul>
+<h2>Overview</h2>
+<p>This is a four week project with lots of open-ended programming. Get started right away!</p>
+<h4>Team Formation</h4>
+<p>In this project, you can work in teams of 2 people, or (if you prefer) individually. 
+Individual teams still need to complete all the parts below. We want to incentivize you to work in pairs.</p>
+<p>If you need help finding teammates, please post to our "Finding a Partner for Project B" post on Piazza.</p>
+<p>By the start of the second week (by end of day Mon 11/02), you should have identified your partner and signed up here:</p>
+<ul>
+<li><a href="https://forms.gle/rq2mP2idLZCPcKEZ6">ProjectB Team Formation Form</a></li>
+<li>
+<ul>
+<li>Even if you decide to work alone, you should fill this form out acknowledging that.</li>
+</ul>
+</li>
+</ul>
+<h4>Work to Complete</h4>
+<p>As a team, you will work on two <em>semi-structured, yet open-ended</em> problems, and then a <em>completely open-ended</em> problem. The 3 problems look at different representations of text for a common task.</p>
+<ul>
+<li>Problem 1 looks at using bag-of-word feature representations</li>
+<li>Problem 2 looks at word embedding feature representations, using "GloVe"</li>
+<li>Problem 3 is an open-ended problem, where any feature representation is allowed</li>
+</ul>
+<p>Throughout Problems 1, 2, and 3, you will practice the <em>development cycle</em> of an ML practitioner:</p>
+<ul>
+<li>
+<ul>
+<li>Propose a reasonable ML pipeline (feature extraction + classifier)</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Evaluate it and analyze the results carefully</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Revise the pipeline and repeat</li>
+</ul>
+</li>
+</ul>
+<p>For all 3 problems, we will maintain a <em>leaderboard</em> on Gradescope. You should periodically submit the predictions of your best model on the <em>test set</em> (we do not release the labels to you in advance). </p>
+<h4><a id="#what-to-turn-in"> What to Turn In </a></h4>
+<ol>
+<li>
+<p>Each team will prepare <em>one</em> PDF report covering all 3 problems below.</p>
+</li>
+<li>
+<p>Prepare a short PDF report (no more than 7 pages).</p>
+</li>
+<li>This document will be manually graded according to our <a href="#rubric">rubric</a></li>
+<li>Can use your favorite report writing tool (Word or G Docs or LaTeX or ....)</li>
+<li>Should be <strong>human-readable</strong>. Do not include code. Do NOT just export a jupyter notebook to PDF.</li>
+<li>
+<p>Should have each subproblem <a href="https://www.youtube.com/watch?v=KMPoby5g_nE&amp;feature=youtu.be&amp;t=43">marked via the in-browser Gradescope annotation tool</a>)</p>
+</li>
+<li>
+<p>Each team will prepare one ZIP file of test-set predictions as a leaderboard submission for Problem 1, Problem 2, and Problem 3. This ZIP file will contain just one file:</p>
+</li>
+<li>
+<p>yproba1_test.txt : plain text file</p>
+</li>
+<li>
+<ul>
+<li>Each line contains float probability that the relevant example should be classified as a positive example given its features</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Should be loadable into NumPy as a 1D array via this snippet: <code>np.loadtxt('yproba1_test.txt')</code></li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Will be thresholded at 0.5 to produce hard binary predicted labels (either 0 or 1)</li>
+</ul>
+</li>
+<li>
+<p>Each <em>individual</em> will turn in a <em>reflection form</em> (after completing the report).</p>
+</li>
+<li>Link: <a href="https://forms.gle/eKWE8fyvNTKQtS196">https://forms.gle/eKWE8fyvNTKQtS196</a></li>
+</ol>
+<h3><a name='datasets'></a> <a name='code'>Datasets, Starter Code and Code Restrictions</a></h3>
+<p>For all required data and code, see the projectB folder of the public assignments repo for this class:</p>
+<p><a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/tree/master/projectB">https://github.com/tufts-ml-courses/comp135-20f-assignments/tree/master/projectB</a></p>
+<p>Our starter code repo provides a few scripts helping you load the data for each problem, but otherwise offers <em>no</em> other code. This is meant to simulate the lack of code you'd have in the "real world", trying to build a text sentiment classifier from scratch using your machine learning skills.</p>
+<p>For this assignment, you can use <em>any</em> Python package you like (sklearn, nltk, etc). You are welcome to consult the sklearn documentation website or other external web resources for snippets of code to guide your usage of different classifiers. However, you should <em>understand</em> every line of the code you use and not simply copy-paste without thinking carefully.</p>
+<p>Remember to keep the course <a href="index.html#collaboration-policy">collaboration policy</a> in mind: do your own work!</p>
+<h2><a name="background">Background</a></h2>
+<p>We have given you a dataset of several thousand single-sentence reviews collected from three domains: imdb.com, amazon.com, yelp.com. Each review consists of a sentence and a binary label indicating the emotional <em>sentiment</em> of the sentence (1 for reviews expressing <em>positive</em> feelings; 0 for reviews expressing <em>negative</em> feelings). All the provided reviews in the training and test set were scraped from websites whose assumed audience is primarily English speakers, but of course may contain slang, misspellings, some foreign characters, and many other properties that make working with natural language data challenging (and fun!).</p>
+<p>Your goal is to develop a binary classifier that can correctly identify the sentiment of a new sentence.</p>
+<p>Here are some example <em>positive</em> sentences:</p>
+<div class="highlight"><pre><span></span><span class="nv">imdb</span>          <span class="nv">The</span> <span class="nv">writers</span> <span class="nv">were</span> <span class="s2">&quot;</span><span class="s">smack on</span><span class="s2">&quot;</span> <span class="nv">and</span> <span class="nv">I</span> <span class="nv">think</span> <span class="nv">the</span> <span class="nv">best</span> <span class="nv">actors</span> <span class="nv">and</span> <span class="nv">actresses</span> <span class="nv">were</span> <span class="nv">a</span> <span class="nv">bonus</span> <span class="nv">to</span> <span class="nv">the</span> <span class="k">show</span>.<span class="nv">These</span> <span class="nv">characters</span> <span class="nv">were</span> <span class="nv">so</span> <span class="nv">real</span>.
+<span class="nv">imdb</span>          <span class="nv">The</span> <span class="nv">Songs</span> <span class="nv">Were</span> <span class="nv">The</span> <span class="nv">Best</span> <span class="nv">And</span> <span class="nv">The</span> <span class="nv">Muppets</span> <span class="nv">Were</span> <span class="nv">So</span> <span class="nv">Hilarious</span>.  
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="n">yelp</span>          <span class="n">Food</span> <span class="n">was</span> <span class="n">so</span> <span class="n">gooodd</span><span class="p">.</span>
+<span class="n">yelp</span>          <span class="n">I</span> <span class="n">could</span> <span class="n">eat</span> <span class="n">their</span> <span class="n">bruschetta</span> <span class="k">all</span> <span class="k">day</span> <span class="n">it</span> <span class="k">is</span> <span class="n">devine</span><span class="p">.</span>
+</pre></div>
+
+
+<p>Here are some example negative sentences:</p>
+<div class="highlight"><pre><span></span><span class="nv">amazon</span>        <span class="nv">It</span> <span class="nv">always</span> <span class="nv">cuts</span> <span class="nv">out</span> <span class="nv">and</span> <span class="nv">makes</span> <span class="nv">a</span> <span class="k">beep</span> <span class="k">beep</span> <span class="k">beep</span> <span class="nv">sound</span> <span class="k">then</span> <span class="nv">says</span> <span class="nv">signal</span> <span class="nv">failed</span>.
+<span class="nv">amazon</span>        <span class="nv">the</span> <span class="nv">only</span> <span class="nv">VERY</span> <span class="nv">DISAPPOINTING</span> <span class="nv">thing</span> <span class="nv">was</span> <span class="nv">there</span> <span class="nv">was</span> <span class="nv">NO</span> <span class="nv">SPEAKERPHONE</span><span class="o">!!!!</span>
+</pre></div>
+
+
+<div class="highlight"><pre><span></span><span class="nv">yelp</span>          <span class="nv">It</span> <span class="nv">sure</span> <span class="nv">does</span> <span class="nv">beat</span> <span class="nv">the</span> <span class="nv">nachos</span> <span class="nv">at</span> <span class="nv">the</span> <span class="nv">movies</span> <span class="nv">but</span> <span class="nv">I</span> <span class="nv">would</span> <span class="nv">expect</span> <span class="nv">a</span> <span class="nv">little</span> <span class="nv">bit</span> <span class="nv">more</span> <span class="nv">coming</span> <span class="nv">from</span> <span class="nv">a</span> <span class="nv">restaurant</span>.
+<span class="nv">yelp</span>          <span class="nv">I</span><span class="s1">&#39;</span><span class="s">m not sure how long we stood there but it was long enough for me to begin to feel awkwardly out of place.</span>
+</pre></div>
+
+
+<h4>Dataset acknowledgment</h4>
+<p>This dataset comes from research work by D. Kotzias, M. Denil, N. De Freitas, and P. Smyth described in the <a href="http://mdenil.com/media/papers/2015-deep-multi-instance-learning.pdf">KDD 2015 paper 'From Group to Individual Labels using Deep Features'</a>. We are grateful to these authors for making the dataset available. </p>
+<h2>Provided data</h2>
+<p>You are given the data in CSV file format, with 2400 input,output pairs in the training set, and 600 inputs in the test set.</p>
+<p><strong>Training set</strong> of 2400 examples</p>
+<ul>
+<li>x_train.csv : input data</li>
+<li>
+<ul>
+<li>Column 1: 'website_name' : one of ['imdb', 'amazon', 'yelp']</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>Column 2: 'text' : string sentence which represents the raw review</li>
+</ul>
+</li>
+<li>
+<p>y_train.csv : binary labels to predict</p>
+</li>
+<li>
+<ul>
+<li>Column 1: 'is_positive_sentiment' : 1 = positive sentiment, 0 = negative</li>
+</ul>
+</li>
+</ul>
+<p><strong>Test set</strong> of 600 examples</p>
+<ul>
+<li>x_test.csv : input data</li>
+</ul>
+<h2>Suggested Way to Load Data into Python</h2>
+<p>We suggest loading the sentence data using the <code>read_csv</code> method in Pandas:</p>
+<div class="highlight"><pre><span></span><span class="n">x_train_df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;x_train.csv&#39;</span><span class="p">)</span>
+<span class="n">tr_list_of_sentences</span> <span class="o">=</span> <span class="n">x_train_df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">].</span><span class="k">values</span><span class="p">.</span><span class="n">tolist</span><span class="p">()</span>
+</pre></div>
+
+
+<p>You can see a short example working Python script here: <a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/projectB/load_train_data.py">https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/projectB/load_train_data.py</a></p>
+<p>We'll often refer to each review or sentence as a single "document". Our goal is to classify each document into positive or negative labels. </p>
+<h2>Preprocessing</h2>
+<p>We suggest that you remove all the punctuation and convert upper case to lower case for each example. </p>
+<p>As discussed in class, there are many possible approaches to <em>feature representation</em>, the process of transforming any possible natural language document (often represented as an ordered list of words which can be of variable length) into a feature vector <span class="math">\(x_n\)</span> of a standard length.</p>
+<p>In this project, we will explore two approaches: bag-of-words vectors (explored in Problem 1) and embedding vectors (Problem 2). Later, you'll be allowed to try any feature representation approach you want (Problem 3). </p>
+<h2><a name="problem1"> Problem 1: Bag-of-Words Feature Representation</a></h2>
+<h3>Background on Bag-of-Words Representations</h3>
+<p>As discussed in lecture, the "Bag-of-Words" (BoW) representation assumes a fixed, finite-size vocabulary of V possible words is known in advance, with a defined index order (e.g. the first word is "stegosaurus", the second word is "dinosaur", etc.). </p>
+<p>Each document is represented as a count vector of length V, where entry at index v gives the number of times that the vocabulary word with index v appears in the document.</p>
+<p>You have many design decision to make when applying a BoW representation:</p>
+<ul>
+<li>How big is your vocabulary?</li>
+<li>Do you exclude rare words (e.g. appearing in less than 10 documents)? </li>
+<li>Do you exclude common words (like 'the' or 'a', or appearing in more than 50% of documents)?</li>
+<li>Do you only use single words ("unigrams")? Or should you consider some bigrams (e.g. 'New York' or 'not bad')?</li>
+<li>Do you keep the count values, or only store present/absent binary values?</li>
+<li>Do you use smart reweighting techniques like term-frequency/inverse-document-frequency?</li>
+</ul>
+<p>The key constraint with BoW representations is that each input feature must easily map to one human-readable unigram, bigram, or n-gram in a finite vocabulary. </p>
+<p>You should feel free to take advantage of the many tools that sklearn provides related to BoW representations:</p>
+<ul>
+<li><a href="https://scikit-learn.org/stable/modules/feature_extraction.html#the-bag-of-words-representation">User Guide for Bag of Words tools in <code>sklearn.feature_extraction.text</code></a></li>
+<li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.CountVectorizer.html#sklearn.feature_extraction.text.CountVectorizer">sklearn.feature_extraction.text.CountVectorizer</a></li>
+<li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html#sklearn.feature_extraction.text.TfidfVectorizer">sklearn.feature_extraction.text.TfIdfVectorizer</a></li>
+</ul>
+<h3>Goals and Tasks for Problem 1</h3>
+<p>For Problem 1, you will develop an effective BoW representation plus binary classifier pipeline, always aiming to produce the highest <em>balanced accuracy</em> on heldout data.</p>
+<p>You should experiment with several possible ways of performing BoW preprocessing, as well as two possible classifiers. You should use best practices in hyperparameter selection techniques to avoid overfitting and generalize well to new data. Within your hyperparameter selection, you should use cross-validation over <em>multiple</em> folds to assess the range of possible performance numbers that might be observed on new data.</p>
+<p>Your report should contain the following sections:</p>
+<h4><strong>1A</strong> : Bag-of-Words Design Decision Description</h4>
+<p>Well-written paragraph describing your chosen BoW feature representation pipeline, with sufficient detail that another student in this class could reproduce it. You are encouraged to use just plain English prose, but you might include a brief, well-written pseudocode block if you think it is helpful.</p>
+<p>You should describe and justify all major decisions, such as:</p>
+<ul>
+<li>how did you "clean" and "standardize" the data? (punctuation, upper vs. lower case, etc)</li>
+<li>how did you determine the final vocabulary set? did you exclude words, and if so how?</li>
+<li>what was your final vocabulary size (or ballpark size(s), if size varies across folds because it depends on the training set)?</li>
+<li>did you use unigrams or bigrams?</li>
+<li>did you use counts or binary values or something else?</li>
+<li>how did you handle out-of-vocabulary words in the test set?</li>
+</ul>
+<h4><strong>1B</strong> : Cross Validation and Hyperparameter Selection Design Description</h4>
+<p>Well-written paragraph describing how you will use cross-validation and hyperparameter selection to assess and refine each classifier pipeline you'll develop in 1C and 1D below.</p>
+<p>You should describe and justify all major decisions, such as:</p>
+<ul>
+<li>What performance metric will your search try to optimize on heldout data?</li>
+<li>What hyperparameter search strategy will you use?</li>
+<li>What is the source of your heldout data for performance estimates? (how many folds? how big is each fold? how do you split the folds?).</li>
+<li>Given a selected hyperparameter configuration created using CV by training models across several folds, how will you then build a "final" model to apply on the test set?</li>
+</ul>
+<h4><strong>1C</strong> : Hyperparameter Selection Figure for Classifier #1 (should be a tree-based classifier)</h4>
+<p>Using your BoW preprocessing plus any tree-based classifier (decision tree or random forest or boosting classifier), your goal is to train a model that achieves the best performance on heldout data. </p>
+<p>You should use at least 3 fold cross validation to perform a hyperparameter search over at least 5 possible configurations to avoid overfitting. Please follow the <a href="#selection-figure-rubric">hyperparameter selection rubric</a>.</p>
+<p>Your report should include a figure and paragraph summarizing this search.</p>
+<h4><strong>1D</strong> : Hyperparameter Selection Figure for Classifier #2 (any classifier)</h4>
+<p>Using your BoW preprocessing plus any classifier of your choice (logistic regression, MLP, nearest neighbor, etc.), your goal is to train a model that achieves the best performance on heldout data. </p>
+<p>You should use at least 3 fold cross validation to perform a hyperparameter search over at least 5 possible configurations to avoid overfitting. Please follow the <a href="#selection-figure-rubric">hyperparameter selection rubric</a>.</p>
+<p>Your report should include a figure and paragraph summarizing this search.</p>
+<h4><strong>1E</strong> : Determination of the Best Classifier Pipeline</h4>
+<p>Summarize which classifier among the two in 1C and 1D above performs best on heldout data according to your experiments, and try to give some verbal explanation about <em>why</em> (more flexible decision boundaries? better at avoiding overfitting? better suited to these features?). If one is not clearly better than the other, try to explain why.</p>
+<p>Other than heldout performance, is there some strong reason to prefer one classifier over the other (e.g. runtime cost or complexity of implementation)?</p>
+<p>Make sure it is clear which one classifier you select for the next few steps, and what your experiments suggest is a reasonable range for its performance on heldout data.</p>
+<h4><strong>1F</strong> : Analysis of Predictions for the Best Classifier</h4>
+<p>In a table or figure, show some representative examples of false positives and false negatives for your chosen best classifier. If possible, try to characterize what kinds of mistakes it is making.</p>
+<p>To give specific examples, you could look at any of these questions:</p>
+<ul>
+<li>does it do better on longer sentences or shorter sentences?</li>
+<li>does it do better on a particular kind of review (amazon or imdb)?</li>
+<li>does it do better on sentences without negation words ("not", "didn't", "shouldn't", etc.)?</li>
+</ul>
+<p>Do you notice anything about these sentences that you could use to improve performance? (You can <em>apply</em> these ideas later in Problem 3).</p>
+<h4><strong>1G</strong> : Report Performance on Test Set via Leaderboard</h4>
+<p>Apply your best BoW classifier from <strong>1E</strong> to the test sentences in <code>x_test.csv</code>. Store your <em>probabilistic</em> predictions into a single-column plain-text file <code>yproba1_test.txt</code> (remember, we'll use a threshold of 0.5 to turn these into binary decisions when computing performance metrics). Upload this file to our bag-of-words leaderboard.</p>
+<p>In your report, include a summary paragraph stating your ultimate test set performance, compare it to your previous estimates of heldout performance from cross-validation, and reflect on any differences.</p>
+<h2><a name="problem2"> Problem 2: Word Embedding Feature Representation</a></h2>
+<h3>Background on Word Embedding Representations</h3>
+<p>The basic idea of word embeddings is that each possible vocabulary word, such as  "the" or  "good" or "stegosaurus", has a specific associated vector with a fixed size (e.g. 5 dimensions). </p>
+<p>For some background on word embeddings, you might find these articles helpful:</p>
+<ul>
+<li><a href="https://www.shanelynn.ie/get-busy-with-word-embeddings-introduction/">Get Busy with Word Embeddings: An Introduction by Shane Lynn</a></li>
+<li><a href="https://machinelearningmastery.com/what-are-word-embeddings/">What are Word Embeddings? by Jason Brownlee</a></li>
+</ul>
+<p>In the projectB starter code repo, we have made available a large file of pre-trained length-50 embedding vectors for almost 100,000 possible vocabulary words, using a specific word embedding method called "GloVe" (short for Globel Vector). For this problem, the repo contains:</p>
+<ul>
+<li>A large .zip file of the embeddings: <a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/tree/master/projectB/pretrained_word_embeddings">pretrained_embeddings/glove.6B.50d.txt.zip</a></li>
+<li>A script to load the embeddings into a Python dictionary: <a href="https://github.com/tufts-ml-courses/comp135-20f-assignments/blob/master/projectB/load_word_embeddings.py">load_word_embeddings.py</a></li>
+</ul>
+<p>Given a set of pretrained embedding vectors, we can represent a <em>sentence</em> by averaging or summing together the vectors of words in the sentence. </p>
+<p>The key design decisions here are:</p>
+<ul>
+<li>How do you aggregate vectors for each word to produce one vector for a sentence? Average? Sum? Something else?</li>
+<li>What size of vector do you use?</li>
+<li>Do you incorporate all words? Or can you ignore words like 'the' with no anticipated <em>semantic</em> content?</li>
+</ul>
+<p><em>Not required, but if you are curious:</em>: You can read more about the GloVe method (and find other .zip files of higher-dimensional pretrained vectors) at these links:</p>
+<ul>
+<li><a href="https://nlp.stanford.edu/projects/glove/">GloVe project website</a></li>
+<li><a href="https://www.aclweb.org/anthology/D14-1162">GloVe research paper PDF</a></li>
+</ul>
+<h3>Goals and Tasks for Problem 2</h3>
+<p>For Problem 2, you will develop an effective word embedding representation plus binary classifier pipeline, always aiming to produce the highest <em>balanced accuracy</em> on heldout data.</p>
+<p>You should experiment with possible ways of performing word-embedding preprocessing, as well as two possible classifiers. You should use best practices in hyperparameter selection techniques to avoid overfitting and generalize well to new data. Within your hyperparameter selection, you should use cross-validation over <em>multiple</em> folds to assess the range of possible performance numbers that might be observed on new data.</p>
+<p>Your report should contain the following sections:</p>
+<h4><strong>2A</strong> : Word Embedding Preprocessing Description</h4>
+<p>Well-written paragraph describing your chosen word embedding pipeline in plain English, with sufficient detail that another student in this class could reproduce it.</p>
+<p>You should describe and justify all major decisions, such as:</p>
+<ul>
+<li>how did you "clean" and "standardize" the data? (punctuation, upper vs. lower case, etc)</li>
+<li>how did you determine the final vocabulary set? did you exclude words, and if so how?</li>
+<li>what is the size of your final vocabulary (roughly)?</li>
+<li>how was each vocabulary word represented as an embedding vector?</li>
+<li>how did you combine the embedding vectors for each word in a sentence to produce one vector representation for your sentence? how large is each sentence's feature vector?</li>
+<li>how did you handle out of vocabulary words in the test set?</li>
+</ul>
+<h4><strong>2B</strong> : Cross Validation and Hyperparameter Selection Design Description</h4>
+<p>What (if anything) has changed from your earlier hyperparameter selection strategies in 1B.</p>
+<h4><strong>2C</strong> : Hyperparameter selection Figure and Paragraph for Classifier #1 (your choice)</h4>
+<p>Using your word embedding preprocessing plus any classifier of your choice, your goal is to train a model that achieves the best performance on heldout data. </p>
+<p>You should use at least 3 fold cross validation to perform a hyperparameter search over at least 5 possible configurations to avoid overfitting. Please follow the <a href="#selection-figure-rubric">hyperparameter selection rubric</a>.</p>
+<p>Your report should include a figure and paragraph summarizing this search.</p>
+<h4><strong>2D</strong> : Hyperparameter selection Figure and Paragraph for Classifier #2 (your choice)</h4>
+<p>Using your word embedding preprocessing plus any classifier of your choice (distinct from 2C above), your goal is to train a model that achieves the best performance on heldout data. </p>
+<p>You should use at least 3 fold cross validation to perform a hyperparameter search over at least 5 possible configurations to avoid overfitting. Please follow the <a href="#selection-figure-rubric">hyperparameter selection rubric</a>.</p>
+<p>Your report should include a figure and paragraph summarizing this search.</p>
+<h4><strong>2E</strong> : Determination of the Best Classifier Pipeline</h4>
+<p>Summarize which classifier among the two in 2C and 2D above performs best on heldout data according to your experiments, and try to give some verbal explanation about <em>why</em> (more flexible decision boundaries? better at avoiding overfitting? better suited to these features?). If one is not clearly better than the other, try to explain why.</p>
+<p>Other than heldout performance, is there some strong reason to prefer one classifier over the other (e.g. runtime cost or complexity of implementation or guarantees about solution quality)?</p>
+<p>Make sure it is clear which one classifier you select for the next few steps, and what your experiments suggest is a reasonable range for its performance on heldout data.</p>
+<h4><strong>2F</strong> : Analysis of Predictions for the Best Classifier</h4>
+<p>In a table or figure, show some representative examples of false positives and false negatives for your chosen best classifier. If possible, try to characterize what kinds of mistakes it is making.</p>
+<p>To give specific examples, you could look at any of these questions:</p>
+<ul>
+<li>does it do better on longer sentences or shorter sentences?</li>
+<li>does it do better on a particular kind of review (amazon or imdb)?</li>
+<li>does it do better on sentences without negation words ("not", "didn't", "shouldn't", etc.)?</li>
+</ul>
+<p>Do you notice anything about these sentences that you could use to improve performance? (You can <em>apply</em> these ideas later in Problem 3).</p>
+<p><strong>Best practice:</strong> It is ideal if the set of examples here in 2F overlaps with the examples in 1F.</p>
+<h4><strong>2G</strong> : Report Performance on Test Set via Leaderboard</h4>
+<p>Apply your best word embedding classifier from <strong>2E</strong> to the test sentences in <code>x_test.csv</code>. Store your <em>probabilistic</em> predictions into a single-column plain-text file <code>yproba1_test.txt</code> (remember, we'll use a threshold of 0.5 to turn these into binary decisions when computing performance metrics). Upload this file to our Word Embeddings leaderboard.</p>
+<p>In your report, include a summary paragraph stating your ultimate test set performance, compare it to your previous estimates of heldout performance from cross-validation, and reflect on any differences. Discuss if your performance on word embeddings in Problem 2 is better or worse than in Problem 1, and why you think that might be.</p>
+<h2><a name="problem3"> Problem 3: Open-ended challenge </a></h2>
+<h3>Goals and Tasks for Problem 3</h3>
+<p>For this problem, your goal is to obtain the best balanced accuracy on heldout data, using <em>any</em> feature representation you want, <em>any</em> classifier you want, and any hyperparameter selection procedure you want.</p>
+<p>Here are some concrete examples of methods/ideas you could try:</p>
+<ul>
+<li>Can you combine BoW and GloVe representations to improve performance? Maybe just concatenate (stack) the two feature vectors together?</li>
+<li>Would it help build features for the first-half and second-half of sentences?</li>
+<li>Would it help to build separate classifiers for amazon, imdb, and yelp reviews?</li>
+<li>Can you try a kernel specifically designed for comparing BoW histograms, such as the <a href="https://web.archive.org/web/20160726172253/http://web.stanford.edu/group/mmds/slides2008/malik.pdf#page=18">Histogram Intersection kernel (see slide 18)</a>?</li>
+</ul>
+<h4><strong> 3A </strong> : Methods Description</h4>
+<p>Your report should include a concise, well-justified summary of what you've tried and why, that covers:</p>
+<ul>
+<li>how you obtain a feature representation</li>
+<li>which classifier you selected and how you train it</li>
+<li>which model complexity hyperparameters you selected and how you selected them</li>
+</ul>
+<p>We just want to see one or two well-written paragraphs, like the ones in 2A (for hyperparameter selection) and 2D (for classifier).</p>
+<p>You can include figures or tables if you like, but you do not need to.</p>
+<h4><strong>3B</strong> : Report Performance on Test Set via Leaderboard</h4>
+<p>Apply your best pipeline from <strong>3A</strong> to the test sentences in <code>x_test.csv</code>. Store your <em>probabilistic</em> predictions into a single-column plain-text file <code>yproba1_test.txt</code> (remember, we'll use a threshold of 0.5 to turn these into binary decisions when computing performance metrics). Upload this file to our Open-Ended leaderboard.</p>
+<p>In your report, include a summary paragraph stating your ultimate test set performance. Discuss if your performance is better or worse than previous problems, and why you think that might be.</p>
+<h2><a name="rubric">Rubric for Overall Performance </a></h2>
+<p>We'll get a final number for this project by averaging:</p>
+<ul>
+<li>85% : your report performance, using the rubric below</li>
+<li>10% : your leaderboard submissions, using the rubric below</li>
+<li>5% : completion of your reflection on the project</li>
+</ul>
+<h2><a name="rubric">Rubric for Evaluating Leaderboard Submissions</a></h2>
+<p>You'll submit 3 sets of predictions to our leaderboard (one each for Problem 1, 2, and 3)</p>
+<p>For each one, we'll give you a score between 0.0 and 1.0 where:</p>
+<ul>
+<li>90% of points represent if you achieved a "reasonable" score (e.g. a standard pipeline trained using good practices)</li>
+<li>10% of points awarded if you are within tolerance of the top 5 submissions in this class (partial credit possible, linearly interpolating between the "reasonable" score and the "top" score). </li>
+</ul>
+<h2><a name="rubric">Rubric for Evaluating PDF Report</a></h2>
+<p>Earning full credit on this assignment requires a well-thought-out report that demonstrates you made reasonable design decisions for feature preprocessing and classifiers and followed machine learning best practices throughout, especially for hyperparameter selection. Achieving top-scores on the leaderboard is far less important than understanding <em>why</em> some methods and choices outperform others.</p>
+<p>Points will be allocated across the various parts as follows:</p>
+<ul>
+<li>30%: Feature representation design decisions in 1A and 2A</li>
+<li>15%: Cross validation and hyperparameter selection design decisions in 1B and 2B</li>
+<li>25%: Training and selection for individual classifiers in 1C, 1D, 2C, 2D</li>
+<li>10%: Analysis of classifier mistakes in 1E and 2E</li>
+<li>10%: Reflection on heldout performance in 1F and 2F</li>
+<li>10%: Open-ended pipeline analysis in 3A and 3B</li>
+</ul>
+<h3><a name="selection-figure-rubric"> Hyperparameter Selection Rubric </a></h3>
+<h4>Figure Requirements:</h4>
+<p>Your figure should show heldout performance a range of at least 5 possible hyperparameter values controlling <em>model complexity</em> that cover both underfitting and overfitting. That is, if at all possible, at least one candidate value should show clear underfitting and at least one should show clear overfitting. </p>
+<p>Your figure should:</p>
+<ul>
+<li>Show both training set and validation set performance trends in the same plot</li>
+<li>Show the <em>typical</em> performance at each hyperparameter via the <em>average</em> over multiple CV folds</li>
+<li>
+<p>Communicate <em>uncertainty</em> around this typical value, by exposing the variation across the multiple CV folds</p>
+</li>
+<li>
+<ul>
+<li>A simple way to show uncertainty is show the empirical <em>range</em> across all folds, or the empirical standard deviation</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>A <em>better</em> way to do this is show a separate dot for the direct performance of each fold (so 5 dots for 5 folds).</li>
+</ul>
+</li>
+</ul>
+<p>The big idea here is that your figure should help the reader understand if one hyperparameter is definitely better than another (e.g. performance is better on most or all folds) or if there isn't much difference.</p>
+<h4>Paragraph requirements:</h4>
+<p>In each paragraph where you describe training a classifier and selecting its hyperparameters to avoid overfitting, you should include</p>
+<ul>
+<li>1-2 sentences: describe the potential advantages of the chosen classifier for the task at hand.</li>
+<li>1-3 sentences: describe any necessary details about the training process (e.g. are there convergence issues? step-size selection issues? need for early stopping?)</li>
+<li>1-2 sentences: describe which model complexity hyperparameter(s) were explored, how these values control model complexity, and why the chosen candidate value grids (or random distributions) are reasonable to explore the transition between under and over fitting and find the "sweet spot" in-between.</li>
+<li>1-2 sentences: describe the results of the experiment: which hyperparameter is preferred? is the evidence decisive, or uncertain?</li>
+</ul>
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var align = "center",
+        indent = "0em",
+        linebreak = "false";
+
+    if (false) {
+        align = (screen.width < 768) ? "left" : align;
+        indent = (screen.width < 768) ? "0em" : indent;
+        linebreak = (screen.width < 768) ? 'true' : linebreak;
+    }
+
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/latest.js?config=TeX-AMS-MML_HTMLorMML';
+
+    var configscript = document.createElement('script');
+    configscript.type = 'text/x-mathjax-config';
+    configscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'none' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: '"+ align +"'," +
+        "    displayIndent: '"+ indent +"'," +
+        "    showMathMenu: true," +
+        "    messageStyle: 'normal'," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['\\\\(','\\\\)'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        "        availableFonts: ['STIX', 'TeX']," +
+        "        preferredFont: 'STIX'," +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }," +
+        "        linebreaks: { automatic: "+ linebreak +", width: '90% container' }," +
+        "    }, " +
+        "}); " +
+        "if ('default' !== 'default') {" +
+            "MathJax.Hub.Register.StartupHook('HTML-CSS Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax['HTML-CSS'].FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+            "MathJax.Hub.Register.StartupHook('SVG Jax Ready',function () {" +
+                "var VARIANT = MathJax.OutputJax.SVG.FONTDATA.VARIANT;" +
+                "VARIANT['normal'].fonts.unshift('MathJax_default');" +
+                "VARIANT['bold'].fonts.unshift('MathJax_default-bold');" +
+                "VARIANT['italic'].fonts.unshift('MathJax_default-italic');" +
+                "VARIANT['-tex-mathit'].fonts.unshift('MathJax_default-italic');" +
+            "});" +
+        "}";
+
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(configscript);
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+  </div>
+</article>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+       <ul class="col-sm-6 list-inline">
+
+
+
+        </ul>
+        <p class="col-sm-6 text-sm-right text-muted">
+          MIT License
+          /
+          <a href="https://github.com/tufts-ml/tufts_ml_website">
+          Source on github
+          </a>
+          /
+          <a href="https://github.com/getpelican/pelican" target="_blank">Powered by Pelican</a>
+          /
+          <a href="https://github.com/nairobilug/pelican-alchemy" target="_blank">&#x2728;</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>
