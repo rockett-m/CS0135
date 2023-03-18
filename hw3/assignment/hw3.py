@@ -126,6 +126,7 @@ def calc_percent_cancer(labels, cancer_label=1):
 
     return pct_cancerous
 
+
 def predict_0_always_classifier(X):
     """
     Implement a classifier that predicts 0 always.
@@ -133,7 +134,11 @@ def predict_0_always_classifier(X):
     :return: predictions from the always-0 classifier
     """
     # TODO
-    pass
+    matches = sum([int(row[1]) == 0 for row in X]) # get cancer column
+
+    neg_accuracy = matches / (len(X) / 3) # only using middle col
+
+    return neg_accuracy # floating point between 0.0 and 1.0
 
 
 def calc_accuracy(tp, tn, fp, fn):
@@ -146,7 +151,9 @@ def calc_accuracy(tp, tn, fp, fn):
     :return: Accuracy value from 0.0 to 1.0
     """
     # TODO
-    return
+    accuracy_val = ((tp + tn) / (tp + tn + fp + fn))
+
+    return accuracy_val
 
 
 def standardize_data(X_train, X_test):
