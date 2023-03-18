@@ -134,11 +134,9 @@ def predict_0_always_classifier(X):
     :return: predictions from the always-0 classifier
     """
     # TODO
-    matches = sum([int(row[1]) == 0 for row in X]) # get cancer column
+    predictions = np.zeros(len(X))
 
-    neg_accuracy = matches / (len(X) / 3) # only using middle col
-
-    return neg_accuracy # floating point between 0.0 and 1.0
+    return predictions # floating point values between 0.0 and 1.0
 
 
 def calc_accuracy(tp, tn, fp, fn):
@@ -169,7 +167,15 @@ def standardize_data(X_train, X_test):
     """
     from sklearn.preprocessing import MinMaxScaler
     # TODO
-    return X_train, X_test
+    scaler = MinMaxScaler(feature_range=(0, 1))
+
+    X_tr = scaler.fit(X_train)
+    X_te = scaler.fit(X_test)
+
+    X_train = scaler.transform(X_tr)
+    X_test = scaler.transform(X_te)
+
+    return X_train, X_test # may or may not be correct
 
 
 def calc_perf_metrics_for_threshold(y_true_N, y_proba1_N, thresh=0.5):
