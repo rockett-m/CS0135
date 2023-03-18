@@ -92,22 +92,11 @@ def calc_binary_metrics(y_true_N, y_hat_N):
     FN : int
         Number of false negatives
     """
-
     # TODO
     TP = 0.0
     TN = 0.0
     FP = 0.0
     FN = 0.0
-
-    for ytrue, yhat in zip(y_true_N, y_hat_N):
-        if ytrue == yhat and ytrue == 0: # no cancer and prediction correct
-            TN += 1
-        elif ytrue == yhat and ytrue == 1: # cancer and prediction correct
-            TP += 1
-        elif ytrue != yhat and ytrue == 0: # no cancer and prediction incorrect
-            FP += 1
-        else: # ytrue != yhat and ytrue == 1: # cancer and prediction incorrect
-            FN += 1
 
     return TP, TN, FP, FN
 
