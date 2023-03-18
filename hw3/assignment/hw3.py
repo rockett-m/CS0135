@@ -120,8 +120,11 @@ def calc_percent_cancer(labels, cancer_label=1):
     :return: Percentage of labels marked as cancerous.
     """
     # TODO
-    pass
+    cancerous = sum([int(x) == cancer_label for x in labels])
 
+    pct_cancerous = (cancerous / len(labels)) * 100
+
+    return pct_cancerous
 
 def predict_0_always_classifier(X):
     """
