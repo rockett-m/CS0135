@@ -167,45 +167,17 @@ def standardize_data(X_train, X_test):
     """
     from sklearn.preprocessing import MinMaxScaler
     # TODO
-    """
-    X_train_tx = X_train.transpose()
-
-    age =      X_train_tx[0,:] # first row - age
-    fam_hist = X_train_tx[1,:]
-    marker =   X_train_tx[2, :]
-
-
-    age_scaled = scaler.fit(age)
-    marker_scaled = scaler.fit(marker)
-
-    x_temp = np.array()
-    for i, j, k in zip(age_scaled, fam_hist, marker_scaled):
-        row = [i, j, k]
-        x_temp.append(row)
-
-    # x_temp = np.array(age_scaled) + np.array(fam_hist) + np.array(marker_scaled)
-    X_train = x_temp.transpose()
-    """
-
+    # don't need to change family history since it is boolean already [0,1]
     scaler = MinMaxScaler(feature_range=(0, 1))
 
-    # print(X_train[:,1])
-    age_scaled = MinMaxScaler().fit_transform(X_train[:,0]).reshape(1, -1)
-    # age_scaled = scaler.fit_transform(X_train[:,0])
-    marker_scaled = scaler.fit_transform(X_train[:,2]).reshape().reshape(1, -1)
-    # print(f'{age_scaled = }')
+    # normalize each column using scaler.fit_transform
+    for i in range(X_train.shape[1]):
+        X_train[:, i] = scaler.fit_transform(X_train[:, i].reshape(-1, 1)).flatten()
 
-    X_train = np.stack((age_scaled, X_train[:,1], marker_scaled), axis=1)
-    # X_train = X_train.reshape(1, -1)
-    # print(f'\n\n\n{X_train = }\n\n\n')
+    for i in range(X_test.shape[1]):
+        X_test[:, i] = scaler.fit_transform(X_test[:, i].reshape(-1, 1)).flatten()
 
-    # X_tr = scaler.fit(X_train)
-    # X_te = scaler.fit(X_test)
-    #
-    # X_train = scaler.transform(X_tr)
-    # X_test = scaler.transform(X_te)
-    X_test = X_train
-    return X_train, X_test  # may or may not be correct
+    return X_train, X_test
 
 
 def calc_perf_metrics_for_threshold(y_true_N, y_proba1_N, thresh=0.5):
