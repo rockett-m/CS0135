@@ -337,9 +337,14 @@ def calibrated_perceptron_classifier(x_train, y_train, x_test, y_test,
 
     # TODO: Use penalty, alpha, random_state for your perceptron classifier
     # BE SURE TO SET RANDOM SEED FOR CLASSIFIER TO BE DETERMINISTIC TO PASS TEST
+    from sklearn.calibration import CalibratedClassifierCV
+    cppn = Perceptron(penalty=penalty, alpha=alpha, random_state=random_state)
 
+    cppn.fit(x_train, y_train)
+    pred_train = cppn.decision_function(x_train)
 
-
+    cppn.fit(x_test, y_test)
+    pred_test = cppn.decision_function(x_test)
 
     return pred_train, pred_test
 
