@@ -339,6 +339,8 @@ def calibrated_perceptron_classifier(x_train, y_train, x_test, y_test,
     # BE SURE TO SET RANDOM SEED FOR CLASSIFIER TO BE DETERMINISTIC TO PASS TEST
 
 
+
+
     return pred_train, pred_test
 
 
@@ -417,28 +419,17 @@ if __name__ == '__main__':
 
     # Load the dataset: creates arrays with the 2- or 3-feature input datasets.
     # Load the x-data and y-class arrays
-    x_train = np.loadtxt(f'{dir_data}/x_train.csv',
-                         delimiter=',',
-                         skiprows=1)
-    x_test = np.loadtxt(f'{dir_data}/x_test.csv',
-                        delimiter=',',
-                        skiprows=1)
+    x_train = np.loadtxt(f'{dir_data}/x_train.csv', delimiter=',', skiprows=1)
 
-    y_train = np.loadtxt(f'{dir_data}/y_train.csv',
-                         delimiter=',',
-                         skiprows=1)
-    y_test = np.loadtxt(f'{dir_data}/y_test.csv',
-                        delimiter=',',
-                        skiprows=1)
+    x_test = np.loadtxt(f'{dir_data}/x_test.csv', delimiter=',', skiprows=1)
 
-    feat_names = np.loadtxt(f'{dir_data}/x_train.csv',
-                            delimiter=',',
-                            dtype=str,
-                            max_rows=1)
-    target_name = np.loadtxt(f'{dir_data}/y_train.csv',
-                             delimiter=',',
-                             dtype=str,
-                             max_rows=1)
+    y_train = np.loadtxt(f'{dir_data}/y_train.csv', delimiter=',', skiprows=1)
+
+    y_test = np.loadtxt(f'{dir_data}/y_test.csv', delimiter=',', skiprows=1)
+
+    feat_names = np.loadtxt(f'{dir_data}/x_train.csv', delimiter=',', dtype=str, max_rows=1)
+
+    target_name = np.loadtxt(f'{dir_data}/y_train.csv', delimiter=',', dtype=str, max_rows=1)
 
     print(f"features: {feat_names}\n")
 
@@ -540,7 +531,7 @@ if __name__ == '__main__':
     # print("PPV threshold: %.4f => PPV: %.4f; TPR: %.4f" % (
     #     best_PPV_threshold, best_PPV, best_TPR_for_best_PPV))
     #
-    # # #### (e) Exploring diffrerent thresholds
+    # # #### (e) Exploring different thresholds
     # #
     # # #### (i) Using default 0.5 threshold.
     # #
