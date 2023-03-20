@@ -308,11 +308,13 @@ def series_of_preceptrons(x_train, y_train, x_test, y_test, alphas):
 
         model.fit(x_train, y_train)
         pred_train = model.predict(x_train)
-        train_accuracy_list.append(pred_train)
+        train_acc = accuracy_score(y_train, pred_train)
+        train_accuracy_list.append(train_acc)
 
         model.fit(x_test, y_test)
         pred_test = model.predict(x_test)
-        test_accuracy_list.append(pred_test)
+        test_acc = accuracy_score(y_test, pred_test)
+        test_accuracy_list.append(test_acc)
 
     return train_accuracy_list, test_accuracy_list
 
