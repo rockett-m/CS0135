@@ -262,20 +262,19 @@ def perceptron_classifier(x_train, y_train, x_test, y_test,
 
     # TODO: Use penalty, alpha, random_state for your perceptron classifier
     # BE SURE TO SET RANDOM SEED FOR CLASSIFIER TO BE DETERMINISTIC TO PASS TEST
-    from sklearn.linear_model import Perceptron
 
     # model with default values
-    perceptron = Perceptron(penalty=penalty, alpha=alpha, random_state=random_state)
+    model = Perceptron(penalty=penalty, alpha=alpha, random_state=random_state)
 
     # fit to training data
-    perceptron.fit(x_train, y_train)
+    model.fit(x_train, y_train)
     # make predictions on the test data
-    pred_train = perceptron.predict(x_train)
+    pred_train = model.predict(x_train)
 
     # fit to training data
-    perceptron.fit(x_test, y_test)
+    model.fit(x_test, y_test)
     # make predictions on the test data
-    pred_test = perceptron.predict(x_test)
+    pred_test = model.predict(x_test)
 
     return pred_train, pred_test
 
@@ -301,9 +300,19 @@ def series_of_preceptrons(x_train, y_train, x_test, y_test, alphas):
     Each model will use a different `alpha` value, multiplying that by the L2 penalty. 
     """
     # TODO
-
     train_accuracy_list = list()
     test_accuracy_list = list()
+
+    for idx, alpha in enumerate(alphas):
+        model = Perceptron(penalty="l2", alpha=alpha, random_state=42)
+
+        model.fit(x_train, y_train)
+        pred_train = model.predict(x_train)
+        train_accuracy_list.append(pred_train)
+
+        model.fit(x_test, y_test)
+        pred_test = model.predict(x_test)
+        test_accuracy_list.append(pred_test)
 
     return train_accuracy_list, test_accuracy_list
 
@@ -448,9 +457,7 @@ if __name__ == '__main__':
     # Compute and print the accuracy of the always-0 classifier on val and test.
     # y_train_pred = predict_0_always_classifier(x_train)
     # y_test_pred = predict_0_always_classifier(x_test)
-    # acc_always0_train = calc_accuracy(
-    #     *calc_binary_metrics(y_train, y_train_pred)
-    # )
+    # acc_always0_train = calc_accuracy(*calc_binary_metrics(y_train, y_train_pred))
     # acc_always0_test = calc_accuracy(*calc_binary_metrics(y_test, y_test_pred))
     # print("acc on TRAIN: %.3f" %
     #       acc_always0_train if acc_always0_train else 0.0)
