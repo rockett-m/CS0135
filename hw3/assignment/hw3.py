@@ -180,7 +180,7 @@ def standardize_data(X_train, X_test):
     return X_train, X_test
 
 
-def calc_perf_metrics_for_threshold(y_true_N, y_proba1_N, thresh=0.5):
+def calc_perf_metrics_for_threshold(y_true_N, y_proba1_N, thresh=0.5):  # check if correct
     """
     Compute performance metrics for a given probabilistic classifier and threshold
     Args
@@ -207,8 +207,16 @@ def calc_perf_metrics_for_threshold(y_true_N, y_proba1_N, thresh=0.5):
     npv : negative predictive value of predictions
     """
     # TODO
-    # tp, tn, fp, fn = calc_binary_metrics(...)
     # tp, tn, fp, fn = calc_binary_metrics(y_true_N, y_hat_N)
+
+    y_hat_N = np.array()  # replace with probabilities with 0 or 1
+    for idx, ypn in enumerate(y_proba1_N):
+        if ypn >= thresh: # we set equal to 1 if >= thresh
+            y_hat_N[idx] = 1
+        else:
+            y_hat_N[idx] = 0
+
+    tp, tn, fp, fn = calc_binary_metrics(y_true_N, y_hat_N)  # replaced y_hat_N 0,1
 
     acc = 0.0
     tpr = 0.0
@@ -217,14 +225,17 @@ def calc_perf_metrics_for_threshold(y_true_N, y_proba1_N, thresh=0.5):
     npv = 0.0
 
     # TODO
-
-
+    acc = calc_accuracy(tp, tn, fp, fn)
+    tpr = (tp / (tp + fn))  # sensitivity
+    tnr = (tn / (tn + fp))  # specificity
+    ppv = (tp / (tp + fp))  # positive pred and has cancer
+    npv = (tn / (tn + fn))  # negative pred and does not have cancer
 
     return acc, tpr, tnr, ppv, npv
 
 
-def perceptron_classifier(x_train, y_train, x_test, y_test, penalty="l2",
-                          alpha=0, random_state=42):
+def perceptron_classifier(x_train, y_train, x_test, y_test,
+                          penalty="l2", alpha=0, random_state=42):
     """
     Trains a perceptron classifier on the given training data and returns the
     predicted values on both training and test data.
@@ -251,7 +262,20 @@ def perceptron_classifier(x_train, y_train, x_test, y_test, penalty="l2",
 
     # TODO: Use penalty, alpha, random_state for your perceptron classifier
     # BE SURE TO SET RANDOM SEED FOR CLASSIFIER TO BE DETERMINISTIC TO PASS TEST
-    # Perceptron(penalty= , alpha= , random_state=42)
+    from sklearn.linear_model import Perceptron
+
+    # model with default values
+    perceptron = Perceptron(penalty=penalty, alpha=alpha, random_state=random_state)
+
+    # fit to training data
+    perceptron.fit(x_train, y_train)
+    # make predictions on the test data
+    pred_train = perceptron.predict(x_train)
+
+    # fit to training data
+    perceptron.fit(x_test, y_test)
+    # make predictions on the test data
+    pred_test = perceptron.predict(x_test)
 
     return pred_train, pred_test
 
@@ -302,6 +326,8 @@ def calibrated_perceptron_classifier(x_train, y_train, x_test, y_test,
 
     # TODO: Use penalty, alpha, random_state for your perceptron classifier
     # BE SURE TO SET RANDOM SEED FOR CLASSIFIER TO BE DETERMINISTIC TO PASS TEST
+
+
     return pred_train, pred_test
 
 
@@ -450,7 +476,7 @@ if __name__ == '__main__':
     # Each model will use a different `alpha` value multiplied by the L2 penalty.
     # Record and plot the accuracy of each model on both training and test data.
 
-    # train_accuracy_list, test_accuracy_list = series_of_perceptrons(
+    # train_accuracy_list, test_accuracy_list = series_of_preceptrons(
     # alphas=np.logspace(-5, 5, base=10, num=100))
     # plt.plot(alphas, train_accuracy_list, label='Accuracy on training')
     # plt.plot(alphas, test_accuracy_list, label='Accuracy on testing')
