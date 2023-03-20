@@ -136,7 +136,7 @@ def predict_0_always_classifier(X):
     # TODO
     predictions = np.zeros(len(X))
 
-    return predictions # floating point values between 0.0 and 1.0
+    return predictions  # floating point values between 0.0 and 1.0
 
 
 def calc_accuracy(tp, tn, fp, fn):
@@ -208,12 +208,18 @@ def calc_perf_metrics_for_threshold(y_true_N, y_proba1_N, thresh=0.5):
     """
     # TODO
     # tp, tn, fp, fn = calc_binary_metrics(...)
+    # tp, tn, fp, fn = calc_binary_metrics(y_true_N, y_hat_N)
+
     acc = 0.0
     tpr = 0.0
     tnr = 0.0
     ppv = 0.0
     npv = 0.0
+
     # TODO
+
+
+
     return acc, tpr, tnr, ppv, npv
 
 
@@ -245,7 +251,7 @@ def perceptron_classifier(x_train, y_train, x_test, y_test, penalty="l2",
 
     # TODO: Use penalty, alpha, random_state for your perceptron classifier
     # BE SURE TO SET RANDOM SEED FOR CLASSIFIER TO BE DETERMINISTIC TO PASS TEST
-
+    # Perceptron(penalty= , alpha= , random_state=42)
 
     return pred_train, pred_test
 
@@ -341,8 +347,7 @@ def print_perf_metrics_for_threshold(y_true, y_proba1, thresh=0.5):
 
     See calc_perf_metrics_for_threshold() for parameter descriptions.
     """
-    acc, tpr, tnr, ppv, npv = calc_perf_metrics_for_threshold(y_true,
-                                                              y_proba1, thresh)
+    acc, tpr, tnr, ppv, npv = calc_perf_metrics_for_threshold(y_true, y_proba1, thresh)
 
     # Pretty print the results
     print("%.3f ACC" % acc)
@@ -353,17 +358,23 @@ def print_perf_metrics_for_threshold(y_true, y_proba1, thresh=0.5):
 
 
 if __name__ == '__main__':
+
     dir_data = "./data"
+
     all0 = np.zeros(10)
     all1 = np.ones(10)
+
     # Testing code
     # The following four calls to the function above test your results.
     TP, TN, FP, FN = calc_binary_metrics(all0, all1)
     print(f"TP: {TP}\t\tTN: {TN}\t\tFP: {FP}\tFN: {FN}\t")
+
     calc_binary_metrics(all1, all0)
     print(f"TP: {TP}\t\tTN: {TN}\t\tFP: {FP}\tFN: {FN}\t")
+
     calc_binary_metrics(all1, all1)
     print(f"TP: {TP}\t\tTN: {TN}\t\tFP: {FP}\tFN: {FN}\t")
+
     calc_binary_metrics(all0, all0)
     print(f"TP: {TP}\t\tTN: {TN}\t\tFP: {FP}\tFN: {FN}\t\n")
 
@@ -396,8 +407,7 @@ if __name__ == '__main__':
 
     df_sampled_data = pd.DataFrame(x_test, columns=feat_names)
     df_sampled_data[str(target_name)] = y_test
-    print(df_sampled_data.sample(15))
-    print()
+    print(f'{df_sampled_data.sample(15)}\n')
 
     # 2: Compute the fraction of patients with cancer.
     # Compute values for train and test sets (i.e., don't hand-count and print).
@@ -440,7 +450,7 @@ if __name__ == '__main__':
     # Each model will use a different `alpha` value multiplied by the L2 penalty.
     # Record and plot the accuracy of each model on both training and test data.
 
-    # train_accuracy_list, test_accuracy_list = series_of_preceptrons(
+    # train_accuracy_list, test_accuracy_list = series_of_perceptrons(
     # alphas=np.logspace(-5, 5, base=10, num=100))
     # plt.plot(alphas, train_accuracy_list, label='Accuracy on training')
     # plt.plot(alphas, test_accuracy_list, label='Accuracy on testing')
