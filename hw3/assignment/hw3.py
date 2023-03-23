@@ -366,7 +366,7 @@ def find_best_thresholds(y_test, pred_prob_test):
     best_PPV_threshold : best positive predictive value  threshold
     """
     # Try a range of thresholds for classifying data into the positive class (1).
-    # For each threshold, compute the true postive rate (TPR) and positive
+    # For each threshold, compute the true positive rate (TPR) and positive
     # predictive value (PPV).  Record the best value of each metric, along with
     # the threshold that achieves it, and the *other*
 
@@ -379,7 +379,20 @@ def find_best_thresholds(y_test, pred_prob_test):
     best_PPV_threshold = 0.0
 
     # TODO: test different thresholds to compute these values
-    # thresholds = np.linspace(0, 1.001, 51)
+    thresholds = np.linspace(0, 1.001, 51)
+    for idx, threshold in enumerate(thresholds):
+
+        ACC, TPR, TNR, PPV, NPV = calc_perf_metrics_for_threshold(y_true_N=y_test, y_proba1_N=pred_prob_test, thresh=threshold)
+
+        if TPR > best_TPR:
+            best_TPR = TPR
+            best_PPV_for_best_TPR = PPV
+            best_TPR_threshold = threshold
+
+        if PPV > best_PPV:
+            best_PPV = PPV
+            best_PPV_for_best_TPR = TPR
+            best_PPV_threshold = threshold
 
     return best_TPR, best_PPV_for_best_TPR, best_TPR_threshold, best_PPV, best_TPR_for_best_PPV, best_PPV_threshold
 
@@ -522,7 +535,7 @@ if __name__ == '__main__':
     # # Compare the probabilistic classifier across multiple decision thresholds
     # #
     # # Try a range of thresholds for classifying data into the positive class (1).
-    # # For each threshold, compute the true postive rate (TPR) and positive
+    # # For each threshold, compute the true positive rate (TPR) and positive
     # # predictive value (PPV).  Record the best value of each metric, along with
     # # the threshold that achieves it, and the *other*
     # # TODO: test different thresholds to compute these values
