@@ -226,9 +226,9 @@ def calc_perf_metrics_for_threshold(y_true_N, y_proba1_N, thresh=0.5):  # check 
 
     # TODO
     acc = calc_accuracy(tp, tn, fp, fn)
-    tpr = (tp / (tp + fn))  # sensitivity
+    tpr = (tp / (tp + fn))  # recall # sensitivity
     tnr = (tn / (tn + fp))  # specificity
-    ppv = (tp / (tp + fp))  # positive pred and has cancer
+    ppv = (tp / (tp + fp))  # precision # positive pred and has cancer
     npv = (tn / (tn + fn))  # negative pred and does not have cancer
 
     return acc, tpr, tnr, ppv, npv
