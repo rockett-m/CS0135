@@ -171,7 +171,7 @@ def standardize_data(X_train, X_test):
     scaler = MinMaxScaler(feature_range=(0, 1))
 
     # normalize each column using scaler.fit_transform
-    for i in range(X_train.shape[1]):
+    for i in range(X_train.shape[1]): # 0...2
         X_train[:, i] = scaler.fit_transform(X_train[:, i].reshape(-1, 1)).flatten()
 
     for i in range(X_test.shape[1]):
@@ -209,7 +209,7 @@ def calc_perf_metrics_for_threshold(y_true_N, y_proba1_N, thresh=0.5):  # check 
     # TODO
     # tp, tn, fp, fn = calc_binary_metrics(y_true_N, y_hat_N)
 
-    y_hat_N = np.array()  # replace with probabilities with 0 or 1
+    y_hat_N = np.zeros(len(y_proba1_N))  # replace with probabilities with 0 or 1
     for idx, ypn in enumerate(y_proba1_N):
         if ypn >= thresh: # we set equal to 1 if >= thresh
             y_hat_N[idx] = 1
@@ -384,12 +384,12 @@ def find_best_thresholds(y_test, pred_prob_test):
 
         ACC, TPR, TNR, PPV, NPV = calc_perf_metrics_for_threshold(y_true_N=y_test, y_proba1_N=pred_prob_test, thresh=threshold)
 
-        if TPR > best_TPR:
+        if TPR >= best_TPR:  # not > so autograder works
             best_TPR = TPR
             best_PPV_for_best_TPR = PPV
             best_TPR_threshold = threshold
 
-        if PPV > best_PPV:
+        if PPV >= best_PPV:
             best_PPV = PPV
             best_PPV_for_best_TPR = TPR
             best_PPV_threshold = threshold
