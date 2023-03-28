@@ -1,0 +1,54 @@
++1 pts. BONUS) Along with your code, submit a completed version of the COLLABORATORS.txt file with:
+
+Your name: Morgan Rockett
+
+The time it took you to complete the assignment: Estimating 20 hours
+# Majority of it was solo on the weekend before spring break week. I spent a lot of time digesting the material and doing
+trial and error as there were no office hours available until after break. I got to question 5 solo. I did have to fix
+a few mistakes from Q1-4 but I had graphs working and was able to progress a lot.
+# 1.5 hours in office hours (3/28) with TA Ethan gave me the boost I needed to clarify misunderstandings and get the help
+needed with implementation and debugging.
+# Then I spent time helping others and finishing the writeup.
+
+Any resources you used to complete the assignment, including discussions with the instructor, Tasks, or fellow students,
+and any online or offline resources consulted. You could say that you did not need to consult any outside resources.
+
+Piazza class discussion board throughout
+TA Ethan in office hours 3/28
+Classmate Kieran helped in office hours 3/28
+Helped other students in office hours...not sure of names
+Helped classmates Prithvi, Anthony
+
+Offline Resources:
+Lecture slides from class
+Textbooks for class...I don't recall which...I used my MacBook's spotlight search feature with search terms to pull up
+matching search results and then went to that point in the textbook(s).
+"Magician’s Corner: 9. Performance Metrics for Machine Learning Models" for TPR, FPR, PPV, NPV, ACC
+
+Online resources:
+ChatGPT was helpful for understanding a few functions in examples, although it did give me bad results for a few parts
+such as the standardizing of the data. I thought it was supposed to be done column by column and had an implementation
+for this method but TA Ethan told me that was overcomplicating things and I could call the fit_transform() and
+transform() functions on the entire dataset at once. For what I asked ChatGPT it was a fairly helpful guide though.
+
+https://github.com/0xshaikat/comp135/blob/master/hw/hw_03_logistic_regression/hw03.ipynb
+# This github helped me with confusion matrices since I had the inverse result before I saw it.
+# The calc_perf_metrics_for_threshold() function was helpful to see tpr, tnr and other metrics but I referenced the
+# slides (Lecture8) and the Performance Metrics .pdf from canvas for proper implementation.
+# The predict always-0 part was helpful to compare my results and get the concept down.
+# Other functions were enough different than this project that I disregarded the rest of the notebook.
+# I stumbled upon Tufts ML github repos before taking this class to see what the material would be roughly, so I was
+# aware of the cancer project.
+
+# All of these are general documentation or examples but not Tufts related \/
+https://github.com/scikit-learn/scikit-learn/issues/1549
+https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html
+https://piazza.com/class_profile/get_resource/ld52hde44wy2e2/lf0exinflmd14b
+https://www.bmj.com/content/bmj/suppl/2020/05/12/bmj.m1808.DC1/watj056527.ww1.pdf
+https://machinelearningmastery.com/perceptron-algorithm-for-classification-in-python/
+https://vitalflux.com/perceptron-explained-using-python-example/
+https://amueller.github.io/aml/01-ml-workflow/03-preprocessing.html
+https://scikit-learn.org/stable/modules/generated/sklearn.calibration.CalibratedClassifierCV.html
+https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html
+https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html
+https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc
