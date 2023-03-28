@@ -345,7 +345,7 @@ def calibrated_perceptron_classifier(x_train, y_train, x_test, y_test,
 
     ppn = Perceptron(penalty=penalty, alpha=alpha, random_state=random_state)
 
-    calibrated_clf = CalibratedClassifierCV(base_estimator=ppn, method="isotonic")
+    calibrated_clf = CalibratedClassifierCV(estimator=ppn, method="isotonic")
     calibrated_clf.fit(X=x_train, y=y_train)
 
     pred_train = calibrated_clf.predict_proba(x_train)[:, 1] # take all rows in 2nd column
