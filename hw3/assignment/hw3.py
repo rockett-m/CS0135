@@ -174,17 +174,10 @@ def standardize_data(X_train, X_test):
     scaler = MinMaxScaler(feature_range=(0, 1))
 
     # call it on the entire dataset
-
-    # normalize each column using scaler.fit_transform
-    # for i in range(X_train.shape[1]): # 0...2
-    #     X_train[:, i] = scaler.fit_transform(X_train[:, i].reshape(-1, 1)).flatten()
-
     X_train = scaler.fit_transform(X_train)
 
     X_test = scaler.transform(X_test)
-    # for i in range(X_test.shape[1]):
-    #     # X_test[:, i] = scaler.fit_transform(X_test[:, i].reshape(-1, 1)).flatten()
-    #     # scaler.transform
+
     return X_train, X_test
 
 
@@ -349,13 +342,14 @@ def calibrated_perceptron_classifier(x_train, y_train, x_test, y_test,
     # TODO: Use penalty, alpha, random_state for your perceptron classifier
     # BE SURE TO SET RANDOM SEED FOR CLASSIFIER TO BE DETERMINISTIC TO PASS TEST
     from sklearn.calibration import CalibratedClassifierCV
-    cppn = Perceptron(penalty=penalty, alpha=alpha, random_state=random_state)
 
-    cppn.fit(x_train, y_train)
-    pred_train = cppn.decision_function(x_train)
+    ppn = Perceptron(penalty=penalty, alpha=alpha, random_state=random_state)
 
-    # cppn.fit(x_test, y_test)
-    pred_test = cppn.decision_function(x_test)
+    calibrated_clf = CalibratedClassifierCV(base_estimator=ppn, method="isotonic")
+    calibrated_clf.fit(X=x_train, y=y_train)
+
+    pred_train = calibrated_clf.predict_proba(x_train)[:, 1] # take all rows in 2nd column
+    pred_test = calibrated_clf.predict_proba(x_test)[:, 1]
 
     return pred_train, pred_test
 
@@ -391,18 +385,18 @@ def find_best_thresholds(y_test, pred_prob_test):
 
     # TODO: test different thresholds to compute these values
     thresholds = np.linspace(0, 1.001, 51)
-    for idx, threshold in enumerate(thresholds):
+    for threshold in thresholds:
 
         ACC, TPR, TNR, PPV, NPV = calc_perf_metrics_for_threshold(y_true_N=y_test, y_proba1_N=pred_prob_test, thresh=threshold)
 
-        if TPR >= best_TPR:  # not just > so autograder works
+        if (TPR > best_TPR) or (TPR == best_TPR and PPV > best_PPV_for_best_TPR):
             best_TPR = TPR
             best_PPV_for_best_TPR = PPV
             best_TPR_threshold = threshold
 
-        if PPV >= best_PPV:  # not just > so autograder works
+        if (PPV > best_PPV) or (PPV == best_PPV and TPR > best_TPR_for_best_PPV):
             best_PPV = PPV
-            best_PPV_for_best_TPR = TPR
+            best_TPR_for_best_PPV = TPR
             best_PPV_threshold = threshold
 
     return best_TPR, best_PPV_for_best_TPR, best_TPR_threshold, best_PPV, best_TPR_for_best_PPV, best_PPV_threshold
