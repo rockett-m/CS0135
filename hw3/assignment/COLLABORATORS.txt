@@ -52,3 +52,8 @@ https://scikit-learn.org/stable/modules/generated/sklearn.calibration.Calibrated
 https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.MinMaxScaler.html
 https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html
 https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc
+https://www.split.io/glossary/false-positive-rate/
+https://www.qservegroup.com/eu/en/i776/why-ppv-and-npv-should-be-considered-when-setting-sensitivity-and-specificity-requirements
+https://www.qservegroup.com/eu/en/i717/why-overall-accuracy-isnt-sufficientennbsp-
+https://towardsdatascience.com/understanding-l1-and-l2-regularization-93918a5ac8d0
+https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc

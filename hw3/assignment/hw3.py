@@ -228,14 +228,18 @@ def calc_perf_metrics_for_threshold(y_true_N, y_proba1_N, thresh=0.5):  # check 
     # TODO
     acc = calc_accuracy(tp, tn, fp, fn)
 
-    if (tp + fn) > 0: # eliminate divide by zero error
-        tpr = tp / (tp + fn)  # recall # sensitivity
-    if (tn + fp) > 0:
-        tnr = tn / (tn + fp)  # specificity
-    if (tp + fp) > 0:
-        ppv = tp / (tp + fp)  # precision # positive pred and has cancer
+    # eliminate divide by zero error by checking denominators before division
+    if (tp + fn) > 0: # sensitivity
+        tpr = tp / (tp + fn)  # proportion of correctly predicting cancer, of all the people with cancer
+
+    if (tn + fp) > 0: # specificity
+        tnr = tn / (tn + fp)  # proportion of correctly predicting no cancer, of all the people with no cancer
+
+    if (tp + fp) > 0: # precision
+        ppv = tp / (tp + fp)  # proportion of correctly predicting cancer, of all predictions of cancer
+
     if (tn + fn) > 0:
-        npv = tn / (tn + fn)  # negative pred and does not have cancer
+        npv = tn / (tn + fn)  # proportion of correctly predicting no cancer, of all predictions of no cancer
 
     return acc, tpr, tnr, ppv, npv
 
