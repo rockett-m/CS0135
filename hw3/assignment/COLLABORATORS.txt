@@ -2,13 +2,14 @@
 
 Your name: Morgan Rockett
 
-The time it took you to complete the assignment: Estimating 20 hours
+The time it took you to complete the assignment: Estimating 28 hours
 # Majority of it was solo on the weekend before spring break week. I spent a lot of time digesting the material and doing
 trial and error as there were no office hours available until after break. I got to question 5 solo. I did have to fix
 a few mistakes from Q1-4 but I had graphs working and was able to progress a lot.
 # 1.5 hours in office hours (3/28) with TA Ethan gave me the boost I needed to clarify misunderstandings and get the help
 needed with implementation and debugging.
 # Then I spent time helping others and finishing the writeup.
+# Edit: the analysis took a long time to properly think about so 8 hours here.
 
 Any resources you used to complete the assignment, including discussions with the instructor, Tasks, or fellow students,
 and any online or offline resources consulted. You could say that you did not need to consult any outside resources.
