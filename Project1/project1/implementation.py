@@ -70,11 +70,21 @@ def objective_function(X, y, a, kernel):
     # TODO: implement
     
     # Reshape a and y to be column vectors
+    a.reshape(-1, 1)
+    y.reshape(-1, 1)
 
     # Compute the value of the objective function
     # The first term is the sum of all Lagrange multipliers
     # The second term involves the kernel matrix, the labels and the Lagrange multipliers
-    return None
+    sum_lg = sum([x for x in a]) # first term
+
+    Z = 0
+    # Z = (a * X) + (b * y)
+    # for a, b in zip(sum_lg, X):
+    #    + b
+
+    # find out what to multiply here...will use kernel matrix...find out!
+    return Z
 
 
 class SVM(object):
@@ -159,20 +169,24 @@ class SVM(object):
         
         # constraints = ({'type': 'ineq', 'fun': ...},
         #                {'type': 'eq', 'fun': ...})
-        
+        constraints = dict()
+
         # TODO: Use minimize from scipy.optimize to find the optimal Lagrange multipliers
-        
         # res = minimize(...)
         # self.a = ...
-        
+
+        # res = minimize(fun= , x0=X)  # fun(x, *args) -> float
+        self.a = ''
+
         # TODO: Substitute into dual problem to find weights
         
-        # self.w = ...
-        
+        # self.w = ...  ## Coefficient Vector (ndarray with shape (n_features, )
+        self.w = np.zeros(X.shape[1])  # X : shape (n_samples, n_features)
+
         # TODO: Substitute into a support vector to find bias
         
-        # self.b = ...
-
+        # self.b = ...  ## Intercept Term (float)
+        self.b = 0.0
 
         return self
 
@@ -192,8 +206,9 @@ class SVM(object):
           Class labels for samples in X.
         """
         # TODO: implement
+        y_pred = np.zeros(len(X.shape[0]))
 
-        return None
+        return y_pred
 
     def outputs(X):
         """
@@ -211,8 +226,9 @@ class SVM(object):
           Class labels for samples in X.
         """
         # TODO: implement
+        y_pred = np.zeros(len(X.shape[0]))
 
-        return None
+        return y_pred
 
     def score(self, X, y):
         """
@@ -235,5 +251,6 @@ class SVM(object):
           Mean accuracy of self.predict(X)
         """
         # TODO: implement
+        score = 0.0
 
-        return None
+        return score
