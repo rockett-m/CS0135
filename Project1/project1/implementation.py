@@ -23,7 +23,7 @@ def linear_kernel(X1, X2):
     # TODO: implement
     A = np.array(X1)
     B = np.array(X2)
-
+    B.transpose() # transpose B for matrix multiplication
     print(f'{A = }\n{B = }\n')
 
     C = np.zeros(len(X1))
@@ -169,13 +169,28 @@ class SVM(object):
         
         # constraints = ({'type': 'ineq', 'fun': ...},
         #                {'type': 'eq', 'fun': ...})
-        constraints = dict()
+
+        # X (n_samples, n_features) # matrix of data x1, x2, ... xn
+        # y (n_samples,) # vector of labels y1, y2, y3
+        # ai + yi = 0 summation
+        # a.T.y = 0
+        # constraints are compared to 0
+        # ineq by default ... loops through all values of a
+        constraints = ({'type': 'ineq', 'fun': lambda a: a },
+                       {'type': 'eq',   'fun': lambda a: a.transpose() @ y })
+        # 'type': 'ineq', # > 0 # goes through all vals of a
+        # 'type': 'eq', # == 0 # dot product  a[0] * y[0] + a[1] * y[1] + ... + a[n] * y[n]
+        '''
+        with comparison to 0
+        > or <
+        scipy.minimize constraints
+        '''
 
         # TODO: Use minimize from scipy.optimize to find the optimal Lagrange multipliers
         # res = minimize(...)
         # self.a = ...
 
-        # res = minimize(fun= , x0=X)  # fun(x, *args) -> float
+        # res = minimize(fun= , x0=X, constraints=cons, )  # fun(x, *args) -> float
         self.a = ''
 
         # TODO: Substitute into dual problem to find weights
@@ -210,25 +225,7 @@ class SVM(object):
 
         return y_pred
 
-    def outputs(X):
-        """
-        Perform classification on samples in X.
-
-        For a one-class model, +1 or -1 is returned.
-
-        Parameters
-        ----------
-        X : {array-like, sparse matrix} of shape (n_samples, n_features) or (n_samples_test, n_samples_train)
-
-        Returns
-        -------
-        y_pred : ndarray of shape (n_samples,)
-          Class labels for samples in X.
-        """
-        # TODO: implement
-        y_pred = np.zeros(len(X.shape[0]))
-
-        return y_pred
+    # removed def outputs(X): # was the same thing as # def predict(self, X):
 
     def score(self, X, y):
         """
@@ -253,4 +250,14 @@ class SVM(object):
         # TODO: implement
         score = 0.0
 
+        acc_list = []
+        for idx, x in X:
+            out = self.predict(x)
+            acc_list.append(out)
+
+
         return score
+
+
+def one_versus_the_rest(train_mn, train_labels_mn):
+    ...
