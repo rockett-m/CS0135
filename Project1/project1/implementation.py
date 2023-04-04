@@ -23,12 +23,12 @@ def linear_kernel(X1, X2):
     # TODO: implement
     A = np.array(X1)
     B = np.array(X2)
-    B.transpose() # transpose B for matrix multiplication
-    print(f'{A = }\n{B = }\n')
+    # B.transpose() # transpose B for matrix multiplication # dot product
+    # print(f'{A = }\n{B = }\n')
 
-    C = np.zeros(len(X1))
-
-    C = np.dot(A, B)
+    # C = np.zeros(X1.shape[0])
+    C = A @ B.transpose()
+    C = np.array(C)
 
     return C
 
@@ -72,19 +72,26 @@ def objective_function(X, y, a, kernel):
     # Reshape a and y to be column vectors
     a.reshape(-1, 1)
     y.reshape(-1, 1)
+    # calculate the distance
 
     # Compute the value of the objective function
-    # The first term is the sum of all Lagrange multipliers
-    # The second term involves the kernel matrix, the labels and the Lagrange multipliers
-    sum_lg = sum([x for x in a]) # first term
+    # The first term is the sum of all Lagrange multipliers  # np.sum(a)
+    # The second term involves the kernel matrix (X), the labels (y) and the Lagrange multipliers (a)
+    obj_val = np.zeros(len(a))
+    # for idx, alpha in enumerate(a):
+    #     obj_val[idx] = a - 0.5*( (alpha @ alpha.transpose()) * (y[idx] @ y[idx].transpose()) * kernel(X,X) )
 
-    Z = 0
+    # obj_val = np.sum(a) - 0.5 * np.sum( (a @ a.transpose()) * (y @ y.transpose()) * kernel(X,X))
+    obj_val = np.sum(a) - 0.5 * np.sum(a @ a.T * (y @ y.T) * kernel(X, X))
+    # np.inner(X)
+
+    # Z = 0
     # Z = (a * X) + (b * y)
     # for a, b in zip(sum_lg, X):
     #    + b
 
     # find out what to multiply here...will use kernel matrix...find out!
-    return Z
+    return obj_val
 
 
 class SVM(object):
@@ -190,18 +197,49 @@ class SVM(object):
         # res = minimize(...)
         # self.a = ...
 
-        # res = minimize(fun= , x0=X, constraints=cons, )  # fun(x, *args) -> float
-        self.a = ''
+        # res = minimize(fun=objective_function(X, y, self.a, kernel="linear"), x0=X, constraints=constraints)  # fun(x, *args) -> float
+        # res = minimize(lambda a: objective_function(X=X, y=y, a=self.a))  # fun(x, *args) -> float
+        # res = minimize(lambda a: objective_function(X=X, y=y, constraints=constraints))  # fun(x, *args) -> float
+        # res = minimize(lambda a: function_to_minimize(parameter, a, parameter)
+        self.a = np.zeros(X.shape[0])  # X : shape (n_samples, n_features) # n_samples
 
+        res = minimize(lambda a: (-objective_function(X=X, y=y, a=a, kernel=self.kernel)), x0=self.a, constraints=constraints)  # fun(x, *args) -> float
+        # negative float return
+        # get alpha from result attributes
+        self.a = np.array(res.x)
+        # print(f'{self.a = }') # [0. 0. 0. 0. 0.]
+        # print(f'{res = }') # [0. 0. 0. 0. 0.]
+        '''
+        res = message: Optimization
+        terminated
+        successfully
+        success: True
+        status: 0
+        fun: 0
+        x: [0.000e+00  0.000e+00  0.000e+00  0.000e+00  0.000e+00] # array we want
+        nit: 1
+        jac: [0.000e+00  0.000e+00  0.000e+00  0.000e+00  0.000e+00]
+        nfev: 6
+        njev: 1
+        '''
         # TODO: Substitute into dual problem to find weights
-        
+        # w = ai * yi * xi
         # self.w = ...  ## Coefficient Vector (ndarray with shape (n_features, )
-        self.w = np.zeros(X.shape[1])  # X : shape (n_samples, n_features)
+        self.w = np.zeros(X.shape[1])  # X : shape (n_samples, n_features) # features
+
+        for idx, alpha in enumerate(self.a):
+            if alpha > 1e-8: # if alpha isn't super small
+                self.w += alpha * y[idx] * X[idx]  # optimal Lagrange values
 
         # TODO: Substitute into a support vector to find bias
         
         # self.b = ...  ## Intercept Term (float)
+
+        y.reshape(-1, 1)  # reshape y to proper dims to calc bias
         self.b = 0.0
+        self.b = -0.5 * ( max(np.inner(self.w, X[y == -1])) + min(np.inner(self.w, X[y == 1])) )
+        # print(f'{self.b = }')
+        # self.b = -0.5 * ( (mxw * X[0][mxw_idx]) + (mnw * X[1][mnw_idx]) )
 
         return self
 

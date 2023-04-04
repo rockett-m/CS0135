@@ -34,7 +34,7 @@ from sklearn.metrics import accuracy_score
 from matplotlib import pyplot as plt
 import seaborn as sns
 
-plt.style.use('seaborn-v0_8')  # pretty matplotlib plots
+plt.style.use('seaborn')  # pretty matplotlib plots
 
 
 def calc_confusion_matrix_for_threshold(y_true_N, y_proba1_N, thresh=0.5):
