@@ -189,10 +189,19 @@ class SVM(object):
         # self.w = ...  ## Coefficient Vector (ndarray with shape (n_features, )
         self.w = np.zeros(X.shape[1])  # X : shape (n_samples, n_features) # features
 
+        # self.a = array([2.42302085e-02, 1.20036236e-02, -8.39240244e-17, 2.52919642e-02, 1.09418679e-02])
         for idx, alpha in enumerate(self.a):
             if alpha > 1e-8: # if alpha isn't super small
-                self.w += alpha * y[idx] * X[idx]  # optimal Lagrange values
-                # print(f'{idx = } : {alpha = }\n{self.w = }\n')
+
+                # equivalent
+                # self.w[0] += alpha * y[idx] * X[idx][0]
+                # self.w[1] += alpha * y[idx] * X[idx][1]
+                # self.w[2] += alpha * y[idx] * X[idx][2]
+
+                self.w += (alpha * y[idx] * X[idx])  # optimal Lagrange values
+
+        # result.coef_ = array([[0., 0.5, 0.99969451]])
+        # svm.w = array([8.15320034e-17, 1.16681058e-01, 1.41271351e-02])
 
         # TODO: Substitute into a support vector to find bias
         y.reshape(-1, 1)  # reshape y to proper dims to calc bias
