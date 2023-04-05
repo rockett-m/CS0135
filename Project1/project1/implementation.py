@@ -81,9 +81,18 @@ def objective_function(X, y, a, kernel):
     # The first term is the sum of all Lagrange multipliers  # np.sum(a)
     # The second term involves the kernel matrix (X), the labels (y) and the Lagrange multipliers (a)
 
-    obj_val = np.zeros(len(a))
+    # obj_val = np.zeros(len(a))
     # obj_val = np.sum(a) - (0.5 * np.sum( np.dot(a, a.T) * np.dot(y, y.T) * (kernel(X, X)) ) )
-    obj_val = np.sum(a) - (0.5 * a.T @ (y.T * kernel(X,X) * y) @ a) # correct
+    # obj_val = np.sum(a) - (0.5 * a.T @ (y.T * kernel(X, X) * y) @ a) # didn't work
+
+    xya_total = 0
+
+    for i, val0 in enumerate(a):
+        for j, val1 in enumerate(a):
+            xya_total += (a[i] * a[j] * y[i] * y[j] * kernel(X, X)[i, j])
+
+    obj_val = np.sum(a) - (0.5 * xya_total)
+    # print(f'{obj_val = }')
     return obj_val
 
 
@@ -166,7 +175,8 @@ class SVM(object):
 
         # TODO: Define the constraints for the optimization problem
         constraints = ({'type': 'ineq', 'fun': lambda a: a },
-                       {'type': 'eq',   'fun': lambda a: np.dot(a.transpose(), y) })
+                       {'type': 'eq',   'fun': lambda a: np.dot(a, y) }) # a.transpose()
+                        # {'type': 'eq', 'fun': lambda a: np.dot(y.T, a)})  # a.transpose()
 
         # X (n_samples, n_features) # matrix of data x1, x2, ... xn
         # y (n_samples,) # vector of labels y1, y2, y3
@@ -189,15 +199,13 @@ class SVM(object):
         # self.w = ...  ## Coefficient Vector (ndarray with shape (n_features, )
         self.w = np.zeros(X.shape[1])  # X : shape (n_samples, n_features) # features
 
-        # self.a = array([2.42302085e-02, 1.20036236e-02, -8.39240244e-17, 2.52919642e-02, 1.09418679e-02])
+        # self.a = array([1.47549954e-01, 4.77448320e-01, 1.46822658e-15, 4.08827517e-01, 2.16170757e-01])
         for idx, alpha in enumerate(self.a):
             if alpha > 1e-8: # if alpha isn't super small
-
                 # equivalent
                 # self.w[0] += alpha * y[idx] * X[idx][0]
                 # self.w[1] += alpha * y[idx] * X[idx][1]
                 # self.w[2] += alpha * y[idx] * X[idx][2]
-
                 self.w += (alpha * y[idx] * X[idx])  # optimal Lagrange values
 
         # result.coef_ = array([[0., 0.5, 0.99969451]])
@@ -208,7 +216,8 @@ class SVM(object):
         self.b = 0.0  ## Intercept Term (float)
         self.b = -0.5 * ( max(np.inner(self.w, X[y == -1])) + min(np.inner(self.w, X[y == 1])) )
 
-        print(f'{self.w = }\n')
+        print(f'{self.a = }')
+        print(f'{self.w = }')
         print(f'{self.b = }\n')
 
         '''
