@@ -27,7 +27,9 @@ def linear_kernel(X1, X2):
     # print(f'{A = }\n{B = }\n')
 
     # C = np.zeros(X1.shape[0])
-    C = A @ B.transpose()
+    # C = (A @ B.transpose()) ** 2
+    C = np.dot(A, B.transpose())
+
     C = np.array(C)
 
     return C
@@ -72,25 +74,16 @@ def objective_function(X, y, a, kernel):
     # Reshape a and y to be column vectors
     a.reshape(-1, 1)
     y.reshape(-1, 1)
+
     # calculate the distance
 
     # Compute the value of the objective function
     # The first term is the sum of all Lagrange multipliers  # np.sum(a)
     # The second term involves the kernel matrix (X), the labels (y) and the Lagrange multipliers (a)
+
     obj_val = np.zeros(len(a))
-    # for idx, alpha in enumerate(a):
-    #     obj_val[idx] = a - 0.5*( (alpha @ alpha.transpose()) * (y[idx] @ y[idx].transpose()) * kernel(X,X) )
+    obj_val = np.sum(a) - (0.5 * np.sum( np.dot(a, a.T) * np.dot(y, y.T) * (kernel(X, X)) ) )
 
-    # obj_val = np.sum(a) - 0.5 * np.sum( (a @ a.transpose()) * (y @ y.transpose()) * kernel(X,X))
-    obj_val = np.sum(a) - 0.5 * np.sum(a @ a.T * (y @ y.T) * kernel(X, X))
-    # np.inner(X)
-
-    # Z = 0
-    # Z = (a * X) + (b * y)
-    # for a, b in zip(sum_lg, X):
-    #    + b
-
-    # find out what to multiply here...will use kernel matrix...find out!
     return obj_val
 
 
@@ -171,44 +164,53 @@ class SVM(object):
         """
         # save alpha parameters, weights, and bias weight
 
-        
         # TODO: Define the constraints for the optimization problem
-        
-        # constraints = ({'type': 'ineq', 'fun': ...},
-        #                {'type': 'eq', 'fun': ...})
+        constraints = ({'type': 'ineq', 'fun': lambda a: a },
+                       {'type': 'eq',   'fun': lambda a: np.dot(a.transpose(), y) })
 
         # X (n_samples, n_features) # matrix of data x1, x2, ... xn
         # y (n_samples,) # vector of labels y1, y2, y3
-        # ai + yi = 0 summation
-        # a.T.y = 0
-        # constraints are compared to 0
-        # ineq by default ... loops through all values of a
-        constraints = ({'type': 'ineq', 'fun': lambda a: a },
-                       {'type': 'eq',   'fun': lambda a: a.transpose() @ y })
+
+        # ai + yi = 0 summation # a.T.y = 0
+        # constraints are compared to 0  # ineq by default ... loops through all values of a
+
         # 'type': 'ineq', # > 0 # goes through all vals of a
         # 'type': 'eq', # == 0 # dot product  a[0] * y[0] + a[1] * y[1] + ... + a[n] * y[n]
-        '''
-        with comparison to 0
-        > or <
-        scipy.minimize constraints
-        '''
+        # with comparison to 0 ## > or < ## scipy.minimize constraints
 
         # TODO: Use minimize from scipy.optimize to find the optimal Lagrange multipliers
-        # res = minimize(...)
-        # self.a = ...
-
-        # res = minimize(fun=objective_function(X, y, self.a, kernel="linear"), x0=X, constraints=constraints)  # fun(x, *args) -> float
-        # res = minimize(lambda a: objective_function(X=X, y=y, a=self.a))  # fun(x, *args) -> float
-        # res = minimize(lambda a: objective_function(X=X, y=y, constraints=constraints))  # fun(x, *args) -> float
-        # res = minimize(lambda a: function_to_minimize(parameter, a, parameter)
         self.a = np.zeros(X.shape[0])  # X : shape (n_samples, n_features) # n_samples
+        res = minimize( (lambda a: (-objective_function(X=X, y=y, a=a, kernel=self.kernel)) ),
+                       x0=self.a, constraints=constraints)  # fun(x, *args) -> float
 
-        res = minimize(lambda a: (-objective_function(X=X, y=y, a=a, kernel=self.kernel)), x0=self.a, constraints=constraints)  # fun(x, *args) -> float
-        # negative float return
-        # get alpha from result attributes
         self.a = np.array(res.x)
-        # print(f'{self.a = }') # [0. 0. 0. 0. 0.]
-        # print(f'{res = }') # [0. 0. 0. 0. 0.]
+
+        print(f'{X.shape = }')
+        print(f'{y.shape = }')
+
+        print(f'{X = }')
+        print(f'{y = }\n')
+
+        print(f'{self.a.shape = }')
+        print(f'{self.a = }\n')
+
+        # TODO: Substitute into dual problem to find weights
+        # self.w = ...  ## Coefficient Vector (ndarray with shape (n_features, )
+        self.w = np.zeros(X.shape[1])  # X : shape (n_samples, n_features) # features
+
+        for idx, alpha in enumerate(self.a):
+            if alpha > 1e-8: # if alpha isn't super small
+                self.w += alpha * y[idx] * X[idx]  # optimal Lagrange values
+                # print(f'{idx = } : {alpha = }\n{self.w = }\n')
+
+        # TODO: Substitute into a support vector to find bias
+        y.reshape(-1, 1)  # reshape y to proper dims to calc bias
+        self.b = 0.0  ## Intercept Term (float)
+        self.b = -0.5 * ( max(np.inner(self.w, X[y == -1])) + min(np.inner(self.w, X[y == 1])) )
+
+        print(f'{self.w = }\n')
+        print(f'{self.b = }\n')
+
         '''
         res = message: Optimization
         terminated
@@ -222,24 +224,6 @@ class SVM(object):
         nfev: 6
         njev: 1
         '''
-        # TODO: Substitute into dual problem to find weights
-        # w = ai * yi * xi
-        # self.w = ...  ## Coefficient Vector (ndarray with shape (n_features, )
-        self.w = np.zeros(X.shape[1])  # X : shape (n_samples, n_features) # features
-
-        for idx, alpha in enumerate(self.a):
-            if alpha > 1e-8: # if alpha isn't super small
-                self.w += alpha * y[idx] * X[idx]  # optimal Lagrange values
-
-        # TODO: Substitute into a support vector to find bias
-        
-        # self.b = ...  ## Intercept Term (float)
-
-        y.reshape(-1, 1)  # reshape y to proper dims to calc bias
-        self.b = 0.0
-        self.b = -0.5 * ( max(np.inner(self.w, X[y == -1])) + min(np.inner(self.w, X[y == 1])) )
-        # print(f'{self.b = }')
-        # self.b = -0.5 * ( (mxw * X[0][mxw_idx]) + (mnw * X[1][mnw_idx]) )
 
         return self
 
@@ -292,7 +276,6 @@ class SVM(object):
         for idx, x in X:
             out = self.predict(x)
             acc_list.append(out)
-
 
         return score
 
