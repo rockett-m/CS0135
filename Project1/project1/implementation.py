@@ -82,8 +82,8 @@ def objective_function(X, y, a, kernel):
     # The second term involves the kernel matrix (X), the labels (y) and the Lagrange multipliers (a)
 
     obj_val = np.zeros(len(a))
-    obj_val = np.sum(a) - (0.5 * np.sum( np.dot(a, a.T) * np.dot(y, y.T) * (kernel(X, X)) ) )
-
+    # obj_val = np.sum(a) - (0.5 * np.sum( np.dot(a, a.T) * np.dot(y, y.T) * (kernel(X, X)) ) )
+    obj_val = np.sum(a) - (0.5 * a.T @ (y.T * kernel(X,X) * y) @ a) # correct
     return obj_val
 
 
@@ -184,15 +184,6 @@ class SVM(object):
                        x0=self.a, constraints=constraints)  # fun(x, *args) -> float
 
         self.a = np.array(res.x)
-
-        print(f'{X.shape = }')
-        print(f'{y.shape = }')
-
-        print(f'{X = }')
-        print(f'{y = }\n')
-
-        print(f'{self.a.shape = }')
-        print(f'{self.a = }\n')
 
         # TODO: Substitute into dual problem to find weights
         # self.w = ...  ## Coefficient Vector (ndarray with shape (n_features, )
