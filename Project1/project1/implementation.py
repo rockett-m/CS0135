@@ -276,8 +276,6 @@ class SVM(object):
 
         return y_pred
 
-    # removed def outputs(X): # was the same thing as # def predict(self, X):
-
     def score(self, X, y):
         """
         Return the mean accuracy on the given test data and labels. 
@@ -301,6 +299,8 @@ class SVM(object):
         # TODO: implement
         score = 0.0
         from sklearn.metrics import accuracy_score
+
+        y_pred = self.predict(X)
 
         acc_list = []
         for idx, x in X:
