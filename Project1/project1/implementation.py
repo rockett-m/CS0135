@@ -310,5 +310,5 @@ class SVM(object):
         return score
 
 
-def one_versus_the_rest(train_mn, train_labels_mn):
-    ...
+def one_versus_the_rest(train_samples, train_samples_labels):
+    classes = train_samples_labels.max()
