@@ -1,4 +1,5 @@
 import numpy as np
+import sklearn.metrics
 from scipy.optimize import minimize
 
 
@@ -209,7 +210,7 @@ class SVM(object):
                 self.w += (alpha * y[idx] * X[idx])  # optimal Lagrange values
 
         # result.coef_ = array([[0., 0.5, 0.99969451]])
-        # svm.w = array([8.15320034e-17, 1.16681058e-01, 1.41271351e-02])
+        # svm.w = array([-1.44328993e-15, 4.99986204e-01, 1.00000345e+00])
 
         # TODO: Substitute into a support vector to find bias
         y.reshape(-1, 1)  # reshape y to proper dims to calc bias
@@ -252,7 +253,26 @@ class SVM(object):
           Class labels for samples in X.
         """
         # TODO: implement
-        y_pred = np.zeros(len(X.shape[0]))
+
+        # w.T @ X + b # gives predicted value of the new point
+        # w · x + b = (w1x1 + w2x2 + · · · + wnxn) + b
+        # then apply threshold function to determine +1, -1
+        # w · x ! 0
+        # +1   w @ X + b >= 0
+        # -1   w @ X + b < 0
+
+        # for idx, weight in enumerate(self.w):
+        # result = linear_kernel(self.w, X) + self.b # also works
+        result = np.dot(self.w, X.T) + self.b
+        # print(f'{result = }')
+
+        y_pred = np.zeros(X.shape[0])
+
+        for idx, val in enumerate(result):
+            if val >= 0:
+                y_pred[idx] = 1
+            else:
+                y_pred[idx] = -1
 
         return y_pred
 
@@ -280,6 +300,7 @@ class SVM(object):
         """
         # TODO: implement
         score = 0.0
+        from sklearn.metrics import accuracy_score
 
         acc_list = []
         for idx, x in X:
