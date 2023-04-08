@@ -1,6 +1,7 @@
 import numpy as np
 import sklearn.metrics
 from scipy.optimize import minimize
+from sklearn.svm import SVC
 
 
 # NOTE: follow the docstrings. In-line comments can be followed, or replaced.
@@ -191,6 +192,7 @@ class SVM(object):
 
         # TODO: Use minimize from scipy.optimize to find the optimal Lagrange multipliers
         self.a = np.zeros(X.shape[0])  # X : shape (n_samples, n_features) # n_samples
+
         res = minimize( (lambda a: (-objective_function(X=X, y=y, a=a, kernel=self.kernel)) ),
                        x0=self.a, constraints=constraints)  # fun(x, *args) -> float
 
@@ -263,12 +265,12 @@ class SVM(object):
 
         # for idx, weight in enumerate(self.w):
         # result = linear_kernel(self.w, X) + self.b # also works
-        result = np.dot(self.w, X.T) + self.b
+        product = np.dot(self.w, X.T) + self.b
         # print(f'{result = }')
 
         y_pred = np.zeros(X.shape[0])
 
-        for idx, val in enumerate(result):
+        for idx, val in enumerate(product):
             if val >= 0:
                 y_pred[idx] = 1
             else:
@@ -310,5 +312,37 @@ class SVM(object):
         return score
 
 
-def one_versus_the_rest(train_samples, train_samples_labels):
-    classes = train_samples_labels.max()
+def one_versus_the_rest(samples, samples_labels, label_count=10, model=SVC(kernel="linear", probability=True), thresh=0.5):
+
+    print(f'{samples = }')
+    print(f'{samples_labels = }')
+
+    classes = [x for x in range(label_count)]
+    print(f'{classes = }')
+    y_pred = np.zeros(len(samples_labels))
+
+    for class_num in classes:
+    # for idx, class_val in enumerate(classes):
+
+        model.fit(samples, samples_labels.ravel())
+        model.predict_proba(samples)
+        prob_val = model.predict_proba(samples)
+
+        # model.fit(samples, samples_labels.ravel())
+        # model.predict_proba(samples)
+        # prob_val_test = model.predict_proba(samples)
+
+        if prob_val >= thresh:
+            y_pred[class_num] = 1
+        else:
+            y_pred[class_num] = -1
+
+    return y_pred
+
+'''
+name.shape : min : max
+train_samples.shape = (4000, 784) 0.0 0.2790270547374771
+train_samples_labels.shape = (4000, 1) 0 9
+test_samples.shape = (1000, 784) 0.0 0.2268719189491448
+test_samples_labels.shape = (1000, 1) 0 9
+'''
