@@ -222,7 +222,7 @@ class SVM(object):
         print(f'{self.a = }')
         print(f'{self.w = }')
         print(f'{self.b = }\n')
-
+        self.classes_ = np.unique(y)
         '''
         res = message: Optimization
         terminated
@@ -311,7 +311,16 @@ class SVM(object):
 
         return score
 
+    def predict_proba(self, X, c):
+        distribution = np.dot(self.w, X.transpose()) + self.b
 
+        # calc prob of class c
+        proba = 1 / (1 + np.exp(-distribution))
+        proba *= self.classes_ == c
+
+        return proba[0]
+
+'''
 def one_versus_the_rest(samples, samples_labels, label_count=10, model=SVC(kernel="linear", probability=True), thresh=0.5):
 
     print(f'{samples = }')
@@ -321,6 +330,7 @@ def one_versus_the_rest(samples, samples_labels, label_count=10, model=SVC(kerne
     print(f'{classes = }')
     y_pred = np.zeros(len(samples_labels))
 
+    label_scores = {key: 0.0 for key in classes}
     for class_num in classes:
     # for idx, class_val in enumerate(classes):
 
@@ -338,6 +348,17 @@ def one_versus_the_rest(samples, samples_labels, label_count=10, model=SVC(kerne
             y_pred[class_num] = -1
 
     return y_pred
+'''
+
+def one_versus_the_rest(labels, number):
+
+    new_labels = labels.copy().astype(int)
+
+    new_labels[labels == number] = 1
+    new_labels[labels != number] = -1
+
+    return new_labels
+
 
 '''
 name.shape : min : max
