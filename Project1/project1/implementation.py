@@ -50,12 +50,16 @@ def nonlinear_kernel(X1, X2, sigma=0.5):
          The value of the nonlinear kernel function for the pair of input vectors.
 
      """
-    # (Bonus) TODO: implement 
+    # (Bonus) TODO: implement
 
     # Compute the Euclidean distance between the input vectors
+    distance = np.linalg.norm(X1 - X2)
+
     # Compute the value of the Gaussian kernel function
+    kernel_value = np.exp(-distance ** 2 / (2 * sigma ** 2))
+
     # Return the kernel value
-    return None
+    return kernel_value
 
 
 def objective_function(X, y, a, kernel):
@@ -304,10 +308,11 @@ class SVM(object):
 
         y_pred = self.predict(X)
 
-        acc_list = []
-        for idx, x in X:
-            out = self.predict(x)
-            acc_list.append(out)
+        # acc_list = []
+        # for idx, x in X:
+        #     out = self.predict(x)
+        #     acc_list.append(out)
+        score = accuracy_score(y, y_pred)
 
         return score
 
