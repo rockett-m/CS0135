@@ -15,8 +15,6 @@ def counting_heuristic(x_inputs, y_outputs, feature_index, classes):
     :return: int, total number of correctly classified instances
     """
 
-    total_correct = 0  # TODO: fix me
-
     totals = [ 0 for x in range(len(classes)) ]
     x_inputs = x_inputs.astype(int)
 
@@ -24,10 +22,9 @@ def counting_heuristic(x_inputs, y_outputs, feature_index, classes):
         # print(f'{idx = } : {y_num = } : {x_inputs[idx][feature_index] = }')
         if y_num == 1: # indicates correct based on y-value
             # increase that count for the respective class
-            # totals[x_inputs[idx][feature_index]] += 1
-            totals[x_inputs[idx,:][feature_index]] += 1
+            totals[x_inputs[idx][feature_index]] += 1
 
-    total_correct = int(np.max(totals))
+    total_correct = int(np.max(totals)) # TODO: fix me
 
     return total_correct
 
