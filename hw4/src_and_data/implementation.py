@@ -41,17 +41,20 @@ def set_entropy(x_inputs, y_outputs, classes):
     # pi = 1/k
     # k = 2^len(classes)
     entropy = 0  # TODO: fix me
-
+    # https://www.cs.tufts.edu/comp/135/2020s/lectures/slides/lec08.pdf
     for idx, x_val in enumerate(x_inputs):
-        entropy = -x_val * math.log2(x_val)
+        for idx_c, cls in enumerate(classes):
+            print(f'{idx = } : {x_val = }')
 
-    return entropy
+            entropy += -x_val[idx_c] * math.log2(x_val[idx_c])
+            print(f'{idx = } : {x_val = } : {entropy = }')
+
+    return entropy  # between 0.0 and 1.0
 
 
 def information_remainder(x_inputs, y_outputs, feature_index, classes):
     """Calculate the information remainder after splitting the input-output set based on the
 given feature index.
-
 
     :param x_inputs: numpy array of shape (n_samples, n_features), containing the input data
     :param y_outputs: numpy array of shape (n_samples,), containing the output data (class labels)
