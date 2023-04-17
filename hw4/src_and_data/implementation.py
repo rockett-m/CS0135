@@ -1,4 +1,4 @@
-import math
+from math import log2
 import numpy as np
 
 
@@ -41,13 +41,13 @@ def set_entropy(x_inputs, y_outputs, classes):
     # pi = 1/k
     # k = 2^len(classes)
     entropy = 0  # TODO: fix me
-    # https://www.cs.tufts.edu/comp/135/2020s/lectures/slides/lec08.pdf
-    for idx, x_val in enumerate(x_inputs):
-        for idx_c, cls in enumerate(classes):
-            print(f'{idx = } : {x_val = }')
 
-            entropy += -x_val[idx_c] * math.log2(x_val[idx_c])
-            print(f'{idx = } : {x_val = } : {entropy = }')
+    # https://www.cs.tufts.edu/comp/135/2020s/lectures/slides/lec08.pdf
+    for idx_r, x_val in enumerate(x_inputs): # 0,1,2,3
+        for idx_c, cls in enumerate(classes): # 0,1
+            # print(f'{idx_c = } : {x_val = } : {x_val[idx_c] = } : {entropy = }')
+            if x_val[idx_c] != 0: # 0.0 otherwise
+                entropy += -x_val[idx_c] * log2(x_val[idx_c])
 
     return entropy  # between 0.0 and 1.0
 
