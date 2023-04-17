@@ -25,7 +25,7 @@ def counting_heuristic(x_inputs, y_outputs, feature_index, classes):
             totals[x_inputs[idx][feature_index]] += 1
 
     total_correct = int(np.max(totals)) # TODO: fix me
-
+    print(f'{total_correct = }')
     return total_correct
 
 
@@ -42,13 +42,30 @@ def set_entropy(x_inputs, y_outputs, classes):
     # k = 2^len(classes)
     entropy = 0  # TODO: fix me
 
+    """
     # https://www.cs.tufts.edu/comp/135/2020s/lectures/slides/lec08.pdf
     for idx_r, x_val in enumerate(x_inputs): # 0,1,2,3
         for idx_c, cls in enumerate(classes): # 0,1
             # print(f'{idx_c = } : {x_val = } : {x_val[idx_c] = } : {entropy = }')
-            if x_val[idx_c] != 0: # 0.0 otherwise
+            if x_val[idx_c] != 0: # 0.0 default otherwise
                 entropy += -x_val[idx_c] * log2(x_val[idx_c])
+    """
 
+    # k = len(classes)
+    # pi = 1/k
+    # # https://datascience.stackexchange.com/questions/58565/conditional-entropy-calculation-in-python-hyx
+    # unique, count = np.unique(y_outputs, return_counts=True, axis=0)
+    # prob = count / len(y_outputs)
+    # entropy = -np.sum(prob * log2(prob))
+    # for it in range(len(classes)):
+    #     k = len(classes)
+    #     pi = 1/k
+    #     if pi > 0:
+    #         entropy += -np.sum(pi * log2(pi))
+    #
+
+    entropy += -np.sum(np.multiply(prob, np.log2(prob)))
+    print(f'{entropy = }')
     return entropy  # between 0.0 and 1.0
 
 
@@ -63,6 +80,12 @@ given feature index.
            e.g. [0,1] for two classes or [0,1,2] for 3 classes
     :return: float, information remainder value
     """
+    print(f'{x_inputs = }')
+    print(f'{y_outputs = }')
+    print(f'{feature_index = }')
+    print(f'{classes = }')
+
+    # x_inputs[idx][feature_index]
 
     # Calculate the entropy of the overall set
     overall_entropy = set_entropy(x_inputs, y_outputs, classes)
@@ -74,5 +97,5 @@ given feature index.
     remainder = 0  # TODO: fix me
 
     gain = 0  # TODO: fix me
-
+    print(f'{gain = }')
     return gain
