@@ -59,31 +59,18 @@ def set_entropy(x_inputs, y_outputs, classes):
            e.g. [0,1] for two classes or [0,1,2] for 3 classes
     :return: float, entropy value of the set
     """
-    # pi = 1/k
-    # k = 2^len(classes)
+
     entropy = 0  # TODO: fix me
 
-    """
-    # https://www.cs.tufts.edu/comp/135/2020s/lectures/slides/lec08.pdf
-    for idx_r, x_val in enumerate(x_inputs): # 0,1,2,3
-        for idx_c, cls in enumerate(classes): # 0,1
-            # print(f'{idx_c = } : {x_val = } : {x_val[idx_c] = } : {entropy = }')
-            if x_val[idx_c] != 0: # 0.0 default otherwise
-                entropy += -x_val[idx_c] * log2(x_val[idx_c])
-    """
+    unique_y_vals, counts = np.unique(y_outputs, return_counts=True)
 
-    # k = len(classes)
-    # pi = 1/k
-    # entropy += -np.sum(pi * log2(pi))
-    k = len(classes)
+    # y count over length of y for pi prob
+    for y, y_count in zip(unique_y_vals, counts):
 
-    # for each class, prob of sample being in class given y data
-    for k in range(len(classes)):
-        if k > 0:
-            pi = 1/k
-            entropy += -np.sum(pi * log2(pi))
+        pi = y_count / len(y_outputs)
 
-    print(f'{entropy = }')
+        entropy += -(pi * log2(pi))
+
     return entropy  # between 0.0 and 1.0
 
 
@@ -98,22 +85,28 @@ given feature index.
            e.g. [0,1] for two classes or [0,1,2] for 3 classes
     :return: float, information remainder value
     """
-    print(f'{x_inputs = }')
-    print(f'{y_outputs = }')
-    print(f'{feature_index = }')
-    print(f'{classes = }')
-
-    # x_inputs[idx][feature_index]
 
     # Calculate the entropy of the overall set
     overall_entropy = set_entropy(x_inputs, y_outputs, classes)
 
     # Calculate the entropy of each split set
+    x_col = np.array(x_inputs[:, feature_index]) # select all rows vals from a single column (A or B)
+
     set_entropies = []  # TODO: fix me
 
     # Calculate the remainder
     remainder = 0  # TODO: fix me
     # ((# samples in  split) / (total # of samples)) * (entropy of split)
-    gain = 0  # TODO: fix me
-    print(f'{gain = }')
+    for cls_idx, cls in enumerate(classes):  # 0,1,2
+
+        y_rows_relevant = np.where(x_col == cls)[0]
+        y_output_relevant = y_outputs[y_rows_relevant]
+
+        set_ent = set_entropy(x_inputs=x_inputs, y_outputs=y_output_relevant, classes=classes)
+        set_entropies.append(set_ent)
+
+        remainder += ( (len(y_rows_relevant) / (len(y_outputs))) * set_entropies[cls] )
+
+    gain = overall_entropy - remainder # TODO: fix me
+
     return gain
