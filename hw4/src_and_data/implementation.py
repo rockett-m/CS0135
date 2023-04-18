@@ -1,6 +1,6 @@
 from math import log2
 import numpy as np
-
+from collections import OrderedDict
 
 def counting_heuristic(x_inputs, y_outputs, feature_index, classes):
     """
@@ -15,18 +15,39 @@ def counting_heuristic(x_inputs, y_outputs, feature_index, classes):
     :return: int, total number of correctly classified instances
     """
 
-    totals = [ 0 for x in range(len(classes)) ]
-    x_inputs = x_inputs.astype(int)
+    total_correct = 0
 
-    for idx, y_num in enumerate(y_outputs):
-        # print(f'{idx = } : {y_num = } : {x_inputs[idx][feature_index] = }')
-        if y_num == 1: # indicates correct based on y-value
-            # increase that count for the respective class
-            totals[x_inputs[idx][feature_index]] += 1
+    x_col = np.array(x_inputs[:, feature_index]) # select all rows vals from a single column (A or B)
+    unique_x_vals, counts = np.unique(x_col, return_counts=True)
+    # print(f'{unique_x_vals = } : {counts = }')
 
-    total_correct = int(np.max(totals)) # TODO: fix me
-    print(f'{total_correct = }')
+    x_to_y_count_dict = OrderedDict() # see mapping of x vals to y vals
+    x_to_y_count_dict = {key: 0 for key in unique_x_vals} # 0=>0; 1=>0
+
+    # for each unique x value, create a key in a dict with the value being
+    # counts of corresponding y values for the same row index
+    # then take the max of the values and add it to the total correct value
+    for unq_x_val in list(unique_x_vals): # 1
+
+        relevant_row_indices = [] # where is x equal to 0 in the full col?
+        for row_idx, row_val in enumerate(x_col): # 0,1,2,3,4,5,6,7; 1,1,0,0,0,0,0,0
+
+            if unq_x_val == row_val:
+                relevant_row_indices.append(row_idx)
+
+        # in relevant rows, total up the y-value counts in a dict
+        for good_row in relevant_row_indices:
+            if y_outputs[good_row] not in x_to_y_count_dict.keys():
+                x_to_y_count_dict[y_outputs[good_row]] = 1
+            else:
+                x_to_y_count_dict[y_outputs[good_row]] += 1
+
+        # add the max value prediction to the running total
+        total_correct += max(x_to_y_count_dict.values())
+        x_to_y_count_dict = {key: 0 for key in unique_x_vals}  # 0=>0; 1=>0
+
     return total_correct
+
 
 
 def set_entropy(x_inputs, y_outputs, classes):
@@ -53,18 +74,15 @@ def set_entropy(x_inputs, y_outputs, classes):
 
     # k = len(classes)
     # pi = 1/k
-    # # https://datascience.stackexchange.com/questions/58565/conditional-entropy-calculation-in-python-hyx
-    # unique, count = np.unique(y_outputs, return_counts=True, axis=0)
-    # prob = count / len(y_outputs)
-    # entropy = -np.sum(prob * log2(prob))
-    # for it in range(len(classes)):
-    #     k = len(classes)
-    #     pi = 1/k
-    #     if pi > 0:
-    #         entropy += -np.sum(pi * log2(pi))
-    #
+    # entropy += -np.sum(pi * log2(pi))
+    k = len(classes)
 
-    entropy += -np.sum(np.multiply(prob, np.log2(prob)))
+    # for each class, prob of sample being in class given y data
+    for k in range(len(classes)):
+        if k > 0:
+            pi = 1/k
+            entropy += -np.sum(pi * log2(pi))
+
     print(f'{entropy = }')
     return entropy  # between 0.0 and 1.0
 
@@ -95,7 +113,7 @@ given feature index.
 
     # Calculate the remainder
     remainder = 0  # TODO: fix me
-
+    # ((# samples in  split) / (total # of samples)) * (entropy of split)
     gain = 0  # TODO: fix me
     print(f'{gain = }')
     return gain
