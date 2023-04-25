@@ -101,8 +101,6 @@ def read_sonnets(fin):
 
     if Path(fin).is_file():
         f_sonnets = [fin]
-        print(f'{f_sonnets = }')
-        sys.exit()
     elif Path(fin).is_dir():
         f_sonnets = glob.glob(fin + os.sep + "*.txt")
     else:
@@ -120,7 +118,8 @@ def read_sonnets(fin):
 
         sonnets[sonnet_id] = clean_text("".join(data))
 
-    sonnets = OrderedDict({str(int(k)) : v for k, v in sonnets.items()}) # sort by key numerically
+    # sort by key numerically # make all words lower-case
+    sonnets = OrderedDict({str(int(k)) : v.lower() for k, v in sonnets.items()})
     # print(f'{sonnets = }')
 
     return sonnets
@@ -164,11 +163,34 @@ def idf(corpus: Dict[str, List[str]]) -> Dict[str, float]:
     # >>> idf(corpus)
     {'apple': 1.0986122886681098, 'banana': 0.4054651081081644, 'orange': 0.4054651081081644, 'peach': 0.6931471805599453}
     """
+    all_words = [word for sonnet in corpus.values() for word in sonnet] # all words together
+    uniq_all_words = sorted(list(set(list(all_words)))) # unique words
+    # print(f'{all_words = }');print(f'{uniq_all_words = }')
+    # print(len(all_words)); print(len(uniq_all_words))
 
     # Calculate the IDF for each word
-    corpus_idf = {}  # TODO: FIX ME
 
-    return corpus_idf
+    # key = word; value = doc_count
+    # doc count is number of documents the word occurs in
+    corpus_idf = OrderedDict.fromkeys(uniq_all_words, 0) # TODO: FIX ME
+
+    for sonnet_no, sonnet_words in corpus.items():
+
+        uniq_sonnet_words = list(set(sonnet_words)) # only need want to hit once per document
+
+        for word in uniq_sonnet_words:
+
+            doc_count = corpus_idf[word] + 1
+            corpus_idf.update({word : doc_count}) # add 1 for every document hitting word
+
+    N = len(corpus.keys())
+    for sonnet_word, df in corpus_idf.items():
+
+        new_idf = math.log(N / float(df))
+
+        corpus_idf[sonnet_word] = float(new_idf) # change value from df to idf score
+
+    return corpus_idf # word : idf_score
 
 
 def tf_idf(corpus_idf: Dict[str, float], sonnet_tf: Dict[str, float]) -> Dict[str, float]:
