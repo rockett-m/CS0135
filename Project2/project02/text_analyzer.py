@@ -50,6 +50,8 @@ def sort_dictionary_by_value(dict_in: Dict[str, float], direction: str = "descen
     sort_dict = []  # TODO: fix me
     # Sort the dictionary  dict_in by value
 
+    out = Counter(dict_in)
+    sort_dict = out.most_common()[::-1]
     # Reverse the order if the direction is 'descending'
 
     return sort_dict
@@ -190,7 +192,7 @@ def idf(corpus: Dict[str, List[str]]) -> Dict[str, float]:
 
         corpus_idf[sonnet_word] = float(new_idf) # change value from df to idf score
 
-    return corpus_idf # word : idf_score
+    return corpus_idf  # word : idf_score
 
 
 def tf_idf(corpus_idf: Dict[str, float], sonnet_tf: Dict[str, float]) -> Dict[str, float]:
@@ -212,6 +214,14 @@ def tf_idf(corpus_idf: Dict[str, float], sonnet_tf: Dict[str, float]) -> Dict[st
     """
 
     corpus_tf_idf = {}  # TODO: fix me
+
+    corpus_tf_idf.fromkeys(corpus_idf, 0)
+
+    for sonnet_word, sonnet_val in sonnet_tf.items():
+        tf = sonnet_val
+        idf = corpus_idf[sonnet_word]
+        tf_idf = float(tf * idf)
+        corpus_tf_idf[sonnet_word] = tf_idf
 
     return corpus_tf_idf
 
