@@ -29,8 +29,17 @@ def get_top_k(kv_dict: Dict[str, float], k: int = 20) -> List[Tuple[str, float]]
     """
     # Sort the dictionary by value and return the top 'k' key-value pairs
     kv_sorted = Counter(kv_dict)
-    # for
+    # print(f'{kv_sorted = }')
+
     top_k = []  # TODO: fix me
+    count = 0
+    for k,v in kv_sorted.items():
+        tup = (k, v)
+        top_k.append(tup)
+        count += 1
+        if count == k:
+            break
+    # for
     return top_k
 
 
@@ -51,7 +60,7 @@ def sort_dictionary_by_value(dict_in: Dict[str, float], direction: str = "descen
     # Sort the dictionary  dict_in by value
 
     out = Counter(dict_in)
-    sort_dict = out.most_common()[::-1]
+    sort_dict = list(out.most_common()[::-1])
     # Reverse the order if the direction is 'descending'
 
     return sort_dict
