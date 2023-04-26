@@ -28,18 +28,18 @@ def get_top_k(kv_dict: Dict[str, float], k: int = 20) -> List[Tuple[str, float]]
     [('apple', 5.0), ('banana', 3.0)]
     """
     # Sort the dictionary by value and return the top 'k' key-value pairs
-    kv_sorted = Counter(kv_dict)
+    kv_sorted = OrderedDict(Counter(kv_dict))
     # print(f'{kv_sorted = }')
 
     top_k = []  # TODO: fix me
     count = 0
-    for k,v in kv_sorted.items():
-        tup = (k, v)
+    for key, value in kv_sorted.items():
+        tup = (key, value)
         top_k.append(tup)
         count += 1
-        if count == k:
-            break
-    # for
+        if count >= k:
+            return top_k
+
     return top_k
 
 
@@ -172,8 +172,9 @@ def idf(corpus: Dict[str, List[str]]) -> Dict[str, float]:
     Example:
     # >>> corpus = {"doc1": ["apple", "banana", "orange"], "doc2": ["banana", "peach"], "doc3": ["orange", "peach"]}
     # >>> idf(corpus)
-    {'apple': 1.0986122886681098, 'banana': 0.4054651081081644, 'orange': 0.4054651081081644, 'peach': 0.6931471805599453}
+    {'apple': 1.0986122886681098, 'banana': 0.4054651081081644, 'orange': 0.4054651081081644, 'peach': 0.4054651081081644}
     """
+
     all_words = [word for sonnet in corpus.values() for word in sonnet] # all words together
     uniq_all_words = sorted(list(set(list(all_words)))) # unique words
     # print(f'{all_words = }');print(f'{uniq_all_words = }')
@@ -251,34 +252,44 @@ def cosine_sim(vec1: Dict[str, float], vec2: Dict[str, float]) -> float:
 
     """
     similarity = 0  # TODO: fix me
+    # loop through all vec1, vec2 values and sum up...then square...then mult...then sqrt
+    vec1_tfidf_sum = 0; vec2_tfidf_sum = 0
+
+    # 1 = {A, B, D}
+    # 2 = {A, C, E}
+
+    numerator = 0
+
+    for v1, v2 in zip(vec1.values(), vec2.values()):
+        vec1_tfidf_sum += math.pow(v1, 2)
+        vec2_tfidf_sum += math.pow(v2, 2)
+
+        numerator += v1 * v2
+
+    # numerator = vec1_tfidf_sum * vec2_tfidf_sum
+    denominator = math.sqrt(vec1_tfidf_sum * vec2_tfidf_sum)
+
+    similarity = numerator / denominator
 
     return similarity
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Text Analysis through TFIDF computation",
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    )
-    parser.add_argument(
-        "-i",
-        "--input",
-        type=str,
+
+    parser = argparse.ArgumentParser(description="Text Analysis through TFIDF computation",
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,)
+
+    parser.add_argument("-i", "--input", type=str,
         default="./data/shakespeare_sonnets/1.txt",
-        help="Input text file or files.",
-    )
-    parser.add_argument(
-        "-c",
-        "--corpus",
-        type=str,
+        help="Input text file or files.",)
+
+    parser.add_argument("-c", "--corpus", type=str,
         default="./data/shakespeare_sonnets/",
-        help="Directory containing document collection (i.e., corpus)",
-    )
-    parser.add_argument(
-        "--tfidf",
+        help="Directory containing document collection (i.e., corpus)",)
+
+    parser.add_argument("--tfidf",
         help="Determine the TF IDF of a document w.r.t. a given corpus",
-        action="store_true",
-    )
+        action="store_true",)
 
     args = parser.parse_args()
 
@@ -296,28 +307,25 @@ if __name__ == "__main__":
 
     # get sorted list and slice out top 20
     sonnet1_top20 = get_top_k(sonnet1_tf)
-    print("\nSonnet 1 TF (Top 20):")
-    print(sonnet1_top20)
+    print(f"\nSonnet 1 TF (Top 20):\n{sonnet1_top20}\n")
 
     # TF of entire corpus
     flattened_corpus = [word for sonnet in corpus.values() for word in sonnet]
     corpus_tf = tf(flattened_corpus)
     corpus_top20 = get_top_k(corpus_tf)
-    print("Corpus TF (Top 20):")
-    print(corpus_top20)
+    print(f"Corpus TF (Top 20):\n{corpus_top20}\n")
 
     # IDF of corpus
     corpus_idf = idf(corpus)
     corpus_tf_ordered = get_top_k(corpus_idf)
     # print top 20 to add to report
-    print("Corpus IDF (Top 20):")
-    print(corpus_tf_ordered)
+    print(f"Corpus IDF (Top 20):\n{corpus_tf_ordered}\n")
 
     # TFIDF of Sonnet1 w.r.t. corpus
     sonnet1_tfidf = tf_idf(corpus_idf, sonnet1_tf)
     sonnet1_tfidf_ordered = get_top_k(sonnet1_tfidf)
-    print("Sonnet 1 TFIDF (Top 20):")
-    print(sonnet1_tfidf_ordered)
+    print(f"Sonnet 1 TFIDF (Top 20):\n{sonnet1_tfidf_ordered}\n")
 
     # Determine confusion matrix using cosine similarity scores for each exemplar.
-    
+    # create matrix of sim scores comparison
+
