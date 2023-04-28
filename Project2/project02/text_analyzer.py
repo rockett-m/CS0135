@@ -274,6 +274,23 @@ def cosine_sim(vec1: Dict[str, float], vec2: Dict[str, float]) -> float:
     return similarity
 
 
+def euclidean_distance():
+    ...
+
+
+def manhattan_distance():
+    ...
+
+
+def bm25():
+    ...
+
+
+def sbert():
+    ...
+
+
+
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description="Text Analysis through TFIDF computation",

@@ -1,0 +1,5 @@
+Time Spent: 5 hours
+Collaborators: Group Members, office hours
+Resources Consulted:
+plenty of online python resources to double check functions and refresh memory on
+key value ordering and sorting, etc. such as geeksforgeeks and quora
