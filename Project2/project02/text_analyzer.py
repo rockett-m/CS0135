@@ -240,7 +240,9 @@ def tf_idf(corpus_idf: Dict[str, float], sonnet_tf: Dict[str, float]) -> Dict[st
 
     for sonnet_word, sonnet_val in sonnet_tf.items():
         tf = sonnet_val
-        idf = corpus_idf[sonnet_word]
+        idf = 0.0 # in case it does not exist in corpus words (testcases)
+        if sonnet_word in corpus_idf.keys():
+            idf = corpus_idf[sonnet_word]
         tf_idf = float(tf * idf)
         corpus_tf_idf[sonnet_word] = tf_idf
 
