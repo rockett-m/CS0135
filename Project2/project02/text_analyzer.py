@@ -324,21 +324,23 @@ if __name__ == "__main__":
     corpus = clean_corpus(corpus)
 
     # assign 1.txt to variable sonnet to process and find its TF (Note corpus is of type dic, but sonnet1 is just a str)
-    sonnet1 = corpus["1"]
+    num = "1"
+    sonnet1 = corpus[num]
 
     # input = read_sonnets(args.input)
     if args.input != "./data/shakespeare_sonnets/1.txt":
         sonnet_num = args.input.split('/')[-1].split('.')[0] # get sonnet num (2...154)
         sonnet1 = corpus[sonnet_num]
-        print(f'{sonnet1 = }')
+        num = f'{sonnet_num}'
+        # print(f'{sonnet1 = }')
 
     # determine tf of sonnet
     sonnet1_tf = tf(sonnet1)
-    print(f'{sonnet1_tf = }')
+    # print(f'{sonnet1_tf = }')
 
     # get sorted list and slice out top 20
     sonnet1_top20 = get_top_k(sonnet1_tf)
-    print(f"\nSonnet 1 TF (Top 20):\n{sonnet1_top20}\n")
+    print(f"\nSonnet {num} TF (Top 20):\n{sonnet1_top20}\n")
 
     # TF of entire corpus
     flattened_corpus = [word for sonnet in corpus.values() for word in sonnet]
@@ -355,7 +357,7 @@ if __name__ == "__main__":
     # TFIDF of Sonnet1 w.r.t. corpus
     sonnet1_tfidf = tf_idf(corpus_idf, sonnet1_tf)
     sonnet1_tfidf_ordered = get_top_k(sonnet1_tfidf)
-    print(f"Sonnet 1 TFIDF (Top 20):\n{sonnet1_tfidf_ordered}\n")
+    print(f"Sonnet {num} TFIDF (Top 20):\n{sonnet1_tfidf_ordered}\n")
 
     # Determine confusion matrix using cosine similarity scores for each exemplar.
     # create matrix of sim scores comparison
