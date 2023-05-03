@@ -111,18 +111,18 @@ def read_sonnets(fin):
         print("Filepath of sonnet not found!")
         return None
 
-    text_names = []
-    for entry in f_sonnets:
+    if len(f_sonnets) > 1:
+        text_names = []
+        for entry in f_sonnets:
+            text_names.append(entry.split('/')[-1].split('.txt')[0])
+        # print(f'{text_names = }')
 
-        text_names.append(entry.split('/')[-1].split('.txt')[0])
-    # print(f'{text_names = }')
+        sorted_text_names = [ int(x) for x in text_names ]
+        sorted_text_names.sort()
 
-    sorted_text_names = [ int(x) for x in text_names ]
-    sorted_text_names.sort()
-
-    f_sonnets = [ f'{fin}{x}.txt' for x in sorted_text_names ] # sort 1...154 numerically
-    # from natsort import natsorted # ModuleNotFoundError: No module named 'natsort'
-    # f_sonnets = natsorted(f_sonnets)
+        f_sonnets = [ f'{fin}{x}.txt' for x in sorted_text_names ] # sort 1...154 numerically
+        # from natsort import natsorted # ModuleNotFoundError: No module named 'natsort'
+        # f_sonnets = natsorted(f_sonnets)
 
     sonnets = {}
 
@@ -298,6 +298,8 @@ def sbert():
 
 if __name__ == "__main__":
 
+    # python3 text_analyzer.py - i "./data/shakespeare_sonnets/3.txt"
+
     parser = argparse.ArgumentParser(description="Text Analysis through TFIDF computation",
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,)
 
@@ -324,8 +326,15 @@ if __name__ == "__main__":
     # assign 1.txt to variable sonnet to process and find its TF (Note corpus is of type dic, but sonnet1 is just a str)
     sonnet1 = corpus["1"]
 
+    # input = read_sonnets(args.input)
+    if args.input != "./data/shakespeare_sonnets/1.txt":
+        sonnet_num = args.input.split('/')[-1].split('.')[0] # get sonnet num (2...154)
+        sonnet1 = corpus[sonnet_num]
+        print(f'{sonnet1 = }')
+
     # determine tf of sonnet
     sonnet1_tf = tf(sonnet1)
+    print(f'{sonnet1_tf = }')
 
     # get sorted list and slice out top 20
     sonnet1_top20 = get_top_k(sonnet1_tf)
