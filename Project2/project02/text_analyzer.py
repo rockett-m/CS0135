@@ -26,19 +26,10 @@ def get_top_k(kv_dict: Dict[str, float], k: int = 20) -> List[Tuple[str, float]]
     [('apple', 5.0), ('banana', 3.0)]
     """
     # Sort the dictionary by value and return the top 'k' key-value pairs
-    kv_sorted = OrderedDict(Counter(kv_dict))
-    # print(f'{kv_sorted = }')
+    # sort high to low on value's floating point number
+    kv_sorted = sorted(kv_dict.items(), key=lambda x:x[1], reverse=True)
+    top_k = kv_sorted[:k] # get slice of first k items
 
-    top_k = []  # TODO: fix me
-    count = 0
-    for key, value in kv_sorted.items():
-        tup = (key, value)
-        top_k.append(tup)
-        count += 1
-        if count >= k:
-            return top_k
-
-    print(f'{top_k = }')
     return top_k
 
 
@@ -57,10 +48,13 @@ def sort_dictionary_by_value(dict_in: Dict[str, float], direction: str = "descen
     """
     sort_dict = []  # TODO: fix me
     # Sort the dictionary  dict_in by value
+    # Reverse the order if the direction is 'descending'
 
     out = Counter(dict_in)
-    sort_dict = list(out.most_common()[::-1])
-    # Reverse the order if the direction is 'descending'
+    if direction == "ascending":
+        sort_dict = list(out.most_common()[::-1])
+    else: # default
+        sort_dict = list(out.most_common())
 
     return sort_dict
 
@@ -270,7 +264,6 @@ def cosine_sim(vec1: Dict[str, float], vec2: Dict[str, float]) -> float:
 
     # 1 = {A, B, D}
     # 2 = {A, C, E}
-
     numerator = 0
 
     for v1, v2 in zip(vec1.values(), vec2.values()):
@@ -279,7 +272,6 @@ def cosine_sim(vec1: Dict[str, float], vec2: Dict[str, float]) -> float:
 
         numerator += v1 * v2
 
-    # numerator = vec1_tfidf_sum * vec2_tfidf_sum
     denominator = math.sqrt(vec1_tfidf_sum * vec2_tfidf_sum)
 
     similarity = numerator / denominator

@@ -1,5 +1,15 @@
-Time Spent: 5 hours
+Time Spent: 8 hours
+
 Collaborators: Prithvi Shahani, Anthony Wong, office hours
+
 Resources Consulted:
+No AI tools like Chat-GPT were used
+
+Piazza for testcases for the non-matching keys in corpus_idf
+
 plenty of online python resources to double check functions and refresh memory on
-key value ordering and sorting, etc. such as geeksforgeeks and quora
+key value ordering and sorting, etc. such as geeksforgeeks, stackoverflow, freecodecamp
+
+https://www.geeksforgeeks.org/python-counter-items-counter-keys-and-counter-values/
+https://stackoverflow.com/questions/22264956/how-to-sort-dictionary-by-key-in-numerical-order-python
+https://www.freecodecamp.org/news/sort-dictionary-by-value-in-python/
