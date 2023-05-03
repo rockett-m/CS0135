@@ -6,10 +6,8 @@ import re
 import math
 from typing import Dict, List, Tuple
 from collections import Counter, OrderedDict
-from natsort import natsorted
 
 import sys
-
 import numpy as np
 import pandas as pd
 
@@ -40,6 +38,7 @@ def get_top_k(kv_dict: Dict[str, float], k: int = 20) -> List[Tuple[str, float]]
         if count >= k:
             return top_k
 
+    print(f'{top_k = }')
     return top_k
 
 
@@ -118,7 +117,19 @@ def read_sonnets(fin):
         print("Filepath of sonnet not found!")
         return None
 
-    f_sonnets = natsorted(f_sonnets)
+    text_names = []
+    for entry in f_sonnets:
+
+        text_names.append(entry.split('/')[-1].split('.txt')[0])
+    # print(f'{text_names = }')
+
+    sorted_text_names = [ int(x) for x in text_names ]
+    sorted_text_names.sort()
+
+    f_sonnets = [ f'{fin}{x}.txt' for x in sorted_text_names ] # sort 1...154 numerically
+    # from natsort import natsorted # ModuleNotFoundError: No module named 'natsort'
+    # f_sonnets = natsorted(f_sonnets)
+
     sonnets = {}
 
     for f in f_sonnets:
