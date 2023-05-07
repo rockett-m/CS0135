@@ -1,4 +1,4 @@
-Time Spent: 8 hours
+Time Spent: 10 hours
 
 Collaborators: Prithvi Shahani, Anthony Wong, office hours
 
@@ -13,3 +13,8 @@ key value ordering and sorting, etc. such as geeksforgeeks, stackoverflow, freec
 https://www.geeksforgeeks.org/python-counter-items-counter-keys-and-counter-values/
 https://stackoverflow.com/questions/22264956/how-to-sort-dictionary-by-key-in-numerical-order-python
 https://www.freecodecamp.org/news/sort-dictionary-by-value-in-python/
+
+some commodity links as well for heatmaps etc.
+
+https://plotly.com/python/heatmaps/
+https://seaborn.pydata.org/generated/seaborn.heatmap.html
